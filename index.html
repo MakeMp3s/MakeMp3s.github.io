@@ -156,15 +156,19 @@
         }
 
         .feature-image {
-            flex: 0 0 350px;
+            flex: 0 0 auto;
             display: flex;
             justify-content: center;
             align-items: center;
+            width: 25vw;
+            min-width: 300px;
+            max-width: 500px;
         }
 
         .feature-image img {
-            width: 350px;
-            height: 350px;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
             object-fit: contain;
             transition: transform 0.3s ease;
         }
