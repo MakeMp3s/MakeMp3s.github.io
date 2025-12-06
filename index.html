@@ -52,7 +52,7 @@
             font-weight: bold;
         }
 
-         /* Navigation */
+        /* Navigation */
         nav {
             display: flex;
             justify-content: space-between;
@@ -248,7 +248,10 @@
 
         /* Premium Section */
         .premium-section {
-            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3rem;
             padding: 5rem 2rem;
             margin-top: -5rem;
             background-image: url('images/prem-bg.png');
@@ -256,6 +259,23 @@
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
+        }
+
+        .premium-animation {
+            flex: 0 0 auto;
+            width: 200px;
+            height: 200px;
+        }
+
+        .premium-animation img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .premium-content {
+            flex: 0 0 auto;
+            text-align: center;
         }
 
         .premium-section h2 {
@@ -343,6 +363,15 @@
                 margin: 3rem auto;
             }
 
+            .premium-section {
+                flex-direction: column;
+            }
+
+            .premium-animation {
+                width: 150px;
+                height: 150px;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr 1fr;
             }
@@ -413,9 +442,14 @@
 
     <!-- Premium Section -->
     <section class="premium-section">
-        <h2>Make MP3s Premium Edition</h2>
-        <p>Unlimited Downloads, automatic volume leveling, square cover art, search engine</p>
-        <a href="#preorder" class="btn btn-gold">Get Premium Edition</a>
+        <div class="premium-animation">
+            <img src="images/prem-spin.gif" alt="Premium Animation">
+        </div>
+        <div class="premium-content">
+            <h2>Make MP3s Premium Edition</h2>
+            <p>Unlimited Downloads, automatic volume leveling, square cover art, search engine</p>
+            <a href="#preorder" class="btn btn-gold">Get Premium Edition</a>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -447,5 +481,3 @@
     </footer>
 </body>
 </html>
-
-
