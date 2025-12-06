@@ -104,6 +104,25 @@
             transform: translateY(-2px);
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover span {
+            background-color: #ffffff;
+        }
+
         /* Hero Section */
         .hero {
             text-align: center;
@@ -351,6 +370,27 @@
             }
 
             .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-icons {
                 gap: 1rem;
             }
 
@@ -367,11 +407,19 @@
 
             .premium-section {
                 flex-direction: column;
+                height: auto;
+                padding: 2rem 1rem;
+                gap: 1.5rem;
             }
 
             .premium-animation {
                 width: 250px;
                 height: 250px;
+                margin: -2rem 0;
+            }
+
+            .premium-content {
+                padding: 0 1rem;
             }
 
             .footer-content {
@@ -389,6 +437,11 @@
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <ul class="nav-links">
             <li><a href="#home">Home</a></li>
             <li><a href="#downloads">Downloads</a></li>
