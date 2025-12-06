@@ -288,12 +288,18 @@
             height: 18vw;
             min-width: 260px;
             min-height: 260px;
+            cursor: pointer;
         }
 
         .premium-animation img {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-animation img:hover {
+            transform: scale(1.05);
         }
 
         .premium-content {
@@ -509,13 +515,13 @@
 
     <!-- Premium Section -->
     <section class="premium-section">
-        <div class="premium-animation">
+        <a href="#premium" class="premium-animation">
             <img src="images/prem-spin.gif" alt="Premium Animation">
-        </div>
+        </a>
         <div class="premium-content">
             <h2>Make MP3s Premium Edition</h2>
             <p>Unlimited Downloads, automatic volume leveling, square cover art, search engine</p>
-            <a href="#preorder" class="btn btn-gold">Get Premium Edition</a>
+            <a href="#premium" class="btn btn-gold">Get Premium Edition</a>
         </div>
     </section>
 
