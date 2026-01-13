@@ -759,9 +759,15 @@
     });
 
     // --- UI Functions ---
-    window.toggleDropdown = () => {
-        dropdown.classList.toggle("show");
-    };
+	window.toggleDropdown = () => {
+		if (auth.currentUser) {
+			// User is logged in: Show the account menu
+			dropdown.classList.toggle("show");
+		} else {
+			// User is logged out: Skip the menu and open login immediately
+			window.openAuthModal();
+		}
+	};
 
     window.openAuthModal = () => {
         authModal.style.display = "flex";
