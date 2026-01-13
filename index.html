@@ -297,7 +297,15 @@
         const dropdown = document.getElementById("user-dropdown");
         const authModal = document.getElementById("auth-modal");
 
-        window.toggleDropdown = () => dropdown.classList.toggle("show");
+		window.toggleDropdown = () => {
+			if (auth.currentUser) {
+				// User is logged in: Show the account menu
+				dropdown.classList.toggle("show");
+			} else {
+				// User is logged out: Skip the menu and open login immediately
+				window.openAuthModal();
+			}
+		};
         window.openAuthModal = () => { authModal.style.display = "flex"; dropdown.classList.remove("show"); };
         window.closeAuthModal = () => authModal.style.display = "none";
 
@@ -335,9 +343,10 @@
                     <a href="#settings" class="dropdown-item">Account Settings</a>
                     <a href="javascript:void(0)" onclick="handleLogout()" class="dropdown-item" style="color: #ff4444;">Log Out</a>
                 `;
-            } else {
-                dropdown.innerHTML = `<a href="javascript:void(0)" onclick="openAuthModal()" class="dropdown-item">Sign up / Log in</a>`;
-            }
+			} else {
+				// Clear the dropdown when logged out
+				dropdown.innerHTML = ``;
+			}
         });
 
         window.onclick = (e) => {
