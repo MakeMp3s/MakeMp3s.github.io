@@ -52,46 +52,22 @@
             background-attachment: fixed;
         }
 
-        .logo {
-            width: 40px;
-            height: 40px;
-        }
+        .logo { width: 40px; height: 40px; }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #b0b0b0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: #b0b0b0; text-decoration: none; transition: all 0.3s ease; }
         .nav-links a:hover { color: #ffffff; }
 
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .nav-icons a {
-            color: #b0b0b0;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
+        .nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-icons a { color: #b0b0b0; text-decoration: none; font-size: 1.2rem; transition: all 0.3s ease; }
         .nav-icons a:hover { color: #ffffff; }
 
-        /* --- DROPDOWN & MODAL STYLES (Moved outside media query) --- */
+        /* --- FIXED: Dropdown & Modal Styles (Outside Media Query) --- */
         .dropdown-menu {
             display: none;
             position: absolute;
             right: 0;
-            top: 40px;
+            top: 35px;
             background-color: #2a2a2a;
             min-width: 260px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.5);
@@ -110,9 +86,9 @@
             text-decoration: none;
             transition: background 0.2s;
             border-bottom: 1px solid #3a3a3a;
-            font-size: 0.95rem;
         }
 
+        .dropdown-item:last-child { border-bottom: none; }
         .dropdown-item:hover { background-color: #3a3a3a; color: #fff; }
 
         .modal-overlay {
@@ -123,7 +99,7 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
         }
@@ -153,10 +129,11 @@
             gap: 10px;
             width: 100%;
             font-weight: bold;
-            margin-top: 20px;
+            transition: transform 0.2s;
+            margin-top: 1rem;
         }
 
-        /* --- HERO & CONTENT STYLES --- */
+        /* Hero & Features */
         .hero { text-align: center; padding: 4rem 3rem; max-width: 1200px; margin: 0 auto; }
         .hero h1 { font-size: 2.5rem; margin-bottom: 0.75rem; }
         .hero p { color: #b0b0b0; margin-bottom: 1.5rem; }
@@ -198,10 +175,6 @@
             height: 300px;
         }
 
-        .premium-animation img { width: 260px; }
-
-        footer { background-color: #1a1a1a; padding: 3rem 3rem 1rem; border-top: 1px solid #2a2a2a; }
-
         /* Responsive */
         @media (max-width: 768px) {
             .nav-links { display: none; }
@@ -218,19 +191,17 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="downloads.html">Downloads</a></li>
             <li><a href="#donate">Donate</a></li>
+            <li><a href="#feedback">Feedback</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="nav-icons">
             <a href="#search"><i class="fas fa-search"></i></a>
-            
-            <div class="account-container" style="position: relative;">
+            <div class="account-container" style="position: relative; display: inline-block;">
                 <a href="javascript:void(0)" onclick="toggleDropdown()">
                     <i class="fas fa-user"></i>
                 </a>
-                <div id="user-dropdown" class="dropdown-menu">
-                    </div>
+                <div id="user-dropdown" class="dropdown-menu"></div>
             </div>
-
             <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
         </div>
     </nav>
@@ -243,10 +214,10 @@
         </section>
 
         <section class="feature-section">
-            <div class="feature-image"><img src="images/app-screenshot.png" alt="App"></div>
+            <div class="feature-image"><img src="images/app-screenshot.png" alt="Screenshot"></div>
             <div class="feature-content">
                 <h2>What is Make MP3s?</h2>
-                <p>Simple music conversion tool for high-quality MP3 files. Automatically adds cover art and metadata.</p>
+                <p>Simple music conversion software designed to convert songs into high quality MP3 files from a wide range of streaming platforms.</p>
             </div>
         </section>
     </div>
@@ -255,25 +226,21 @@
         <div class="premium-animation"><img src="images/prem-spin.gif" alt="Premium"></div>
         <div class="premium-content">
             <h2>Make MP3s Premium Edition</h2>
-            <p>Unlimited Downloads, automatic volume leveling, and search engine access.</p>
+            <p>Unlimited Downloads, volume leveling, and more.</p>
             <a href="#premium" class="btn btn-gold">Get Premium Edition</a>
         </div>
     </section>
 
     <div id="auth-modal" class="modal-overlay">
         <div class="modal-box">
-            <span style="position:absolute; top:10px; right:20px; cursor:pointer; font-size:24px;" onclick="closeAuthModal()">&times;</span>
-            <h2 style="margin-bottom: 10px;">Welcome Back</h2>
-            <p style="color: #b0b0b0;">Sign in to sync your premium features.</p>
+            <span style="position:absolute; top:15px; right:20px; cursor:pointer; font-size:28px;" onclick="closeAuthModal()">&times;</span>
+            <h2>Welcome Back</h2>
+            <p style="color: #b0b0b0; margin-bottom: 20px;">Sign in to access your Make MP3s account.</p>
             <button onclick="handleGoogleLogin()" class="google-btn">
                 <i class="fab fa-google"></i> Continue with Google
             </button>
         </div>
     </div>
-
-    <footer>
-        <p>© 2025 Make MP3s | All Rights Reserved</p>
-    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -297,7 +264,15 @@
         const dropdown = document.getElementById("user-dropdown");
         const authModal = document.getElementById("auth-modal");
 
-        window.toggleDropdown = () => dropdown.classList.toggle("show");
+        // --- FIXED: One-Click Login Logic ---
+        window.toggleDropdown = () => {
+            if (auth.currentUser) {
+                dropdown.classList.toggle("show");
+            } else {
+                window.openAuthModal();
+            }
+        };
+
         window.openAuthModal = () => { authModal.style.display = "flex"; dropdown.classList.remove("show"); };
         window.closeAuthModal = () => authModal.style.display = "none";
 
@@ -307,7 +282,6 @@
                 const user = result.user;
                 const userRef = doc(db, "users", user.uid);
                 const userSnap = await getDoc(userRef);
-
                 if (!userSnap.exists()) {
                     await setDoc(userRef, { email: user.email, subscription: "free", createdAt: new Date() });
                 }
@@ -322,21 +296,22 @@
                 const userRef = doc(db, "users", user.uid);
                 const userSnap = await getDoc(userRef);
                 const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
-                const sub = userData.subscription || 'free';
+                const subType = userData.subscription || 'free';
                 
+                // FIXED: Added Gold "ACCOUNT" Label
                 dropdown.innerHTML = `
                     <div style="padding: 15px; border-bottom: 1px solid #444;">
                         <div style="color: #D4AF37; font-weight: bold; font-size: 0.8rem; margin-bottom: 5px;">ACCOUNT</div>
-                        <div style="font-weight: bold; overflow: hidden; text-overflow: ellipsis;">${user.email}</div>
+                        <div style="color: #fff; font-weight: bold;">${user.email}</div>
                         <div style="font-size: 0.85rem; color: #b0b0b0; margin-top: 5px;">
-                            Subscription: <span style="color: ${sub === 'premium' ? '#D4AF37' : '#fff'}; text-transform: capitalize;">${sub}</span>
+                            Plan: <span style="color: ${subType === 'premium' ? '#D4AF37' : '#fff'}; text-transform: uppercase; font-weight: bold;">${subType}</span>
                         </div>
                     </div>
                     <a href="#settings" class="dropdown-item">Account Settings</a>
                     <a href="javascript:void(0)" onclick="handleLogout()" class="dropdown-item" style="color: #ff4444;">Log Out</a>
                 `;
             } else {
-                dropdown.innerHTML = `<a href="javascript:void(0)" onclick="openAuthModal()" class="dropdown-item">Sign up / Log in</a>`;
+                dropdown.innerHTML = ""; // Clear menu when logged out
             }
         });
 
