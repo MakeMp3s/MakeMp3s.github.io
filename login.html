@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - Make MP3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+        }
+
+        h1 {
+            color: #333;
+            margin: 0 0 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 1rem;
+        }
+
+        .google-btn {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .google-btn:hover {
+            background: #357ae8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4);
+        }
+
+        .google-btn:active {
+            transform: translateY(0);
+        }
+
+        #status {
+            margin-top: 1.5rem;
+            color: #666;
+            font-size: 0.95rem;
+            min-height: 24px;
+        }
+
+        .loading {
+            color: #4285f4;
+            font-weight: 500;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-weight: 500;
+        }
+
+        .features {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            text-align: left;
+        }
+
+        .features h3 {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.75rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .feature-item::before {
+            content: '✓';
+            color: #4285f4;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images/logo.png" alt="Make MP3s Logo" class="logo">
+        <h1>Sign In to Make MP3s</h1>
+        <p class="subtitle">Unlock premium features with your Google account</p>
+        
+        <button onclick="handleGoogleLogin()" class="google-btn">
+            <svg width="18" height="18" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none" fill-rule="evenodd">
+                    <path d="M17.6 9.2l-.1-1.8H9v3.4h4.8C13.6 12 13 13 12 13.6v2.2h3a8.8 8.8 0 0 0 2.6-6.6z" fill="#4285F4"/>
+                    <path d="M9 18c2.4 0 4.5-.8 6-2.2l-3-2.2a5.4 5.4 0 0 1-8-2.9H1V13a9 9 0 0 0 8 5z" fill="#34A853"/>
+                    <path d="M4 10.7a5.4 5.4 0 0 1 0-3.4V5H1a9 9 0 0 0 0 8l3-2.3z" fill="#FBBC05"/>
+                    <path d="M9 3.6c1.3 0 2.5.4 3.4 1.3L15 2.3A9 9 0 0 0 1 5l3 2.4a5.4 5.4 0 0 1 5-3.7z" fill="#EA4335"/>
+                </g>
+            </svg>
+            Continue with Google
+        </button>
+        
+        <div id="status"></div>
+
+        <div class="features">
+            <h3>Premium Features</h3>
+            <div class="feature-item">Unlimited downloads</div>
+            <div class="feature-item">Automatic volume leveling</div>
+            <div class="feature-item">Playlist sync</div>
+            <div class="feature-item">Square cover art cropping</div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+            authDomain: "make-mp3s.firebaseapp.com",
+            projectId: "make-mp3s",
+            storageBucket: "make-mp3s.firebasestorage.app",
+            messagingSenderId: "530983812032",
+            appId: "1:530983812032:web:1d059a67673771929b2625"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        const status = document.getElementById('status');
+
+        window.handleGoogleLogin = async () => {
+            status.textContent = 'Opening Google Sign In...';
+            status.className = 'loading';
+            
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                status.textContent = 'Signed in! Getting token...';
+                
+                // Create/update user in Firestore
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        subscription: "premium", // For now, all logged-in = premium
+                        createdAt: new Date()
+                    });
+                }
+                
+                // Get ID token
+                const idToken = await user.getIdToken();
+                
+                // Check for callback parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const callbackUrl = urlParams.get('callback');
+                
+                if (callbackUrl) {
+                    status.textContent = 'Redirecting to Make MP3s...';
+                    
+                    // Redirect to desktop app
+                    window.location.href = `http://${callbackUrl}/auth?token=${idToken}`;
+                } else {
+                    // No callback - redirect to main site
+                    status.textContent = '✅ Signed in successfully!';
+                    status.className = 'loading';
+                    
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                }
+                
+            } catch (error) {
+                status.textContent = `Error: ${error.message}`;
+                status.className = 'error';
+                console.error('Login error:', error);
+            }
+        };
+    </script>
+</body>
+</html>
