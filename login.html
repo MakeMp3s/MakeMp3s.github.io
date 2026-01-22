@@ -6,7 +6,7 @@
     <title>Sign In - Make MP3s</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Loading the exact font defined in your index file */
+        /* Theme from index v4.html: Local Helvetica Neue Bold font */
         @font-face {
             font-family: 'Helvetica Neue Bold';
             src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
@@ -21,8 +21,7 @@
         }
 
         body {
-            /* Using Segoe UI for slimmer texts as requested */
-            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            /* Theme from index v4.html: Dark background with signature image */
             background-color: #1a1a1a;
             background-image: url('images/web-bg.png');
             background-size: cover;
@@ -30,6 +29,8 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #ffffff;
+            /* Slim text font as requested: Segoe UI */
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -39,6 +40,7 @@
         }
 
         .container {
+            /* Theme from index v4.html: Dark container with border */
             background-color: #1a1a1a;
             padding: 3rem;
             border-radius: 15px;
@@ -50,14 +52,14 @@
         }
 
         .logo {
-            width: 60px;
-            height: 60px;
+            width: 65px;
+            height: 65px;
             margin: 0 auto 1.5rem;
         }
 
-        /* Set "Welcome Back" to Helvetica Neue Bold */
         h1 {
-            font-family: 'Helvetica Neue Bold', Helvetica, Arial, sans-serif;
+            /* Consistent font: Helvetica Neue Bold */
+            font-family: 'Helvetica Neue Bold', sans-serif;
             color: #ffffff;
             margin: 0 0 0.5rem;
             font-size: 2rem;
@@ -65,13 +67,13 @@
         }
 
         .subtitle {
-            font-family: 'Segoe UI', sans-serif;
             color: #b0b0b0;
             margin-bottom: 2rem;
             font-size: 1rem;
         }
 
         .google-btn {
+            /* Theme from index v4.html: High-contrast white button */
             background-color: #ffffff;
             color: #1a1a1a;
             border: none;
@@ -84,7 +86,6 @@
             justify-content: center;
             gap: 12px;
             width: 100%;
-            /* Buttons use bold for impact */
             font-family: 'Helvetica Neue Bold', sans-serif;
             transition: all 0.3s ease;
         }
@@ -92,7 +93,18 @@
         .google-btn:hover {
             transform: translateY(-2px);
             background-color: #f0f0f0;
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
         }
+
+        #status {
+            margin-top: 1.5rem;
+            color: #b0b0b0;
+            font-size: 0.95rem;
+            min-height: 24px;
+        }
+
+        .loading { color: #007AFF; font-weight: 500; }
+        .error { color: #ff4444; font-weight: 500; }
 
         .features {
             margin-top: 2rem;
@@ -104,7 +116,7 @@
         .features h3 {
             font-family: 'Helvetica Neue Bold', sans-serif;
             font-size: 0.8rem;
-            color: #D4AF37;
+            color: #D4AF37; /* Gold accent from main site premium section */
             margin-bottom: 1rem;
             text-align: center;
             text-transform: uppercase;
@@ -112,7 +124,6 @@
         }
 
         .feature-item {
-            font-family: 'Segoe UI', sans-serif;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -122,17 +133,17 @@
         }
 
         .feature-item i {
-            color: #007AFF;
+            color: #007AFF; /* Blue accents from main site */
         }
 
         .back-link {
-            font-family: 'Segoe UI', sans-serif;
             margin-top: 1.5rem;
             display: block;
             color: #808080;
             text-decoration: none;
             font-size: 0.85rem;
         }
+        .back-link:hover { color: #ffffff; }
     </style>
 </head>
 <body>
@@ -157,12 +168,78 @@
             <h3>Premium Benefits</h3>
             <div class="feature-item"><i class="fas fa-check"></i> Unlimited daily downloads</div>
             <div class="feature-item"><i class="fas fa-check"></i> Automatic volume leveling</div>
-            <div class="feature-item"><i class="fas fa-check"></i> Sync Playlists</div>
+            <div class="feature-item"><i class="fas fa-check"></i> Playlist sync</div>
             <div class="feature-item"><i class="fas fa-check"></i> Square cover art cropping</div>
         </div>
 
         <a href="index.html" class="back-link">Return to Home</a>
     </div>
 
-    </body>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        /* Logic from login v2.html: Standard Firebase Config */
+        const firebaseConfig = {
+            apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+            authDomain: "make-mp3s.firebaseapp.com",
+            projectId: "make-mp3s",
+            storageBucket: "make-mp3s.firebasestorage.app",
+            messagingSenderId: "530983812032",
+            appId: "1:530983812032:web:1d059a67673771929b2625"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const provider = new GoogleAuthProvider();
+
+        const status = document.getElementById('status');
+
+        window.handleGoogleLogin = async () => {
+            status.textContent = 'Opening Google Sign In...';
+            status.className = 'loading';
+            
+            try {
+                const result = await signInWithPopup(auth, provider);
+                const user = result.user;
+                
+                status.textContent = 'Signed in! Authenticating...';
+                
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                
+                /* Logic from login v2.html: Setting default status to "premium" */
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        email: user.email,
+                        subscription: "premium", 
+                        createdAt: new Date()
+                    });
+                }
+                
+                const idToken = await user.getIdToken();
+                const urlParams = new URLSearchParams(window.location.search);
+                const callbackUrl = urlParams.get('callback');
+                
+                if (callbackUrl) {
+                    status.textContent = 'Redirecting to desktop app...';
+                    window.location.href = `http://${callbackUrl}/auth?token=${idToken}`;
+                } else {
+                    status.innerHTML = '<span style="color: #34A853">✅ Signed in successfully!</span>';
+                    /* Logic from login v2.html: Redirect to root */
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                }
+                
+            } catch (error) {
+                status.textContent = `Error: ${error.message}`;
+                status.className = 'error';
+                console.error('Login error:', error);
+            }
+        };
+    </script>
+</body>
 </html>
