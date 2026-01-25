@@ -207,32 +207,55 @@
                 
                 status.textContent = 'Signed in! Authenticating...';
                 
-                const userRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(userRef);
-                
-                /* Logic from login v2.html: Setting default status to "premium" */
-                if (!userSnap.exists()) {
-                    await setDoc(userRef, {
-                        email: user.email,
-                        subscription: "premium", 
-                        createdAt: new Date()
-                    });
-                }
-                
-                const idToken = await user.getIdToken();
-                const urlParams = new URLSearchParams(window.location.search);
-                const callbackUrl = urlParams.get('callback');
-                
-                if (callbackUrl) {
-                    status.textContent = 'Redirecting to desktop app...';
-                    window.location.href = `http://${callbackUrl}/auth?token=${idToken}`;
-                } else {
-                    status.innerHTML = '<span style="color: #34A853">✅ Signed in successfully!</span>';
-                    /* Logic from login v2.html: Redirect to root */
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 1500);
-                }
+				const userEmail = user.email;
+
+				// Check Firestore using EMAIL as document ID (not UID)
+				const userRef = doc(db, "users", userEmail);
+				const userSnap = await getDoc(userRef);
+
+				// Create user document if doesn't exist (default to free)
+				if (!userSnap.exists()) {
+					await setDoc(userRef, {
+						email: userEmail,
+						subscription: "free",  // Default to free (webhook will upgrade to premium)
+						createdAt: new Date()
+					});
+				}
+
+				// Get user data
+				const userData = userSnap.exists() ? userSnap.data() : { subscription: "free" };
+				const hasPremium = userData.subscription === "premium";
+
+				const idToken = await user.getIdToken();
+				const urlParams = new URLSearchParams(window.location.search);
+				const callbackUrl = urlParams.get('callback');
+
+				// DESKTOP APP CALLBACK (from app login flow)
+				if (callbackUrl) {
+					status.textContent = 'Checking subscription status...';
+					
+					if (hasPremium) {
+						// Premium user - redirect to welcome page first
+						status.textContent = 'Premium account detected! Redirecting...';
+						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+					} else {
+						// Free user - redirect to checkout page
+						status.textContent = 'Redirecting to premium upgrade...';
+						window.location.href = `premium-checkout.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+					}
+				} 
+				// WEB LOGIN (no callback parameter)
+				else {
+					if (hasPremium) {
+						status.innerHTML = '<span style="color: #34A853">✅ Premium account verified!</span>';
+					} else {
+						status.innerHTML = '<span style="color: #34A853">✅ Signed in successfully!</span>';
+					}
+					
+					setTimeout(() => {
+						window.location.href = '/';
+					}, 1500);
+				}
                 
             } catch (error) {
                 status.textContent = `Error: ${error.message}`;
