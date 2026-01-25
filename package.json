@@ -1,0 +1,15 @@
+{
+  "name": "makemp3s-webhook",
+  "version": "1.0.0",
+  "description": "Lemon Squeezy webhook handler for Make MP3s",
+  "main": "api/webhook.js",
+  "scripts": {
+    "start": "node api/webhook.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
