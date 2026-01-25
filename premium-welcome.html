@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Back - Make MP3s Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Matching your login.html theme */
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #1a1a1a;
+            background-image: url('images/web-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            border: 1px solid #444;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 600px;
+            width: 100%;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1s ease infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #b0b0b0;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .premium-badge {
+            background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%);
+            color: #1a1a1a;
+            padding: 12px 30px;
+            border-radius: 25px;
+            display: inline-block;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 16px;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+        }
+        
+        .user-info {
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid #444;
+        }
+        
+        .user-email {
+            font-size: 16px;
+            color: #007AFF;
+            font-weight: bold;
+        }
+        
+        .features-unlocked {
+            text-align: left;
+            margin: 30px auto;
+            max-width: 400px;
+        }
+        
+        .feature {
+            padding: 12px 0;
+            color: #ffffff;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature i {
+            color: #34A853;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .cta-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            background: #0066CC;
+        }
+        
+        .footer-note {
+            margin-top: 30px;
+            color: #808080;
+            font-size: 13px;
+        }
+        
+        .auto-redirect {
+            margin-top: 20px;
+            color: #007AFF;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">⭐</div>
+        <h1>Welcome Back!</h1>
+        <p class="subtitle">Your premium account is active</p>
+        
+        <div class="premium-badge">
+            ✨ PREMIUM MEMBER ✨
+        </div>
+        
+        <div class="user-info">
+            <div class="user-email" id="userEmail">Loading...</div>
+        </div>
+        
+        <div class="features-unlocked">
+            <div class="feature"><i class="fas fa-check"></i> Unlimited downloads</div>
+            <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
+            <div class="feature"><i class="fas fa-check"></i> Advanced volume leveling</div>
+            <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+            <div class="feature"><i class="fas fa-check"></i> Priority support</div>
+        </div>
+        
+        <button class="cta-button" id="continueButton">
+            Continue to Make MP3s
+        </button>
+        
+        <div class="auto-redirect" id="autoRedirect">
+            Auto-redirecting in <span id="countdown">5</span> seconds...
+        </div>
+        
+        <p class="footer-note">
+            You may close this window and return to the app
+        </p>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userEmail = urlParams.get('email');
+        const token = urlParams.get('token');
+        const callback = urlParams.get('callback');
+        
+        // Display user email
+        if (userEmail) {
+            document.getElementById('userEmail').textContent = userEmail;
+        }
+        
+        // Function to continue to app
+        function continueToApp() {
+            if (token && callback) {
+                window.location.href = `http://${callback}/auth?token=${token}`;
+            } else {
+                alert('Session expired. Please sign in again from the app.');
+                window.close();
+            }
+        }
+        
+        // Manual continue button
+        document.getElementById('continueButton').addEventListener('click', continueToApp);
+        
+        // Auto-redirect countdown
+        let countdown = 5;
+        const countdownEl = document.getElementById('countdown');
+        
+        const countdownInterval = setInterval(() => {
+            countdown--;
+            countdownEl.textContent = countdown;
+            
+            if (countdown <= 0) {
+                clearInterval(countdownInterval);
+                continueToApp();
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Premium - Make MP3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Matching your login.html theme */
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background-color: #1a1a1a;
+            background-image: url('images/web-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: #1a1a1a;
+            border-radius: 15px;
+            border: 1px solid #444;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            max-width: 1000px;
+            width: 100%;
+            padding: 50px;
+            text-align: center;
+        }
+        
+        .logo {
+            width: 65px;
+            height: 65px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        h1 {
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #b0b0b0;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .user-email {
+            background: #2a2a2a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 40px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            border: 1px solid #444;
+        }
+        
+        .pricing-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .pricing-card {
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 15px;
+            padding: 40px 30px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            border-color: #007AFF;
+        }
+        
+        .pricing-card.popular {
+            border-color: #D4AF37;
+            background: linear-gradient(135deg, #2a2415 0%, #2a2a2a 100%);
+            position: relative;
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: #D4AF37;
+            color: #1a1a1a;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+        }
+        
+        .plan-name {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 15px;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+        }
+        
+        .price {
+            font-size: 48px;
+            font-weight: bold;
+            color: #007AFF;
+            margin-bottom: 10px;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+        }
+        
+        .pricing-card.popular .price {
+            color: #D4AF37;
+        }
+        
+        .price-period {
+            color: #b0b0b0;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        
+        .features {
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .feature {
+            padding: 10px 0;
+            color: #ffffff;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .feature i {
+            color: #34A853;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        
+        .cta-button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+        
+        .cta-button:hover {
+            transform: scale(1.05);
+            background: #0066CC;
+        }
+        
+        .pricing-card.popular .cta-button {
+            background: #D4AF37;
+            color: #1a1a1a;
+        }
+        
+        .pricing-card.popular .cta-button:hover {
+            background: #B8941F;
+        }
+        
+        .later-link {
+            margin-top: 30px;
+            color: #808080;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .later-link:hover {
+            color: #ffffff;
+            text-decoration: underline;
+        }
+        
+        .footer-note {
+            margin-top: 40px;
+            color: #808080;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="images/logo.png" alt="Make MP3s Logo" class="logo">
+        <h1>Upgrade to Premium</h1>
+        <p class="subtitle">Unlock unlimited downloads and advanced features</p>
+        
+        <div class="user-email" id="userEmail">
+            Loading...
+        </div>
+        
+        <div class="pricing-container">
+            <!-- Lifetime Plan -->
+            <div class="pricing-card popular">
+                <div class="popular-badge">BEST VALUE</div>
+                <div class="plan-name">Lifetime Access</div>
+                <div class="price">$24.99</div>
+                <div class="price-period">One-time payment</div>
+                <div class="features">
+                    <div class="feature"><i class="fas fa-check"></i> Unlimited downloads forever</div>
+                    <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
+                    <div class="feature"><i class="fas fa-check"></i> Advanced volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> Priority support</div>
+                    <div class="feature"><i class="fas fa-check"></i> All future updates included</div>
+                </div>
+                <button class="cta-button" onclick="selectPlan('lifetime')">
+                    Get Lifetime Access
+                </button>
+            </div>
+            
+            <!-- Yearly Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Yearly Subscription</div>
+                <div class="price">$12.99</div>
+                <div class="price-period">per year</div>
+                <div class="features">
+                    <div class="feature"><i class="fas fa-check"></i> Unlimited downloads</div>
+                    <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
+                    <div class="feature"><i class="fas fa-check"></i> Advanced volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> Priority support</div>
+                    <div class="feature"><i class="fas fa-check"></i> Cancel anytime</div>
+                </div>
+                <button class="cta-button" onclick="selectPlan('yearly')">
+                    Subscribe Yearly
+                </button>
+            </div>
+        </div>
+        
+        <a href="#" class="later-link" id="continueLink">Continue to app without premium</a>
+        
+        <p class="footer-note">
+            Secure payment powered by Lemon Squeezy 🍋<br>
+            30-day money-back guarantee
+        </p>
+    </div>
+
+    <script>
+        // Get URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const userEmail = urlParams.get('email');
+        const token = urlParams.get('token');
+        const callback = urlParams.get('callback');
+        
+        // Display user email
+        if (userEmail) {
+            document.getElementById('userEmail').textContent = `Signed in as: ${userEmail}`;
+        }
+        
+        // Checkout URLs from Lemon Squeezy
+        const checkoutUrls = {
+            lifetime: 'https://makemp3s.lemonsqueezy.com/checkout/buy/d554d40a-caab-42ba-b738-268abd7db110',
+            yearly: 'https://makemp3s.lemonsqueezy.com/checkout/buy/cb36a362-7763-43d3-bc88-9d216cbc21bd'
+        };
+        
+        // Handle plan selection
+        function selectPlan(plan) {
+            const checkoutUrl = checkoutUrls[plan];
+            
+            // Add email to checkout URL (Lemon Squeezy will pre-fill it)
+            const separator = checkoutUrl.includes('?') ? '&' : '?';
+            const finalUrl = `${checkoutUrl}${separator}checkout[email]=${encodeURIComponent(userEmail)}&checkout[custom][return_token]=${token}&checkout[custom][return_callback]=${encodeURIComponent(callback)}`;
+            
+            // Open checkout in new window
+            window.open(finalUrl, '_blank', 'width=800,height=900');
+            
+            // Show instruction message
+            alert('Complete your purchase in the new window.\n\nAfter payment, return here and click "Continue to app" to activate your premium features!');
+        }
+        
+        // Continue to app without premium
+        document.getElementById('continueLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (token && callback) {
+                window.location.href = `http://${callback}/auth?token=${token}`;
+            } else {
+                alert('Session expired. Please sign in again from the app.');
+                window.close();
+            }
+        });
+    </script>
+</body>
+</html>
