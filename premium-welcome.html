@@ -196,10 +196,11 @@
             document.getElementById('userEmail').textContent = userEmail;
         }
         
-        // Function to continue to app
+        // Function to continue to app (FIXED)
         function continueToApp() {
-            if (token && callback) {
-                window.location.href = `http://${callback}/auth?token=${token}`;
+            if (token && userEmail && callback) {
+                // FIXED: Properly format callback URL
+                window.location.href = `http://${callback}/callback?token=${token}&email=${encodeURIComponent(userEmail)}&subscription=premium`;
             } else {
                 alert('Session expired. Please sign in again from the app.');
                 window.close();
