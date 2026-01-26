@@ -306,12 +306,13 @@
             alert('Complete your purchase in the new window.\n\nAfter payment, return here and click "Continue to app" to activate your premium features!');
         }
         
-        // Continue to app without premium
+        // Continue to app without premium (FIXED)
         document.getElementById('continueLink').addEventListener('click', function(e) {
             e.preventDefault();
             
-            if (token && callback) {
-                window.location.href = `http://${callback}/auth?token=${token}`;
+            if (token && userEmail && callback) {
+                // FIXED: Properly format callback URL
+                window.location.href = `http://${callback}/callback?token=${token}&email=${encodeURIComponent(userEmail)}&subscription=free`;
             } else {
                 alert('Session expired. Please sign in again from the app.');
                 window.close();
