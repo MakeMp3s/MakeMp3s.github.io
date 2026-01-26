@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Premium - Make MP3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .bg-section {
+            background-image: url('images/web-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+        }
+
+        strong, b {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+            background-image: url('images/web-bg.png');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+            transform: translateY(-1px);
+        }
+
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-icons a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Success Container */
+        .success-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 200px);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .success-icon {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .checkmark {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 8px 24px rgba(212, 175, 55, 0.4);
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .checkmark i {
+            font-size: 4rem;
+            color: #1a1a1a;
+        }
+
+        .success-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .success-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #D4AF37 0%, #F4D03F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .success-content p {
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .features-list {
+            background-color: rgba(42, 42, 42, 0.6);
+            border: 1px solid #444;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: left;
+            animation: fadeInUp 0.6s ease-out 0.6s both;
+        }
+
+        .features-list h3 {
+            color: #D4AF37;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+        }
+
+        .feature-item i {
+            color: #D4AF37;
+            font-size: 1.2rem;
+            min-width: 24px;
+        }
+
+        .feature-item span {
+            color: #ffffff;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: #007AFF;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem;
+            animation: fadeInUp 0.6s ease-out 0.8s both;
+        }
+
+        .btn:hover {
+            background-color: #0051D5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-gold {
+            background-color: #D4AF37;
+            color: #1a1a1a;
+        }
+
+        .btn-gold:hover {
+            background-color: #F4D03F;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #b0b0b0;
+            border: 2px solid #b0b0b0;
+        }
+
+        .btn-secondary:hover {
+            background-color: transparent;
+            color: #ffffff;
+            border-color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            padding: 2rem 3rem 1rem;
+            margin-top: auto;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2a2a2a;
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: #808080;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .success-content h1 {
+                font-size: 2rem;
+            }
+
+            .success-content p {
+                font-size: 1rem;
+            }
+
+            .features-list {
+                padding: 1.5rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="#donate">Donate</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <a href="#search"><i class="fas fa-search"></i></a>
+            <a href="#account"><i class="fas fa-user"></i></a>
+            <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </nav>
+
+    <!-- Success Content -->
+    <div class="bg-section">
+        <div class="success-container">
+            <div class="checkmark">
+                <i class="fas fa-check"></i>
+            </div>
+
+            <div class="success-content">
+                <h1>Welcome to Premium!</h1>
+                <p>Your account has been successfully upgraded. You can now enjoy all premium features and unlimited downloads.</p>
+
+                <div class="features-list">
+                    <h3>Your Premium Benefits</h3>
+                    <div class="feature-item">
+                        <i class="fas fa-infinity"></i>
+                        <span>Unlimited conversions - no daily limits</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-volume-up"></i>
+                        <span>Automatic volume leveling for consistent audio</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-image"></i>
+                        <span>Square cover art optimization</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-search"></i>
+                        <span>Advanced search engine</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-star"></i>
+                        <span>Priority support and updates</span>
+                    </div>
+                </div>
+
+                <p style="margin-top: 2rem;">Ready to start converting? Download the premium edition and log in with your account.</p>
+
+                <div class="button-group">
+                    <a href="downloads.html" class="btn btn-gold">Download Premium Edition</a>
+                    <a href="index.html" class="btn btn-secondary">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2025 Make MP3s | Terms and Policies</p>
+            <div class="social-icons">
+                <a href="#facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
