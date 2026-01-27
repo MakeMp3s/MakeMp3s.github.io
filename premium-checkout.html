@@ -302,8 +302,14 @@
                 finalUrl = `${checkoutUrl}?checkout[email]=${encodeURIComponent(userEmail)}`;
             }
             
-            // Open checkout in new window
-            window.open(finalUrl, '_blank', 'width=800,height=900');
+            // Center the popup window
+            const width = 800;
+            const height = 900;
+            const left = (screen.width / 2) - (width / 2);
+            const top = (screen.height / 2) - (height / 2);
+            
+            // Open checkout in centered window
+            window.open(finalUrl, '_blank', `width=${width},height=${height},left=${left},top=${top}`);
             
             // Show instruction message
             alert('Complete your purchase in the new window.\n\nAfter payment, return here and click "Continue to app" to activate your premium features!');
