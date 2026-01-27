@@ -295,9 +295,12 @@
         function selectPlan(plan) {
             const checkoutUrl = checkoutUrls[plan];
             
-            // Add email to checkout URL (Lemon Squeezy will pre-fill it)
-            const separator = checkoutUrl.includes('?') ? '&' : '?';
-            const finalUrl = `${checkoutUrl}${separator}checkout[email]=${encodeURIComponent(userEmail)}&checkout[custom][return_token]=${token}&checkout[custom][return_callback]=${encodeURIComponent(callback)}`;
+            // Try with just email first - custom parameters might be causing issues
+            let finalUrl = checkoutUrl;
+            
+            if (userEmail) {
+                finalUrl = `${checkoutUrl}?checkout[email]=${encodeURIComponent(userEmail)}`;
+            }
             
             // Open checkout in new window
             window.open(finalUrl, '_blank', 'width=800,height=900');
