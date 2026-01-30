@@ -79,7 +79,6 @@
         .nav-links a {
             color: #b0b0b0;
             text-decoration: none;
-            transition: all 0.3s architecture;
             transition: all 0.3s ease;
         }
 
@@ -484,12 +483,6 @@
 				color: #fff;
 			}
 
-            /* Added Patch: Hide dropdown if empty */
-            .dropdown-menu:empty {
-                display: none !important;
-                border: none;
-            }
-
 			/* Modal Styles */
 			.modal-overlay {
 				display: none; /* Hidden by default */
@@ -559,7 +552,7 @@
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="#donate">Donate</a></li>
+            <li><a href="donate.html">Donate</a></li>
             <li><a href="https://makemp3s.github.io/feedback.html">Feedback & Contact</a></li>
         </ul>
         <div class="nav-icons">
@@ -791,11 +784,13 @@
 	});
 
     // --- UI Functions ---
-    // Patched toggleDropdown logic
 	window.toggleDropdown = () => {
-		if (auth.currentUser) {
+		// Check if user is logged in by checking both auth.currentUser and dropdown content
+		if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+			// User is logged in: Show the account menu
 			dropdown.classList.toggle("show");
 		} else {
+			// User is logged out: Make sure dropdown is hidden, then open login modal
 			dropdown.classList.remove("show");
 			window.openAuthModal();
 		}
