@@ -784,7 +784,8 @@
 
     // --- UI Functions ---
 	window.toggleDropdown = () => {
-		if (auth.currentUser) {
+		// Check if user is logged in by checking both auth.currentUser and dropdown content
+		if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
 			// User is logged in: Show the account menu
 			dropdown.classList.toggle("show");
 		} else {
