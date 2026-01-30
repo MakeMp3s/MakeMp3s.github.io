@@ -779,6 +779,7 @@
 			`;
 		} else {
 			dropdown.innerHTML = "";
+			dropdown.classList.remove("show");
 		}
 	});
 
@@ -789,7 +790,8 @@
 			// User is logged in: Show the account menu
 			dropdown.classList.toggle("show");
 		} else {
-			// User is logged out: Skip the menu and open login immediately
+			// User is logged out: Make sure dropdown is hidden, then open login modal
+			dropdown.classList.remove("show");
 			window.openAuthModal();
 		}
 	};
