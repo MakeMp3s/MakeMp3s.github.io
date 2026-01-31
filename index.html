@@ -41,7 +41,7 @@
             font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
         }
 
-        /* Intro Screen - Wallpaper stays fixed on body background */
+        /* Intro Screen - Transparent background so wallpaper stays still */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -54,6 +54,7 @@
             justify-content: center;
             z-index: 9999;
             pointer-events: none;
+            /* GIF Flies up after 2s */
             animation: flyUp 1.2s cubic-bezier(0.85, 0, 0.15, 1) 2s forwards;
         }
 
@@ -70,16 +71,17 @@
 
         @keyframes flyUp {
             from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-120%); opacity: 0; visibility: hidden; }
+            to { transform: translateY(-130%); opacity: 0; visibility: hidden; }
         }
 
-        /* Main Content revealed via fade */
+        /* Waitlist Content Area */
         .waitlist-container {
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
             text-align: center;
             opacity: 0;
-            animation: fadeInContent 1s ease-out 2.5s forwards;
+            /* Fades in as GIF leaves */
+            animation: fadeInContent 1s ease-out 2.6s forwards;
         }
 
         @keyframes fadeInContent {
@@ -87,17 +89,17 @@
         }
 
         .waitlist-container h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 0.5rem;
             font-weight: 300;
             line-height: 1.2;
-            white-space: nowrap; /* Forces text to stay on one line */
+            white-space: nowrap; /* Desktop single line */
         }
 
         .subheading {
             font-size: 1.5rem;
             color: #b0b0b0;
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
             font-weight: 300;
         }
 
@@ -168,16 +170,18 @@
 
         .error-message.show { display: block; }
 
-        /* Mobile Specific Adjustments */
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .intro-screen .intro-gif { 
-                width: 220px; /* Made the GIF smaller for mobile */
+                /* Scaled to fit, then backed off to 75% for that "in-between" feel */
+                width: 75%; 
             }
             
             .waitlist-container h1 { 
-                /* Dynamically scales text to fit width on one line */
-                font-size: clamp(1.1rem, 7.5vw, 2.5rem); 
+                /* Ensures text stays on 1 line and scales down with screen width */
+                font-size: clamp(1.2rem, 7.8vw, 2.8rem); 
                 white-space: nowrap;
+                letter-spacing: -0.5px;
             }
 
             .subheading {
@@ -195,6 +199,7 @@
     </style>
 </head>
 <body>
+
     <div class="intro-screen">
         <img src="images/prem-spin.gif" alt="Loading" class="intro-gif">
     </div>
@@ -225,7 +230,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
             authDomain: "make-mp3s.firebaseapp.com",
