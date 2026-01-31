@@ -34,14 +34,14 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            overflow-x: hidden; /* Prevents horizontal scroll from the nowrap text */
+            overflow-x: hidden;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
         }
 
-        /* Intro Screen - Wallpaper stays fixed on body */
+        /* Intro Screen - Wallpaper stays fixed on body background */
         .intro-screen {
             position: fixed;
             top: 0;
@@ -59,7 +59,6 @@
 
         .intro-screen .intro-gif {
             width: 400px;
-            max-width: 90%; /* Fits width on smaller screens */
             height: auto;
             animation: pulse 2s ease-in-out;
         }
@@ -74,9 +73,9 @@
             to { transform: translateY(-120%); opacity: 0; visibility: hidden; }
         }
 
-        /* Main Content Container */
+        /* Main Content revealed via fade */
         .waitlist-container {
-            max-width: 800px; /* Increased to accommodate single-line text */
+            max-width: 800px;
             width: 100%;
             text-align: center;
             opacity: 0;
@@ -92,7 +91,7 @@
             margin-bottom: 0.5rem;
             font-weight: 300;
             line-height: 1.2;
-            white-space: nowrap; /* Forces one line */
+            white-space: nowrap; /* Forces text to stay on one line */
         }
 
         .subheading {
@@ -172,12 +171,12 @@
         /* Mobile Specific Adjustments */
         @media (max-width: 768px) {
             .intro-screen .intro-gif { 
-                width: 90%; /* Fits the width of mobile screens */
+                width: 220px; /* Made the GIF smaller for mobile */
             }
             
             .waitlist-container h1 { 
-                /* Dynamically scales text to fit the viewport width on one line */
-                font-size: clamp(1.2rem, 7.5vw, 2.5rem); 
+                /* Dynamically scales text to fit width on one line */
+                font-size: clamp(1.1rem, 7.5vw, 2.5rem); 
                 white-space: nowrap;
             }
 
@@ -226,6 +225,7 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
             authDomain: "make-mp3s.firebaseapp.com",
@@ -248,6 +248,7 @@
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = emailInput.value.trim().toLowerCase();
+            
             submitBtn.disabled = true;
             submitBtn.textContent = 'Joining...';
 
@@ -271,6 +272,7 @@
                 errorMessage.textContent = 'Oops! Something went wrong.';
                 errorMessage.classList.add('show');
                 submitBtn.disabled = false;
+                submitBtn.textContent = 'Join Waitlist';
             }
         });
     </script>
