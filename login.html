@@ -238,7 +238,11 @@
 					// The software will be notified immediately and auth.py will show the success page
 					const subscriptionStatus = hasPremium ? 'premium' : 'free';
 					status.textContent = hasPremium ? 'Premium account detected! Redirecting...' : 'Redirecting...';
-					window.location.href = `http://${callbackUrl}/callback?token=${idToken}&email=${encodeURIComponent(userEmail)}&subscription=${subscriptionStatus}`;
+					
+					// Small delay to ensure the local server is ready
+					setTimeout(() => {
+						window.location.href = `http://${callbackUrl}/callback?token=${idToken}&email=${encodeURIComponent(userEmail)}&subscription=${subscriptionStatus}`;
+					}, 500); // 500ms delay
 				}
 				// WEB LOGIN (no callback parameter)
 				else {
