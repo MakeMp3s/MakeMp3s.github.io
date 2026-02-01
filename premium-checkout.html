@@ -36,16 +36,35 @@
             padding: 20px;
         }
         
-        .container {
-            background-color: #1a1a1a;
-            border-radius: 15px;
-            border: 1px solid #444;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-            max-width: 1000px;
-            width: 100%;
-            padding: 25px;
-            text-align: center;
-        }
+		.container {
+			background-color: transparent; /* Removed background */
+			border-radius: 0;
+			border: none; /* Removed border */
+			box-shadow: none; /* Removed shadow */
+			max-width: 1000px;
+			width: 100%;
+			padding: 25px;
+			text-align: center;
+		}
+
+		/* Added text shadow to ensure legibility over the background image */
+		h1, .subtitle, .plan-name, .price-period, .footer-note, .later-link {
+			text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+		}
+
+		/* Keep the pricing cards solid so they remain readable */
+		.pricing-card {
+			background: rgba(42, 42, 42, 0.6); /* Added slight transparency for a modern look */
+			border: 2px solid #444;
+			border-radius: 15px;
+			padding: 25px 20px;
+			flex: 1;
+			min-width: 280px;
+			max-width: 380px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+			backdrop-filter: blur(10px); /* Optional: blurs the background behind the card */
+		}
         
         .logo {
             width: 45px;
@@ -67,7 +86,7 @@
         }
         
         .user-email {
-            background: #2a2a2a;
+            background: rgba(42, 42, 42, 0.6);
             padding: 10px 18px;
             border-radius: 8px;
             display: inline-block;
@@ -85,29 +104,35 @@
             flex-wrap: wrap;
         }
         
-        .pricing-card {
-            background: #2a2a2a;
-            border: 2px solid #444;
-            border-radius: 15px;
-            padding: 25px 20px;
-            flex: 1;
-            min-width: 280px;
-            max-width: 380px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
-            border-color: #007AFF;
-        }
-        
-        .pricing-card.popular {
-            border-color: #D4AF37;
-            background: linear-gradient(135deg, #2a2415 0%, #2a2a2a 100%);
-            position: relative;
-        }
+		/* Yearly / Standard Card */
+		.pricing-card {
+			background: rgba(42, 42, 42, 0.6);
+			/* 95% opacity on the standard grey border */
+			border: 2px solid rgba(68, 68, 68, 0.50); 
+			border-radius: 15px;
+			padding: 25px 20px;
+			flex: 1;
+			min-width: 280px;
+			max-width: 380px;
+			transition: all 0.3s ease;
+			cursor: pointer;
+			backdrop-filter: blur(10px);
+		}
+
+		.pricing-card:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+			/* 95% opacity on the Blue hover border */
+			border-color: rgba(0, 122, 255, 0.50); 
+		}
+
+		/* Lifetime / Popular Card */
+		.pricing-card.popular {
+			/* 95% opacity on the Gold border */
+			border-color: rgba(212, 175, 55, 0.95); 
+			background: linear-gradient(135deg, rgba(42, 36, 21, 0.6) 0%, rgba(42, 42, 42, 0.6) 100%);
+			position: relative;
+		}
         
         .popular-badge {
             position: absolute;
