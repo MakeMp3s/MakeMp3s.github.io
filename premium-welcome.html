@@ -367,7 +367,7 @@
             </button>
 
             <p class="close-msg">You can close this window and return to the app.</p>
-            <p class="auto-redirect">Auto-redirecting in <span id="countdown">5</span> seconds...</p>
+            <p class="auto-redirect">Auto-redirecting in <span id="countdown">3</span> seconds...</p>
         </div>
     </div>
 
@@ -389,6 +389,34 @@
         const userEmail = urlParams.get('email');
         const token = urlParams.get('token');
         const callback = urlParams.get('callback');
+        const type = urlParams.get('type'); // 'free' or null (premium)
+        
+        const isPremium = type !== 'free';
+        
+        // Update page content based on user type
+        if (!isPremium) {
+            // Update for free users
+            document.querySelector('h1').textContent = 'Welcome!';
+            document.querySelector('.success-content p').textContent = "You've been signed in to Make MP3s.";
+            
+            // Hide premium features list for free users
+            const featuresList = document.querySelector('.features-list');
+            if (featuresList) {
+                featuresList.style.display = 'none';
+            }
+            
+            // Change checkmark to green for free users
+            const checkmark = document.querySelector('.checkmark');
+            checkmark.style.background = 'linear-gradient(135deg, #00c776 0%, #00a863 100%)';
+            checkmark.style.boxShadow = '0 8px 24px rgba(0, 199, 118, 0.4)';
+            
+            // Change heading color for free users
+            const heading = document.querySelector('h1');
+            heading.style.background = 'none';
+            heading.style.webkitBackgroundClip = 'unset';
+            heading.style.webkitTextFillColor = 'unset';
+            heading.style.color = '#ffffff';
+        }
         
         // Display user email
         if (userEmail) {
@@ -398,8 +426,9 @@
         // Function to continue to app (STABLE OLD METHOD)
         function continueToApp() {
             if (token && userEmail && callback) {
-                // Properly format callback URL (same as old version)
-                window.location.href = `http://${callback}/callback?token=${token}&email=${encodeURIComponent(userEmail)}&subscription=premium`;
+                // Properly format callback URL (same as old working version)
+                const subscription = isPremium ? 'premium' : 'free';
+                window.location.href = `http://${callback}/callback?token=${token}&email=${encodeURIComponent(userEmail)}&subscription=${subscription}`;
             } else {
                 alert('Session expired. Please sign in again from the app.');
                 window.close();
@@ -409,8 +438,8 @@
         // Manual continue button
         document.getElementById('continueButton').addEventListener('click', continueToApp);
         
-        // Auto-redirect countdown (same as old version - 5 seconds)
-        let countdown = 5;
+        // Auto-redirect countdown (REDUCED to 3 seconds for faster login)
+        let countdown = 3;
         const countdownEl = document.getElementById('countdown');
         
         const countdownInterval = setInterval(() => {
