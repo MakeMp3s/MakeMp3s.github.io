@@ -234,15 +234,15 @@
 				if (callbackUrl) {
 					status.textContent = 'Checking subscription status...';
 					
-					// BOTH premium and free users redirect directly to callback
-					// The software will be notified immediately and auth.py will show the success page
-					const subscriptionStatus = hasPremium ? 'premium' : 'free';
-					status.textContent = hasPremium ? 'Premium account detected! Redirecting...' : 'Redirecting...';
-					
-					// Small delay to ensure the local server is ready
-					setTimeout(() => {
-						window.location.href = `http://${callbackUrl}/callback?token=${idToken}&email=${encodeURIComponent(userEmail)}&subscription=${subscriptionStatus}`;
-					}, 500); // 500ms delay
+					if (hasPremium) {
+						// Premium user - redirect to welcome page first (this was working!)
+						status.textContent = 'Premium account detected! Redirecting...';
+						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+					} else {
+						// Free user - also use welcome page flow for consistency
+						status.textContent = 'Redirecting...';
+						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}&type=free`;
+					}
 				}
 				// WEB LOGIN (no callback parameter)
 				else {
