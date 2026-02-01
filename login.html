@@ -235,13 +235,13 @@
 					status.textContent = 'Checking subscription status...';
 					
 					if (hasPremium) {
-						// Premium user - redirect to welcome page first (this was working!)
+						// Premium user - redirect to welcome page first
 						status.textContent = 'Premium account detected! Redirecting...';
 						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
 					} else {
-						// Free user - also use welcome page flow for consistency
-						status.textContent = 'Redirecting...';
-						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}&type=free`;
+						// Free user - redirect to checkout page
+						status.textContent = 'Redirecting to premium upgrade...';
+						window.location.href = `premium-checkout.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
 					}
 				}
 				// WEB LOGIN (no callback parameter)
