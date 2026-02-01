@@ -234,9 +234,15 @@
 				if (callbackUrl) {
 					status.textContent = 'Checking subscription status...';
 					
-					// UPDATED: Redirect directly to callback with subscription status
-					const subscriptionStatus = hasPremium ? 'premium' : 'free';
-					window.location.href = `http://${callbackUrl}/callback?token=${idToken}&email=${encodeURIComponent(userEmail)}&subscription=${subscriptionStatus}`;
+					if (hasPremium) {
+						// Premium user - redirect to welcome page first
+						status.textContent = 'Premium account detected! Redirecting...';
+						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+					} else {
+						// Free user - redirect to checkout page
+						status.textContent = 'Redirecting to premium upgrade...';
+						window.location.href = `premium-checkout.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+					}
 				}
 				// WEB LOGIN (no callback parameter)
 				else {
