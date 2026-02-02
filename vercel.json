@@ -14,12 +14,22 @@
       "use": "@vercel/static"
     },
     {
-      "src": "images/**", 
+      "src": "images/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "font/**",
       "use": "@vercel/static"
     }
   ],
-  "rewrites": [
-    { "source": "/api/webhook", "destination": "api/webhook.js" },
-    { "source": "/(.*)", "destination": "/index.html" }
+  "routes": [
+    {
+      "src": "/api/webhook",
+      "dest": "api/webhook.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
   ]
 }
