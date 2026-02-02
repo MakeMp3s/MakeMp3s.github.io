@@ -1,12 +1,26 @@
 {
   "version": 2,
-  "cleanUrls": true,
   "builds": [
-    { "src": "api/webhook.js", "use": "@vercel/node" },
-    { "src": "*.html", "use": "@vercel/static" },
-    { "src": "assets/**", "use": "@vercel/static" },
-    { "src": "images/**", "use": "@vercel/static" },
-    { "src": "font/**", "use": "@vercel/static" }
+    {
+      "src": "api/webhook.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "images/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "font/**", 
+      "use": "@vercel/static"
+    }
   ],
   "rewrites": [
     { "source": "/api/webhook", "destination": "api/webhook.js" },
