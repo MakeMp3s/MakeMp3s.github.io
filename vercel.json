@@ -1,35 +1,16 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "builds": [
-    {
-      "src": "api/webhook.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "index.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "assets/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "images/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "font/**",
-      "use": "@vercel/static"
-    }
+    { "src": "api/webhook.js", "use": "@vercel/node" },
+    { "src": "*.html", "use": "@vercel/static" },
+    { "src": "assets/**", "use": "@vercel/static" },
+    { "src": "images/**", "use": "@vercel/static" },
+    { "src": "font/**", "use": "@vercel/static" }
   ],
-  "routes": [
-    {
-      "src": "/api/webhook",
-      "dest": "api/webhook.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+  "rewrites": [
+    { "source": "/api/webhook", "destination": "api/webhook.js" },
+    { "source": "/downloads", "destination": "/downloads.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
