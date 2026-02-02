@@ -4,12 +4,18 @@
     {
       "src": "api/webhook.js",
       "use": "@vercel/node"
+    },
+    {
+      "src": "index.html",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "assets/**", 
+      "use": "@vercel/static"
     }
   ],
-  "routes": [
-    {
-      "src": "/api/webhook",
-      "dest": "api/webhook.js"
-    }
+  "rewrites": [
+    { "source": "/api/webhook", "destination": "api/webhook.js" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
