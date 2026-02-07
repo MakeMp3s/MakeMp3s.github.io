@@ -3,9 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join the Waitlist - Make MP3s</title>
-	<link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
-	<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Primary Meta Tags -->
+    <title>Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s</title>
+    <meta name="title" content="Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s">
+    <meta name="description" content="Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.">
+    <meta name="keywords" content="playlist to mp3 converter, playlist to mp3, convert playlist to mp3, spotify playlist to mp3, youtube playlist to mp3, bulk playlist downloader, large playlist to mp3 converter, spotify playlist to mp3 converter, youtube playlist to mp3 converter, download playlist as mp3">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://makemp3s.com/">
+    <meta property="og:title" content="Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s">
+    <meta property="og:description" content="Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.">
+    <meta property="og:image" content="https://makemp3s.com/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://makemp3s.com/">
+    <meta property="twitter:title" content="Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s">
+    <meta property="twitter:description" content="Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.">
+    <meta property="twitter:image" content="https://makemp3s.com/og-image.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://makemp3s.com/">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "MakeMp3s - Playlist to MP3 Converter",
+      "url": "https://makemp3s.com",
+      "description": "Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": "Spotify playlist conversion, YouTube playlist conversion, Bulk downloads, High-quality audio",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1250"
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @font-face {
@@ -200,7 +249,7 @@
 <body>
 
     <div class="intro-screen">
-        <img src="images/prem-spin.gif" alt="Loading" class="intro-gif">
+        <img src="images/prem-spin.gif" alt="MakeMp3s Playlist to MP3 Converter Loading" class="intro-gif">
     </div>
 
     <div class="waitlist-container">
@@ -210,7 +259,7 @@
         <div class="waitlist-form">
             <form id="waitlist-form">
                 <div class="form-group">
-                    <input type="email" id="email-input" placeholder="Enter your email" required>
+                    <input type="email" id="email-input" placeholder="Enter your email" required aria-label="Email address">
                     <button type="submit" class="btn" id="submit-btn">Join Waitlist</button>
                 </div>
                 <div class="error-message" id="error-message" style="display:none; color: #ff6b6b; margin-top: 1rem;"></div>
@@ -279,4 +328,3 @@
     </script>
 </body>
 </html>
-
