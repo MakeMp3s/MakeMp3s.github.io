@@ -159,24 +159,34 @@
 
         async function handleResult() {
             try {
-                const result = await getRedirectResult(auth);
+                const returningFromGoogle = sessionStorage.getItem('googleRedirectPending') === 'true';
 
-                if (!result) {
-                    // No redirect result — this is a fresh page load, kick off redirect immediately
+                if (!returningFromGoogle) {
+                    // Fresh page load — save callback and kick off Google redirect
                     startLogin();
                     return;
                 }
 
-                // Back from Google — process the sign-in
-                statusEl.textContent = 'Signed in! Checking your account…';
+                // We're back from Google — clear the flag and process
+                sessionStorage.removeItem('googleRedirectPending');
+                statusEl.textContent = 'Signed in! Checking your account...';
                 subtitleEl.textContent = 'Almost there…';
+
+                const result = await getRedirectResult(auth);
+
+                if (!result) {
+                    showError('Sign-in could not be completed. Please try again.');
+                    return;
+                }
 
                 const user      = result.user;
                 const userEmail = user.email;
 
+                // Check Firestore using EMAIL as document ID (not UID)
                 const userRef  = doc(db, "users", userEmail);
                 const userSnap = await getDoc(userRef);
 
+                // Create user document if doesn't exist (default to free)
                 if (!userSnap.exists()) {
                     await setDoc(userRef, {
                         email: userEmail,
@@ -185,29 +195,40 @@
                     });
                 }
 
-                const userData   = userSnap.exists() ? userSnap.data() : { subscription: "free" };
-                const hasPremium = userData.subscription === "premium";
-                const idToken    = await user.getIdToken();
+                const idToken = await user.getIdToken();
 
-                const urlParams   = new URLSearchParams(window.location.search);
-                const callbackUrl = urlParams.get('callback');
+                // Restore callback URL saved before the redirect (URL params are lost during redirect)
+                const callbackUrl = sessionStorage.getItem('loginCallback') || '';
+                sessionStorage.removeItem('loginCallback');
 
-                statusEl.textContent = 'Signed in! Redirecting…';
-                const params = new URLSearchParams({ email: userEmail, token: idToken });
-                if (callbackUrl) params.set('callback', callbackUrl);
-                window.location.href = `premium-welcome.html?${params.toString()}`;
+                // Always go to premium-welcome, passing along callback if present
+                statusEl.textContent = 'Redirecting...';
+                if (callbackUrl) {
+                    window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+                } else {
+                    window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}`;
+                }
 
             } catch (error) {
                 console.error('Login error:', error);
+                sessionStorage.removeItem('googleRedirectPending');
+                sessionStorage.removeItem('loginCallback');
                 showError(error.message);
             }
         }
 
         window.startLogin = () => {
-            errorEl.textContent  = '';
+            errorEl.textContent = '';
             retryBtn.style.display = 'none';
             statusEl.textContent = 'Redirecting to Google…';
             subtitleEl.textContent = 'Signing you in with Google…';
+
+            // Save callback URL and set flag BEFORE navigating away — URL params are lost during redirect
+            const urlParams = new URLSearchParams(window.location.search);
+            const callbackUrl = urlParams.get('callback');
+            if (callbackUrl) sessionStorage.setItem('loginCallback', callbackUrl);
+            sessionStorage.setItem('googleRedirectPending', 'true');
+
             signInWithRedirect(auth, provider);
         };
 
