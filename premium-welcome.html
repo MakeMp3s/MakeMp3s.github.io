@@ -367,7 +367,7 @@
             </button>
 
             <p class="close-msg">You can close this window and return to the app.</p>
-            <p class="auto-redirect">Auto-redirecting in <span id="countdown">3</span> seconds...</p>
+
         </div>
     </div>
 
@@ -438,19 +438,8 @@
         // Manual continue button
         document.getElementById('continueButton').addEventListener('click', continueToApp);
         
-        // Auto-redirect countdown (REDUCED to 3 seconds for faster login)
-        let countdown = 3;
-        const countdownEl = document.getElementById('countdown');
-        
-        const countdownInterval = setInterval(() => {
-            countdown--;
-            countdownEl.textContent = countdown;
-            
-            if (countdown <= 0) {
-                clearInterval(countdownInterval);
-                continueToApp();
-            }
-        }, 1000);
+        // Redirect instantly
+        continueToApp();
     </script>
 </body>
 </html>
