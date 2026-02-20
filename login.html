@@ -192,20 +192,10 @@
                 const urlParams   = new URLSearchParams(window.location.search);
                 const callbackUrl = urlParams.get('callback');
 
-                if (callbackUrl) {
-                    if (hasPremium) {
-                        statusEl.textContent = 'Premium account detected! Redirecting…';
-                        window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
-                    } else {
-                        statusEl.textContent = 'Redirecting to premium upgrade…';
-                        window.location.href = `premium-checkout.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
-                    }
-                } else {
-                    statusEl.innerHTML = hasPremium
-                        ? '<span style="color:#34A853">✅ Premium account verified!</span>'
-                        : '<span style="color:#34A853">✅ Signed in successfully!</span>';
-                    setTimeout(() => { window.location.href = '/'; }, 1200);
-                }
+                statusEl.textContent = 'Signed in! Redirecting…';
+                const params = new URLSearchParams({ email: userEmail, token: idToken });
+                if (callbackUrl) params.set('callback', callbackUrl);
+                window.location.href = `premium-welcome.html?${params.toString()}`;
 
             } catch (error) {
                 console.error('Login error:', error);
