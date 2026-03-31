@@ -6,7 +6,6 @@
     <title>Sign In - Make MP3s</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Theme from index v4.html: Local Helvetica Neue Bold font */
         @font-face {
             font-family: 'Helvetica Neue Bold';
             src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
@@ -14,14 +13,9 @@
             font-style: normal;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            /* Theme from index v4.html: Dark background with signature image */
             background-color: #1a1a1a;
             background-image: url('images/boombox.jpg');
             background-size: cover;
@@ -29,7 +23,6 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #ffffff;
-            /* Slim text font as requested: Segoe UI */
             font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
@@ -40,7 +33,6 @@
         }
 
         .container {
-            /* Theme from index v4.html: Dark container with border */
             background-color: rgba(42, 42, 42, 0.6);
             padding: 3rem;
             border-radius: 15px;
@@ -58,7 +50,6 @@
         }
 
         h1 {
-            /* Consistent font: Helvetica Neue Bold */
             font-family: 'Helvetica Neue Bold', sans-serif;
             color: #ffffff;
             margin: 0 0 0.5rem;
@@ -72,8 +63,8 @@
             font-size: 1rem;
         }
 
+        /* ── Google button ──────────────────────────────────── */
         .google-btn {
-            /* Theme from index v4.html: High-contrast white button */
             background-color: #ffffff;
             color: #1a1a1a;
             border: none;
@@ -89,40 +80,173 @@
             font-family: 'Helvetica Neue Bold', sans-serif;
             transition: all 0.3s ease;
         }
-
         .google-btn:hover {
             transform: translateY(-2px);
             background-color: #f0f0f0;
-            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(255,255,255,0.1);
         }
 
+        /* ── "or" divider ───────────────────────────────────── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem 0 0.5rem;
+            color: #555;
+            font-size: 0.8rem;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #3a3a3a;
+        }
+
+        /* ── Outer toggle link ──────────────────────────────── */
+        .manual-toggle {
+            background: none;
+            border: none;
+            color: #808080;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+            padding: 0;
+        }
+        .manual-toggle:hover { color: #cccccc; }
+
+        /* ── Email / password panel ─────────────────────────── */
+        .manual-form {
+            display: none;
+            margin-top: 1rem;
+            text-align: left;
+        }
+        .manual-form.visible { display: block; }
+
+        .form-group { margin-bottom: 0.75rem; }
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #a0a0a0;
+            margin-bottom: 0.3rem;
+        }
+        .form-group input {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus { border-color: #007AFF; }
+        .form-group input::placeholder { color: #555; }
+
+        /* Confirm password — only visible in sign-up mode */
+        #confirmGroup { display: none; }
+        #confirmGroup.visible { display: block; }
+
+        /* Forgot password — hidden in sign-up mode */
+        .forgot-link {
+            display: block;
+            text-align: right;
+            font-size: 0.78rem;
+            color: #808080;
+            text-decoration: none;
+            margin-top: -0.35rem;
+            margin-bottom: 0.75rem;
+            transition: color 0.2s;
+        }
+        .forgot-link:hover { color: #cccccc; }
+        .forgot-link.hidden { display: none; }
+
+        /* Primary action button */
+        .email-btn {
+            background-color: #007AFF;
+            color: #ffffff;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .email-btn:hover {
+            transform: translateY(-2px);
+            background-color: #0066dd;
+            box-shadow: 0 4px 12px rgba(0,122,255,0.3);
+        }
+        .email-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Inline error / success message */
+        .form-error {
+            font-size: 0.82rem;
+            margin-top: 0.5rem;
+            min-height: 18px;
+            text-align: center;
+            color: #ff4444;
+        }
+
+        /* ── Sign-in / sign-up switch ───────────────────────── */
+        .account-switch {
+            margin-top: 0.4rem;
+            text-align: center;
+            font-size: 0.82rem;
+            color: #808080;
+        }
+        .account-switch button {
+            background: none;
+            border: none;
+            color: #007AFF;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        .account-switch button:hover { color: #3399ff; }
+
+        /* ── Shared status bar ──────────────────────────────── */
         #status {
-            margin-top: 0.35rem;
-            margin-bottom: 0.35rem;
+            margin-top: 0.15rem;
+            margin-bottom: 0.15rem;
             color: #b0b0b0;
             font-size: 0.95rem;
-            min-height: 24px;
+            min-height: 16px;
+            text-align: center;
         }
-
         .loading { color: #007AFF; font-weight: 500; }
-        .error { color: #ff4444; font-weight: 500; }
+        .error   { color: #ff4444; font-weight: 500; }
 
+        /* ── Premium features list ──────────────────────────── */
         .features {
             margin-top: 0.5rem;
             padding-top: 0.5rem;
             text-align: left;
         }
-
         .features h3 {
             font-family: 'Helvetica Neue Bold', sans-serif;
             font-size: 0.8rem;
-            color: #D4AF37; /* Gold accent from main site premium section */
+            color: #D4AF37;
             margin-bottom: 1rem;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
-
         .feature-item {
             display: flex;
             align-items: center;
@@ -131,10 +255,7 @@
             color: #b0b0b0;
             font-size: 0.95rem;
         }
-
-        .feature-item i {
-            color: #007AFF; /* Blue accents from main site */
-        }
+        .feature-item i { color: #007AFF; }
 
         .back-link {
             margin-top: 1.5rem;
@@ -151,8 +272,9 @@
         <img src="images/logo.png" alt="Make MP3s Logo" class="logo">
         <h1>Welcome Back</h1>
         <p class="subtitle">Sign in to your Make MP3s account</p>
-        
-        <button onclick="handleGoogleLogin()" class="google-btn">
+
+        <!-- Google sign-in -->
+        <button onclick="handleGoogleLogin()" class="google-btn" id="googleBtn">
             <svg viewBox="0 0 24 24" width="20" height="20">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/>
                 <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
@@ -161,7 +283,49 @@
             </svg>
             Continue with Google
         </button>
-        
+
+        <!-- Divider + outer toggle -->
+        <div class="divider" id="orDivider">or</div>
+        <button class="manual-toggle" id="outerToggle" onclick="toggleManualForm()">
+            Sign in with email &amp; password
+        </button>
+
+        <!-- Email / password panel (hidden by default) -->
+        <div class="manual-form" id="manualForm">
+
+            <div class="form-group">
+                <label for="emailInput">Email</label>
+                <input type="email" id="emailInput" placeholder="you@example.com" autocomplete="email">
+            </div>
+
+            <div class="form-group">
+                <label for="passwordInput">Password</label>
+                <input type="password" id="passwordInput" placeholder="••••••••" autocomplete="current-password"
+                       onkeydown="if(event.key==='Enter') handleSubmit()">
+            </div>
+
+            <!-- Only shown in sign-up mode -->
+            <div class="form-group" id="confirmGroup">
+                <label for="confirmInput">Confirm Password</label>
+                <input type="password" id="confirmInput" placeholder="••••••••" autocomplete="new-password"
+                       onkeydown="if(event.key==='Enter') handleSubmit()">
+            </div>
+
+            <!-- Hidden in sign-up mode -->
+            <a href="#" class="forgot-link" id="forgotLink" onclick="handleForgotPassword(event)">Forgot password?</a>
+
+            <button class="email-btn" id="emailActionBtn" onclick="handleSubmit()">Sign In</button>
+
+            <div class="form-error" id="formError"></div>
+
+            <!-- Switch between modes -->
+            <div class="account-switch">
+                <span id="switchText">Don't have an account?</span>
+                <button id="switchBtn" onclick="switchMode()">Create one</button>
+            </div>
+
+        </div>
+
         <div id="status"></div>
 
         <div class="features">
@@ -177,10 +341,16 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import {
+            getAuth,
+            signInWithPopup,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            sendPasswordResetEmail,
+            GoogleAuthProvider
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        /* Logic from login v2.html: Standard Firebase Config */
         const firebaseConfig = {
             apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
             authDomain: "make-mp3s.firebaseapp.com",
@@ -190,79 +360,200 @@
             appId: "1:530983812032:web:1d059a67673771929b2625"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        const app      = initializeApp(firebaseConfig);
+        const auth     = getAuth(app);
+        const db       = getFirestore(app);
         const provider = new GoogleAuthProvider();
 
-        const status = document.getElementById('status');
+        // UI refs
+        const statusEl     = document.getElementById('status');
+        const formErrorEl  = document.getElementById('formError');
+        const confirmGroup = document.getElementById('confirmGroup');
+        const forgotLink   = document.getElementById('forgotLink');
+        const actionBtn    = document.getElementById('emailActionBtn');
+        const switchText   = document.getElementById('switchText');
+        const switchBtn    = document.getElementById('switchBtn');
+        const outerToggle  = document.getElementById('outerToggle');
 
+        let isSignUpMode = false;
+
+        // ── Shared post-auth routing ─────────────────────────────────────────
+        async function handleAuthResult(user) {
+            const userEmail = user.email;
+            const userRef   = doc(db, "users", userEmail);
+            const userSnap  = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                await setDoc(userRef, {
+                    email: userEmail,
+                    subscription: "free",
+                    createdAt: new Date()
+                });
+            }
+
+            const userData   = userSnap.exists() ? userSnap.data() : { subscription: "free" };
+            const hasPremium = userData.subscription === "premium";
+            const idToken    = await user.getIdToken();
+            const callbackUrl = new URLSearchParams(window.location.search).get('callback');
+
+            if (callbackUrl) {
+                statusEl.textContent = 'Checking subscription status...';
+                statusEl.className   = 'loading';
+                if (hasPremium) {
+                    statusEl.textContent = 'Premium account detected! Redirecting...';
+                    window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+                } else {
+                    statusEl.textContent = 'Redirecting to premium upgrade...';
+                    window.location.href = `premium-checkout.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
+                }
+            } else {
+                statusEl.innerHTML = hasPremium
+                    ? '<span style="color:#34A853">✅ Premium account verified!</span>'
+                    : '<span style="color:#34A853">✅ Signed in successfully!</span>';
+                setTimeout(() => { window.location.href = '/'; }, 1500);
+            }
+        }
+
+        // ── Google sign-in ───────────────────────────────────────────────────
         window.handleGoogleLogin = async () => {
-            status.textContent = 'Opening Google Sign In...';
-            status.className = 'loading';
-            
+            statusEl.textContent    = 'Opening Google Sign In...';
+            statusEl.className      = 'loading';
+            formErrorEl.textContent = '';
             try {
                 const result = await signInWithPopup(auth, provider);
-                const user = result.user;
-                
-                status.textContent = 'Signed in! Authenticating...';
-                
-				const userEmail = user.email;
-
-				// Check Firestore using EMAIL as document ID (not UID)
-				const userRef = doc(db, "users", userEmail);
-				const userSnap = await getDoc(userRef);
-
-				// Create user document if doesn't exist (default to free)
-				if (!userSnap.exists()) {
-					await setDoc(userRef, {
-						email: userEmail,
-						subscription: "free",  // Default to free (webhook will upgrade to premium)
-						createdAt: new Date()
-					});
-				}
-
-				// Get user data
-				const userData = userSnap.exists() ? userSnap.data() : { subscription: "free" };
-				const hasPremium = userData.subscription === "premium";
-
-				const idToken = await user.getIdToken();
-				const urlParams = new URLSearchParams(window.location.search);
-				const callbackUrl = urlParams.get('callback');
-
-				// DESKTOP APP CALLBACK (from app login flow)
-				if (callbackUrl) {
-					status.textContent = 'Checking subscription status...';
-					
-					if (hasPremium) {
-						// Premium user - redirect to welcome page first
-						status.textContent = 'Premium account detected! Redirecting...';
-						window.location.href = `premium-welcome.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
-					} else {
-						// Free user - redirect to checkout page
-						status.textContent = 'Redirecting to premium upgrade...';
-						window.location.href = `premium-checkout.html?email=${encodeURIComponent(userEmail)}&token=${idToken}&callback=${encodeURIComponent(callbackUrl)}`;
-					}
-				}
-				// WEB LOGIN (no callback parameter)
-				else {
-					if (hasPremium) {
-						status.innerHTML = '<span style="color: #34A853">✅ Premium account verified!</span>';
-					} else {
-						status.innerHTML = '<span style="color: #34A853">✅ Signed in successfully!</span>';
-					}
-					
-					setTimeout(() => {
-						window.location.href = '/';
-					}, 1500);
-				}
-                
+                statusEl.textContent = 'Signed in! Authenticating...';
+                await handleAuthResult(result.user);
             } catch (error) {
-                status.textContent = `Error: ${error.message}`;
-                status.className = 'error';
-                console.error('Login error:', error);
+                statusEl.textContent = `Error: ${error.message}`;
+                statusEl.className   = 'error';
             }
         };
+
+        // ── Friendly error messages ──────────────────────────────────────────
+        function friendlyError(code) {
+            return ({
+                'auth/user-not-found'       : 'No account found with that email.',
+                'auth/wrong-password'       : 'Incorrect password. Please try again.',
+                'auth/invalid-email'        : 'Please enter a valid email address.',
+                'auth/too-many-requests'    : 'Too many attempts. Please wait a moment and try again.',
+                'auth/invalid-credential'   : 'Incorrect email or password.',
+                'auth/email-already-in-use' : 'An account with this email already exists. Try signing in instead.',
+                'auth/weak-password'        : 'Password must be at least 6 characters.',
+            })[code] || null;
+        }
+
+        // ── Delegates to sign-in or sign-up based on current mode ────────────
+        window.handleSubmit = () => isSignUpMode ? handleSignUp() : handleSignIn();
+
+        // ── Sign in ──────────────────────────────────────────────────────────
+        async function handleSignIn() {
+            const email    = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+
+            setFormError('');
+            if (!email || !password) { setFormError('Please enter your email and password.'); return; }
+
+            setLoading(true, 'Signing in...');
+            try {
+                const result = await signInWithEmailAndPassword(auth, email, password);
+                statusEl.textContent = 'Signed in! Authenticating...';
+                statusEl.className   = 'loading';
+                await handleAuthResult(result.user);
+            } catch (error) {
+                setFormError(friendlyError(error.code) || `Sign in failed: ${error.message}`);
+            } finally {
+                setLoading(false, 'Sign In');
+            }
+        }
+
+        // ── Create account ───────────────────────────────────────────────────
+        async function handleSignUp() {
+            const email    = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const confirm  = document.getElementById('confirmInput').value;
+
+            setFormError('');
+            if (!email || !password || !confirm) { setFormError('Please fill in all fields.'); return; }
+            if (password !== confirm)             { setFormError('Passwords do not match.'); return; }
+            if (password.length < 6)              { setFormError('Password must be at least 6 characters.'); return; }
+
+            setLoading(true, 'Creating account...');
+            try {
+                const result = await createUserWithEmailAndPassword(auth, email, password);
+                statusEl.textContent = 'Account created! Setting up...';
+                statusEl.className   = 'loading';
+                await handleAuthResult(result.user);
+            } catch (error) {
+                setFormError(friendlyError(error.code) || `Could not create account: ${error.message}`);
+            } finally {
+                setLoading(false, 'Create Account');
+            }
+        }
+
+        // ── Forgot password ──────────────────────────────────────────────────
+        window.handleForgotPassword = async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('emailInput').value.trim();
+            setFormError('');
+            if (!email) {
+                setFormError('Enter your email above first, then click Forgot password.');
+                document.getElementById('emailInput').focus();
+                return;
+            }
+            try {
+                await sendPasswordResetEmail(auth, email);
+                formErrorEl.style.color = '#34A853';
+                formErrorEl.textContent = `Reset email sent to ${email}. Check your inbox.`;
+            } catch (error) {
+                setFormError(friendlyError(error.code) || `Could not send reset email: ${error.message}`);
+            }
+        };
+
+        // ── Switch between sign-in and sign-up ──────────────────────────────
+        window.switchMode = () => {
+            isSignUpMode = !isSignUpMode;
+            setFormError('');
+            document.getElementById('confirmInput').value = '';
+
+            if (isSignUpMode) {
+                confirmGroup.classList.add('visible');
+                forgotLink.classList.add('hidden');
+                actionBtn.textContent  = 'Create Account';
+                switchText.textContent = 'Already have an account?';
+                switchBtn.textContent  = 'Sign in';
+                document.getElementById('passwordInput').setAttribute('autocomplete', 'new-password');
+            } else {
+                confirmGroup.classList.remove('visible');
+                forgotLink.classList.remove('hidden');
+                actionBtn.textContent  = 'Sign In';
+                switchText.textContent = "Don't have an account?";
+                switchBtn.textContent  = 'Create one';
+                document.getElementById('passwordInput').setAttribute('autocomplete', 'current-password');
+            }
+        };
+
+        // ── Show / hide the whole panel ──────────────────────────────────────
+        window.toggleManualForm = () => {
+            const form      = document.getElementById('manualForm');
+            const googleBtn = document.getElementById('googleBtn');
+            const orDivider = document.getElementById('orDivider');
+            const showing   = form.classList.toggle('visible');
+
+            googleBtn.style.display = showing ? 'none' : 'flex';
+            orDivider.style.display = showing ? 'none' : 'flex';
+            outerToggle.textContent = showing ? 'Return to google sign in' : 'Sign in with email & password';
+            if (showing) document.getElementById('emailInput').focus();
+        };
+
+        // ── Small helpers ────────────────────────────────────────────────────
+        function setFormError(msg) {
+            formErrorEl.style.color = '#ff4444';
+            formErrorEl.textContent = msg;
+        }
+        function setLoading(on, label) {
+            actionBtn.disabled    = on;
+            actionBtn.textContent = on ? label : (isSignUpMode ? 'Create Account' : 'Sign In');
+        }
     </script>
 </body>
 </html>
