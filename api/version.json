@@ -1,28 +1,8 @@
 {
-  "latest_version": "1.0.0",
+  "version": "1.0.0",
   "version_name": "Beta v1.0.0",
-  "release_date": "2025-02-10",
-  "minimum_version": "1.0.0",
-  "platforms": {
-    "windows": {
-      "version": "1.0.0",
-      "download_url": "https://makemp3s.github.io/downloads/MakeMP3s-Windows-1.0.0.exe",
-      "size_mb": 45.2,
-      "required": false
-    },
-    "macos": {
-      "version": "1.0.0",
-      "download_url": "https://makemp3s.github.io/downloads/MakeMP3s-Mac-1.0.0.dmg",
-      "size_mb": 48.5,
-      "required": false
-    }
-  },
-  "changelog": [
-    "✅ Enhanced 10-song daily limit for free users",
-    "✅ Automatic yt-dlp update checking",
-    "✅ Combined app + yt-dlp update status",
-    "🆕 User-controlled software updates",
-    "🐛 Performance improvements"
-  ],
-  "notes": "Initial release with automatic update checking"
+  "download_url": "https://makemp3s.github.io/downloads.html",
+  "release_notes": "Initial beta release",
+  "released_at": "2026-04-02T17:12:40.829249+00:00",
+  "_sig": "7025347396b6a42979fd8af37512fa92107f26f90ec70dcf071d185964280679"
 }
