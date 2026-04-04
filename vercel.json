@@ -1,6 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.9"
+    }
+  },
   "rewrites": [
     { "source": "/api/webhook", "destination": "/api/webhook.js" },
     { "source": "/downloads", "destination": "/downloads.html" },
