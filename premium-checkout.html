@@ -256,7 +256,7 @@
             <div class="pricing-card popular">
                 <div class="popular-badge">BEST VALUE</div>
                 <div class="plan-name">Lifetime Access</div>
-                <div class="price">$29.99 <span style="font-size:16px;font-weight:normal;color:#b0a060;">USD</span></div>
+                <div class="price">$39.99 <span style="font-size:16px;font-weight:normal;color:#b0a060;">USD</span></div>
                 <div class="price-period">One-time payment</div>
                 <div class="features">
                     <div class="feature"><i class="fas fa-check"></i> Unlimited downloads forever</div>
@@ -288,6 +288,24 @@
                     Subscribe Yearly
                 </button>
             </div>
+            
+            <!-- Monthly Plan -->
+            <div class="pricing-card">
+                <div class="plan-name">Monthly Subscription</div>
+                <div class="price">$1.99 <span style="font-size:16px;font-weight:normal;color:#5588cc;">USD</span></div>
+                <div class="price-period">per month</div>
+                <div class="features">
+                    <div class="feature"><i class="fas fa-check"></i> Unlimited downloads</div>
+                    <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
+                    <div class="feature"><i class="fas fa-check"></i> Advanced volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> Priority support</div>
+                    <div class="feature"><i class="fas fa-check"></i> Cancel anytime</div>
+                </div>
+                <button class="cta-button" onclick="selectPlan('monthly')">
+                    Subscribe Monthly
+                </button>
+            </div>
         </div>
         
         <a href="#" class="later-link" id="continueLink">Continue to app without premium</a>
@@ -313,7 +331,8 @@
         // Checkout URLs from Lemon Squeezy
         const checkoutUrls = {
             lifetime: 'https://makemp3s.lemonsqueezy.com/checkout/buy/d554d40a-caab-42ba-b738-268abd7db110',
-            yearly: 'https://makemp3s.lemonsqueezy.com/checkout/buy/cb36a362-7763-43d3-bc88-9d216cbc21bd'
+            yearly: 'https://makemp3s.lemonsqueezy.com/checkout/buy/cb36a362-7763-43d3-bc88-9d216cbc21bd',
+            monthly: 'https://makemp3s.lemonsqueezy.com/checkout/buy/YOUR_MONTHLY_PRODUCT_ID' // Replace with your monthly product ID
         };
         
         // Handle plan selection
