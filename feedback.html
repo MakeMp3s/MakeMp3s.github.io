@@ -41,9 +41,9 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 3rem;
-            background-image: url('images/web-bg.png');
+            background-image: url('images/boombox.jpg');
             background-size: cover;
-            background-position: center top;
+            background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
@@ -108,9 +108,9 @@
 
         /* Content */
         .content-wrapper {
-            background-image: url('images/web-bg.png');
+            background-image: url('images/boombox.jpg');
             background-size: cover;
-            background-position: center top;
+            background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             min-height: calc(100vh - 200px);
@@ -396,19 +396,27 @@
             <p>Help us improve Make MP3s by sharing your thoughts and suggestions</p>
 
             <div class="feedback-form">
+                <div data-fs-success style="display:none; color: #34A853; text-align: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(52, 168, 83, 0.1); border-radius: 8px;">
+                    <i class="fas fa-check-circle"></i> Thanks for your feedback! We'll get back to you soon.
+                </div>
+                <div data-fs-error style="display:none; color: #FF3B30; text-align: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 59, 48, 0.1); border-radius: 8px;"></div>
+
+                <form id="feedback-form">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Your name">
+                    <input type="text" id="name" name="name" placeholder="Your name" data-fs-field>
+                    <span data-fs-error="name" style="color: #FF3B30; font-size: 0.9rem; display: block; margin-top: 0.3rem;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="your.email@example.com">
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" data-fs-field required>
+                    <span data-fs-error="email" style="color: #FF3B30; font-size: 0.9rem; display: block; margin-top: 0.3rem;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="category">Feedback Type</label>
-                    <select id="category">
+                    <select id="category" name="category" data-fs-field>
                         <option value="">Select a category</option>
                         <option value="bug">Bug Report</option>
                         <option value="feature">Feature Request</option>
@@ -416,14 +424,17 @@
                         <option value="general">General Feedback</option>
                         <option value="other">Other</option>
                     </select>
+                    <span data-fs-error="category" style="color: #FF3B30; font-size: 0.9rem; display: block; margin-top: 0.3rem;"></span>
                 </div>
 
                 <div class="form-group">
                     <label for="message">Your Feedback</label>
-                    <textarea id="message" placeholder="Tell us what you think..."></textarea>
+                    <textarea id="message" name="message" placeholder="Tell us what you think..." data-fs-field required></textarea>
+                    <span data-fs-error="message" style="color: #FF3B30; font-size: 0.9rem; display: block; margin-top: 0.3rem;"></span>
                 </div>
 
-                <button type="button" class="btn">Submit Feedback</button>
+                <button type="submit" class="btn" data-fs-submit-btn>Submit Feedback</button>
+                </form>
             </div>
         </div>
     </div>
@@ -454,5 +465,11 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+        formspree('initForm', { formElement: '#feedback-form', formId: 'xojppplp' });
+    </script>
+    <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 </body>
 </html>
