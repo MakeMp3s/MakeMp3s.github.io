@@ -34,7 +34,7 @@
 
         .container {
             background-color: rgba(42, 42, 42, 0.6);
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 15px;
             border: 1px solid #444;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
@@ -46,7 +46,7 @@
         .logo {
             width: 65px;
             height: 65px;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
         }
 
         h1 {
@@ -59,7 +59,7 @@
 
         .subtitle {
             color: #b0b0b0;
-            margin-bottom: 2rem;
+            margin-bottom: 1.25rem;
             font-size: 1rem;
         }
 
@@ -242,7 +242,7 @@
             font-family: 'Helvetica Neue Bold', sans-serif;
             font-size: 0.8rem;
             color: #D4AF37;
-            margin-bottom: 1rem;
+            margin-bottom: 0.6rem;
             text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -251,14 +251,13 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 0.75rem;
-            color: #b0b0b0;
+            margin-bottom: 0.5rem;
             font-size: 0.95rem;
         }
         .feature-item i { color: #007AFF; }
 
         .back-link {
-            margin-top: 1.5rem;
+            margin-top: 1rem;
             display: block;
             color: #808080;
             text-decoration: none;
@@ -364,6 +363,7 @@
         const auth     = getAuth(app);
         const db       = getFirestore(app);
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
 
         // UI refs
         const statusEl     = document.getElementById('status');
