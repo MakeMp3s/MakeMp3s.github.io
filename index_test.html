@@ -22,12 +22,17 @@
         body {
             font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
             background-color: #1a1a1a;
+            background-image: url('images/paper-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
             color: #ffffff;
             line-height: 1.6;
         }
 
         .bg-section {
-            background-image: url('images/web-bg.png');
+            background-image: url('images/paper-bg.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -35,7 +40,7 @@
         }
 
         .content-wrapper {
-            background-image: url('images/web-bg.png');
+            background-image: url('images/paper-bg.jpg');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
@@ -58,7 +63,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 3rem;
-            background-image: url('images/web-bg.png');
+            background-image: url('images/paper-bg.jpg');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
@@ -273,13 +278,27 @@
             gap: 1.5rem;
             padding: 2rem;
             margin-top: -5rem;
+            background-image: none;
+            position: relative;
+            height: 360px;
+            overflow: hidden;
+        }
+
+        .premium-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
             background-image: url('images/prem-bg.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            opacity: 0.75;
+            z-index: 0;
+        }
+
+        .premium-section > * {
             position: relative;
-            height: 300px;
-            overflow: hidden;
+            z-index: 1;
         }
 
         .premium-animation {
@@ -320,8 +339,8 @@
 
         /* Footer */
         footer {
-            background-color: #1a1a1a;
-            padding: 3rem 3rem 1rem;
+            background-color: transparent;
+            padding: 1rem 3rem;
         }
 
         .footer-content {
@@ -345,7 +364,6 @@
         }
 
         .footer-bottom {
-            border-top: 1px solid #2a2a2a;
             padding-top: 1rem;
             display: flex;
             justify-content: space-between;
@@ -556,7 +574,6 @@
             <li><a href="https://makemp3s.github.io/feedback.html">Feedback & Contact</a></li>
         </ul>
         <div class="nav-icons">
-            <a href="#search"><i class="fas fa-search"></i></a>
 			<div class="account-container" style="position: relative; display: inline-block;">
 				<a href="javascript:void(0)" onclick="toggleDropdown()">
 					<i class="fas fa-user"></i>
@@ -564,7 +581,8 @@
 				<div id="user-dropdown" class="dropdown-menu">
 					</div>
 			</div>
-            <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
     </nav>
 
@@ -635,28 +653,9 @@
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About us</h4>
-                <p>We're here to share our love and passion for music to everyone</p>
-            </div>
-            <div class="footer-section">
-                <h4>Shop</h4>
-            </div>
-            <div class="footer-section">
-                <h4><a href="https://makemp3s.github.io/feedback.html">Feedback</a></h4>
-            </div>
-            <div class="footer-section">
-                <h4>Our story</h4>
-            </div>
-        </div>
         <div class="footer-bottom">
-            <p>© 2025 Make MP3s | Terms and Policies</p>
-            <div class="social-icons">
-                <a href="#facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
+            <p>© 2025 Make MP3s | <a href="https://makemp3s.com/legal" style="color: #808080; text-decoration: none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color: #808080; text-decoration: none;">Our Story</a>
         </div>
     </footer>
 	
