@@ -22,17 +22,13 @@
         body {
             font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
             background-color: #1a1a1a;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-
-        .bg-section {
-            background-image: url('images/web-bg.png');
+            background-image: url('images/boombox.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            min-height: 100vh;
+            color: #ffffff;
+            line-height: 1.6;
         }
 
         h1, h2, h3, h4, h5, h6 {
@@ -50,11 +46,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 1rem 3rem;
-            background-image: url('images/web-bg.png');
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-color: transparent;
         }
 
         .logo {
@@ -96,6 +88,25 @@
             transform: translateY(-2px);
         }
 
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover span {
+            background-color: #ffffff;
+        }
+
         /* Success Container */
         .success-container {
             display: flex;
@@ -103,7 +114,7 @@
             align-items: center;
             justify-content: center;
             min-height: calc(100vh - 200px);
-            padding: 2rem 2rem;
+            padding: 2rem 2rem 5rem;
             text-align: center;
         }
 
@@ -228,8 +239,6 @@
             border: none;
             cursor: pointer;
             font-size: 1rem;
-            margin: 0.5rem;
-            animation: fadeInUp 0.6s ease-out 0.8s both;
         }
 
         .btn:hover {
@@ -266,7 +275,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
-            flex-wrap: wrap;
+            align-items: center;
             margin-top: 1.5rem;
         }
 
@@ -309,36 +318,17 @@
 
         /* Footer */
         footer {
-            background-color: #1a1a1a;
-            padding: 2rem 3rem 1rem;
-            margin-top: auto;
+            background-color: transparent;
+            padding: 1rem 3rem 2rem;
         }
 
         .footer-bottom {
-            border-top: 1px solid #2a2a2a;
             padding-top: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: #808080;
             font-size: 0.9rem;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .social-icons a {
-            color: #808080;
-            text-decoration: none;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .social-icons a:hover {
-            color: #ffffff;
-            transform: translateY(-2px);
         }
 
         /* Responsive */
@@ -374,12 +364,69 @@
                 gap: 1rem;
             }
         }
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background-color: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: #b0b0b0;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .google-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .google-btn:hover {
+            transform: translateY(-2px);
+            background-color: #f0f0f0;
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="downloads.html">Downloads</a></li>
@@ -387,7 +434,6 @@
             <li><a href="https://makemp3s.github.io/feedback.html">Feedback & Contact</a></li>
         </ul>
         <div class="nav-icons">
-            <a href="#search"><i class="fas fa-search"></i></a>
             <div class="account-container" style="position: relative; display: inline-block;">
                 <a href="javascript:void(0)" onclick="toggleDropdown()">
                     <i class="fas fa-user"></i>
@@ -395,12 +441,13 @@
                 <div id="user-dropdown" class="dropdown-menu">
                 </div>
             </div>
-            <a href="#cart"><i class="fas fa-shopping-cart"></i></a>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
     </nav>
 
     <!-- Success Content -->
-    <div class="bg-section">
+    
         <div class="success-container">
             <div class="checkmark">
                 <i class="fas fa-check"></i>
@@ -442,18 +489,120 @@
                 </div>
             </div>
         </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color: #fff; margin-bottom: 1rem;">Welcome Back</h2>
+            <p style="color: #b0b0b0; margin-bottom: 2rem;">Sign in to access your Make MP3s account.</p>
+            <button onclick="handleGoogleLogin()" class="google-btn">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+        </div>
     </div>
 
     <!-- Footer -->
     <footer>
         <div class="footer-bottom">
-            <p>© 2025 Make MP3s | Terms and Policies</p>
-            <div class="social-icons">
-                <a href="#facebook" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="#instagram" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#youtube" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            </div>
+            <p>© 2025 Make MP3s | <a href="https://makemp3s.com/legal" style="color: #808080; text-decoration: none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color: #808080; text-decoration: none; font-weight: bold;">Our Story</a>
         </div>
     </footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+        authDomain: "make-mp3s.firebaseapp.com",
+        projectId: "make-mp3s",
+        storageBucket: "make-mp3s.firebasestorage.app",
+        messagingSenderId: "530983812032",
+        appId: "1:530983812032:web:1d059a67673771929b2625",
+        measurementId: "G-H11K90Y0CD"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    window.handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists()) {
+                await setDoc(userRef, { email: user.email, subscription: "free", createdAt: new Date() });
+            }
+            window.closeAuthModal();
+        } catch (error) {
+            console.error("Login Failed:", error);
+            alert("Login failed. Please try again.");
+        }
+    };
+
+    window.handleLogout = async () => {
+        await signOut(auth);
+        window.location.reload();
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
+            const subType = userData.subscription || 'free';
+            dropdown.innerHTML = `
+                <div style="padding: 15px; border-bottom: 1px solid #444;">
+                    <div style="color: #D4AF37; font-weight: bold; font-size: 0.8rem; margin-bottom: 5px;">ACCOUNT</div>
+                    <div style="color: #fff; font-weight: bold;">${user.email}</div>
+                    <div style="font-size: 0.85rem; color: #b0b0b0; margin-top: 5px;">
+                        Plan: <span style="color: ${subType === 'premium' ? '#D4AF37' : '#fff'}; text-transform: uppercase; font-weight: bold;">${subType}</span>
+                    </div>
+                </div>
+                <a href="#settings" class="dropdown-item">Account Settings</a>
+                <a href="javascript:void(0)" onclick="handleLogout()" class="dropdown-item" style="color: #ff4444;">Log Out</a>
+            `;
+        } else {
+            dropdown.innerHTML = "";
+            dropdown.classList.remove("show");
+        }
+    });
+
+    window.toggleDropdown = () => {
+        if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+            dropdown.classList.toggle("show");
+        } else {
+            dropdown.classList.remove("show");
+            window.openAuthModal();
+        }
+    };
+
+    window.openAuthModal = () => {
+        authModal.style.display = "flex";
+        dropdown.classList.remove("show");
+    };
+
+    window.closeAuthModal = () => {
+        authModal.style.display = "none";
+    };
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) {
+            window.closeAuthModal();
+        }
+    }
+</script>
 </body>
 </html>
