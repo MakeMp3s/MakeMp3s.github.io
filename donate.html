@@ -450,10 +450,17 @@
         }
 
         @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+                position: relative;
+            }
             .hamburger {
                 position: absolute;
                 left: 70px;
                 display: flex;
+            }
+            .hamburger span {
+                background-color: #b0b0b0;
             }
             .nav-links {
                 display: none;
@@ -469,6 +476,27 @@
             }
             .nav-links.active {
                 display: flex;
+            }
+            .nav-icons {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background-image: none;
+            }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('images/boombox.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
             }
         }
     </style>
