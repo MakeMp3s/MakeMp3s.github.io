@@ -24,7 +24,6 @@ if (!admin.apps.length) {
     credential: admin.credential.cert({
       projectId: process.env.FIREBASE_PROJECT_ID,
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      // Ensure the private key handles newlines correctly
       privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
     }),
   });
@@ -48,8 +47,7 @@ export default async function handler(req, res) {
     if (secret && signature) {
       const hmac = crypto.createHmac('sha256', secret);
       const digest = hmac.update(rawBody).digest('hex');
-      
-      // Use timingSafeEqual to prevent timing attacks
+
       const isValid = crypto.timingSafeEqual(
         Buffer.from(signature, 'hex'),
         Buffer.from(digest, 'hex')
@@ -69,17 +67,16 @@ export default async function handler(req, res) {
 
     console.log(`📨 Event: ${eventName}`);
 
-    // --- YOUR LOGIC CONTINUES BELOW ---
-    
+    // ─── order_created: fired for both lifetime and monthly purchases ──────────
     if (eventName === 'order_created' && attributes?.status === 'paid') {
       const email = attributes.user_email;
       const productName = attributes.first_order_item?.product_name || '';
       const orderId = event.data?.id;
 
-      let subscriptionType = 'lifetime';
-      if (productName.toLowerCase().includes('yearly')) {
-        subscriptionType = 'yearly';
-      }
+      // FIX: check for "monthly" explicitly — everything else is lifetime
+      const subscriptionType = productName.toLowerCase().includes('monthly')
+        ? 'monthly'
+        : 'lifetime';
 
       await db.collection('users').doc(email).set({
         email: email,
@@ -90,10 +87,67 @@ export default async function handler(req, res) {
         productName: productName,
       }, { merge: true });
 
-      console.log(`✅ Firestore updated for ${email}`);
-    } 
-    
-    // ... rest of your subscription_created and subscription_updated logic ...
+      console.log(`✅ order_created: Firestore updated for ${email} — type: ${subscriptionType}`);
+    }
+
+    // ─── subscription_created: fired for monthly — saves subscription ID ──────
+    if (eventName === 'subscription_created') {
+      const email = attributes?.user_email;
+      const subscriptionId = event.data?.id;
+      const status = attributes?.status;
+
+      if (email && subscriptionId) {
+        await db.collection('users').doc(email).set({
+          lemonSqueezySubscriptionId: String(subscriptionId),
+          subscriptionStatus: status,
+        }, { merge: true });
+
+        console.log(`✅ subscription_created: saved subscriptionId ${subscriptionId} for ${email}`);
+      }
+    }
+
+    // ─── subscription_updated: keeps status in sync ───────────────────────────
+    if (eventName === 'subscription_updated') {
+      const email = attributes?.user_email;
+      const status = attributes?.status;
+      const subscriptionId = event.data?.id;
+
+      if (email) {
+        const update = {
+          subscriptionStatus: status,
+        };
+
+        // If cancelled via API or dashboard, reflect it in Firebase
+        if (status === 'cancelled') {
+          update.subscriptionCancelled = true;
+          update.cancellationDate = admin.firestore.FieldValue.serverTimestamp();
+        }
+
+        // If it expired after cancellation, revoke premium
+        if (status === 'expired') {
+          update.subscription = 'free';
+          update.subscriptionCancelled = true;
+        }
+
+        await db.collection('users').doc(email).set(update, { merge: true });
+        console.log(`✅ subscription_updated: ${email} status → ${status}`);
+      }
+    }
+
+    // ─── subscription_expired: revoke premium access ──────────────────────────
+    if (eventName === 'subscription_expired') {
+      const email = attributes?.user_email;
+
+      if (email) {
+        await db.collection('users').doc(email).set({
+          subscription: 'free',
+          subscriptionStatus: 'expired',
+          subscriptionCancelled: true,
+        }, { merge: true });
+
+        console.log(`✅ subscription_expired: premium revoked for ${email}`);
+      }
+    }
 
     return res.status(200).json({ received: true });
 
