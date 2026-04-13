@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cancel subscription – make mp3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('images/boombox.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .logo { width: 40px; height: 40px; }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #ffffff; }
+
+        .nav-icons { display: flex; gap: 1.5rem; }
+
+        .nav-icons a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover { color: #ffffff; transform: translateY(-2px); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        /* Dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 35px;
+            background-color: #2a2a2a;
+            min-width: 260px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 15px;
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: background 0.2s;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background-color: #3a3a3a; color: #fff; }
+
+        /* Page */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem 5rem;
+        }
+
+        .card {
+            background-color: rgba(42, 42, 42, 0.6);
+            border: 1px solid #444;
+            border-radius: 16px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Loading state */
+        #state-loading .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #D4AF37;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #state-loading p { color: #b0b0b0; }
+
+        /* All states hidden by default */
+        .state { display: none; }
+        .state.active { display: block; }
+
+        /* Icons */
+        .state-icon {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .icon-gold { color: #D4AF37; }
+        .icon-grey { color: #808080; }
+        .icon-red  { color: #ff4444; }
+        .icon-green { color: #4CAF50; }
+
+        /* Typography */
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p {
+            color: #b0b0b0;
+            font-size: 0.97rem;
+            line-height: 1.8;
+            margin-bottom: 0.75rem;
+        }
+
+        .card p:last-of-type { margin-bottom: 0; }
+
+        /* Info row */
+        .info-row {
+            background-color: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #b0b0b0;
+        }
+
+        .info-row span {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        /* Warning callout */
+        .callout-warning {
+            background-color: rgba(255, 68, 68, 0.08);
+            border: 1px solid rgba(255, 68, 68, 0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            font-size: 0.9rem;
+            color: #ffaaaa;
+            text-align: left;
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+
+        .callout-warning i { margin-top: 2px; flex-shrink: 0; }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            width: 100%;
+            margin-top: 0.75rem;
+        }
+
+        .btn-gold {
+            background-color: #D4AF37;
+            color: #1a1a1a;
+        }
+
+        .btn-gold:hover {
+            background-color: #F4D03F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #b0b0b0;
+            border: 2px solid #555;
+        }
+
+        .btn-outline:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-red {
+            background-color: transparent;
+            color: #ff6666;
+            border: 2px solid #ff4444;
+        }
+
+        .btn-red:hover {
+            background-color: rgba(255,68,68,0.1);
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Feedback form */
+        .form-group { margin-bottom: 1rem; text-align: left; }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: #a0a0a0;
+            margin-bottom: 0.4rem;
+        }
+
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-group select:focus,
+        .form-group textarea:focus { border-color: #D4AF37; }
+
+        .form-group select option { background-color: #1a1a1a; }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .optional-tag {
+            font-size: 0.75rem;
+            color: #606060;
+            margin-left: 0.4rem;
+        }
+
+        .skip-link {
+            display: block;
+            margin-top: 0.75rem;
+            color: #606060;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: center;
+        }
+
+        .skip-link:hover { color: #b0b0b0; }
+
+        /* Error message */
+        .error-msg {
+            color: #ff6666;
+            font-size: 0.88rem;
+            margin-top: 0.75rem;
+            display: none;
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background-color: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: #b0b0b0;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .google-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .google-btn:hover { transform: translateY(-2px); background-color: #f0f0f0; }
+
+        /* Footer */
+        footer { background-color: transparent; padding: 1rem 3rem; }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem; position: relative; }
+            .hamburger { position: absolute; left: 70px; display: flex; }
+            .hamburger span { background-color: #b0b0b0; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px; left: 0; right: 0;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+            .nav-links.active { display: flex; }
+            .nav-icons { gap: 1rem; }
+            .card { padding: 1.75rem 1.25rem; }
+        }
+
+        @media (max-width: 768px) {
+            body { background-image: none; }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background-image: url('images/boombox.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="feedback.html">Feedback & Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div class="account-container" style="position: relative; display: inline-block;">
+                <a href="javascript:void(0)" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="user-dropdown" class="dropdown-menu"></div>
+            </div>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+        <div class="card">
+
+            <!-- Sign in required -->
+            <div id="state-signin-required" class="state">
+                <div class="state-icon icon-gold"><i class="fas fa-user-lock"></i></div>
+                <h2>Sign In Required</h2>
+                <p>Please sign in to manage your subscription.</p>
+                <button class="btn btn-gold" onclick="window.openAuthModal()" style="margin-top:1.5rem;">
+                    <i class="fas fa-sign-in-alt" style="margin-right:0.5rem;"></i>Sign In
+                </button>
+            </div>
+
+            <!-- Loading -->
+            <div id="state-loading" class="state active">
+                <div class="spinner"></div>
+                <p>Checking your account...</p>
+            </div>
+
+            <!-- Lifetime user — nothing to cancel -->
+            <div id="state-lifetime" class="state">
+                <div class="state-icon icon-gold"><i class="fas fa-infinity"></i></div>
+                <h2>You Have a Lifetime License</h2>
+                <p>Your Make MP3s Premium access never expires — there's no subscription to cancel.</p>
+                <p>If you have any questions about your account, feel free to reach out.</p>
+                <a href="feedback.html" class="btn btn-outline" style="margin-top:1.5rem;">Contact Support</a>
+            </div>
+
+            <!-- Already cancelled -->
+            <div id="state-already-cancelled" class="state">
+                <div class="state-icon icon-grey"><i class="fas fa-check-circle"></i></div>
+                <h2>Already Cancelled</h2>
+                <p>Your subscription has already been cancelled. You'll keep Premium access until the end of your current billing period.</p>
+                <a href="index.html" class="btn btn-outline" style="margin-top:1.5rem;">Back to Home</a>
+            </div>
+
+            <!-- No subscription ID — edge case for older users -->
+            <div id="state-no-id" class="state">
+                <div class="state-icon icon-grey"><i class="fas fa-exclamation-circle"></i></div>
+                <h2>Manual Cancellation Required</h2>
+                <p>We weren't able to find your subscription ID automatically. This can happen for accounts created before our system update.</p>
+                <p>Please contact support and we'll cancel it for you right away.</p>
+                <a href="feedback.html" class="btn btn-gold" style="margin-top:1.5rem;">Contact Support</a>
+            </div>
+
+            <!-- Cancel confirmation -->
+            <div id="state-confirm" class="state">
+                <div class="state-icon icon-red"><i class="fas fa-times-circle"></i></div>
+                <h2>Cancel Subscription</h2>
+                <p>You're about to cancel your Make MP3s Premium subscription.</p>
+
+                <div class="info-row">
+                    Signed in as <span id="user-email-display">—</span>
+                </div>
+
+                <div class="callout-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>You'll keep full Premium access until the end of your current billing period. After that, your account will revert to the free plan.</div>
+                </div>
+
+                <button class="btn btn-red" id="confirm-cancel-btn" onclick="confirmCancel()">
+                    <i class="fas fa-times" style="margin-right:0.5rem;"></i>Yes, Cancel My Subscription
+                </button>
+                <a href="index.html" class="btn btn-outline">Keep My Subscription</a>
+                <div class="error-msg" id="cancel-error"></div>
+            </div>
+
+            <!-- Cancelling... -->
+            <div id="state-cancelling" class="state">
+                <div class="spinner" style="margin:0 auto 1.5rem;"></div>
+                <h2>Cancelling...</h2>
+                <p>Please wait while we process your cancellation.</p>
+            </div>
+
+            <!-- Feedback form -->
+            <div id="state-feedback" class="state">
+                <div class="state-icon icon-green"><i class="fas fa-check-circle"></i></div>
+                <h2>Subscription Cancelled</h2>
+                <p>Your subscription has been cancelled. You'll keep Premium access until the end of your billing period.</p>
+
+                <div style="margin-top:1.75rem; border-top:1px solid rgba(255,255,255,0.08); padding-top:1.5rem; text-align:left;">
+                    <p style="color:#ffffff; margin-bottom:1rem; font-size:0.95rem;">Mind telling us why? <span class="optional-tag">(optional)</span></p>
+
+                    <div class="form-group">
+                        <label for="cancel-reason">Reason for cancelling</label>
+                        <select id="cancel-reason">
+                            <option value="">Select a reason...</option>
+                            <option value="too_expensive">Too expensive</option>
+                            <option value="not_using">Not using it enough</option>
+                            <option value="missing_features">Missing features I need</option>
+                            <option value="technical_issues">Technical issues</option>
+                            <option value="switching">Switching to another tool</option>
+                            <option value="temporary">Just taking a break</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cancel-comments">Additional comments <span class="optional-tag">(optional)</span></label>
+                        <textarea id="cancel-comments" placeholder="Tell us more..."></textarea>
+                    </div>
+
+                    <button class="btn btn-gold" onclick="submitFeedback()">Submit Feedback</button>
+                    <button class="skip-link" onclick="showState('state-done')">Skip — no feedback</button>
+                </div>
+            </div>
+
+            <!-- Done -->
+            <div id="state-done" class="state">
+                <div class="state-icon icon-green"><i class="fas fa-check-circle"></i></div>
+                <h2>All Done</h2>
+                <p>Your cancellation is confirmed. We're sorry to see you go — if you ever want to come back, Premium will be here.</p>
+                <a href="index.html" class="btn btn-outline" style="margin-top:1.5rem;">Back to Home</a>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color:#fff; margin-bottom:1rem;">Welcome Back</h2>
+            <p style="color:#b0b0b0; margin-bottom:2rem;">Sign in to access your Make MP3s account.</p>
+            <button onclick="handleGoogleLogin()" class="google-btn">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2026 Make MP3s | <a href="https://makemp3s.com/legal" style="color:#808080; text-decoration:none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color:#808080; text-decoration:none; font-weight:bold;">Our Story</a>
+        </div>
+    </footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+        authDomain: "make-mp3s.firebaseapp.com",
+        projectId: "make-mp3s",
+        storageBucket: "make-mp3s.firebasestorage.app",
+        messagingSenderId: "530983812032",
+        appId: "1:530983812032:web:1d059a67673771929b2625",
+        measurementId: "G-H11K90Y0CD"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    // ── Show/hide states ──────────────────────────────────────────────────────
+    window.showState = (id) => {
+        document.querySelectorAll('.state').forEach(el => el.classList.remove('active'));
+        document.getElementById(id)?.classList.add('active');
+    };
+
+    // ── On auth state change ──────────────────────────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            showState('state-signin-required');
+            return;
+        }
+
+        // Populate nav dropdown
+        const userRef  = doc(db, "users", user.email);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
+        const subType  = userData.subscription || 'free';
+
+        dropdown.innerHTML = `
+            <div style="padding:15px; border-bottom:1px solid #444;">
+                <div style="color:#D4AF37; font-weight:bold; font-size:0.8rem; margin-bottom:5px;">ACCOUNT</div>
+                <div style="color:#fff; font-weight:bold;">${user.email}</div>
+                <div style="font-size:0.85rem; color:#b0b0b0; margin-top:5px;">
+                    Plan: <span style="color:${subType === 'premium' ? '#D4AF37' : '#fff'}; text-transform:uppercase; font-weight:bold;">${subType}</span>
+                </div>
+            </div>
+            <a href="#settings" class="dropdown-item">Account Settings</a>
+            <a href="javascript:void(0)" onclick="handleLogout()" class="dropdown-item" style="color:#ff4444;">Log Out</a>
+        `;
+
+        // Show email in confirm state
+        document.getElementById('user-email-display').textContent = user.email;
+
+        // ── Decide which state to show ────────────────────────────────────────
+        const { subscriptionType, subscriptionCancelled, subscription } = userData;
+
+        if (subscription !== 'premium') {
+            // Not a premium user — nothing to cancel
+            showState('state-already-cancelled');
+            return;
+        }
+
+        if (subscriptionType === 'lifetime') {
+            showState('state-lifetime');
+            return;
+        }
+
+        if (subscriptionCancelled) {
+            showState('state-already-cancelled');
+            return;
+        }
+
+        // Monthly user — show cancel confirmation
+        showState('state-confirm');
+    });
+
+    // ── Cancel subscription ───────────────────────────────────────────────────
+    window.confirmCancel = async () => {
+        const user = auth.currentUser;
+        if (!user) return;
+
+        showState('state-cancelling');
+
+        try {
+            const idToken = await user.getIdToken();
+
+            const response = await fetch('/api/cancel-subscription', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${idToken}`,
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (data.error === 'no_subscription_id') {
+                    showState('state-no-id');
+                } else {
+                    showState('state-confirm');
+                    const errEl = document.getElementById('cancel-error');
+                    errEl.textContent = data.message || 'Something went wrong. Please try again or contact support.';
+                    errEl.style.display = 'block';
+                }
+                return;
+            }
+
+            // Success — show feedback form
+            showState('state-feedback');
+
+        } catch (err) {
+            console.error('Cancel error:', err);
+            showState('state-confirm');
+            const errEl = document.getElementById('cancel-error');
+            errEl.textContent = 'A network error occurred. Please try again.';
+            errEl.style.display = 'block';
+        }
+    };
+
+    // ── Submit feedback ───────────────────────────────────────────────────────
+    window.submitFeedback = async () => {
+        const user   = auth.currentUser;
+        const reason = document.getElementById('cancel-reason').value;
+        const comments = document.getElementById('cancel-comments').value.trim();
+
+        if (user && (reason || comments)) {
+            try {
+                await setDoc(doc(db, "cancellation_feedback", user.email), {
+                    email: user.email,
+                    reason: reason || null,
+                    comments: comments || null,
+                    submittedAt: new Date(),
+                }, { merge: true });
+            } catch (e) {
+                console.warn('Feedback save failed:', e);
+                // Non-critical — still move on
+            }
+        }
+
+        showState('state-done');
+    };
+
+    // ── Nav auth ──────────────────────────────────────────────────────────────
+    window.handleGoogleLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+            window.closeAuthModal();
+        } catch (error) {
+            console.error("Login Failed:", error);
+        }
+    };
+
+    window.handleLogout = async () => {
+        await signOut(auth);
+        window.location.reload();
+    };
+
+    window.toggleDropdown = () => {
+        if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+            dropdown.classList.toggle("show");
+        } else {
+            dropdown.classList.remove("show");
+            window.openAuthModal();
+        }
+    };
+
+    window.openAuthModal  = () => { authModal.style.display = "flex"; dropdown.classList.remove("show"); };
+    window.closeAuthModal = () => { authModal.style.display = "none"; };
+
+    window.onclick = (event) => {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) window.closeAuthModal();
+    };
+</script>
+
+</body>
+</html>
