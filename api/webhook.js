@@ -78,6 +78,40 @@ export default async function handler(req, res) {
         ? 'monthly'
         : 'lifetime';
 
+      // If upgrading from monthly to lifetime, cancel existing monthly subscription
+      if (subscriptionType === 'lifetime') {
+        const userRef  = db.collection('users').doc(email);
+        const userSnap = await userRef.get();
+        if (userSnap.exists) {
+          const existingData = userSnap.data();
+          const existingSubId = existingData.lemonSqueezySubscriptionId;
+          const existingType  = existingData.subscriptionType;
+
+          if (existingSubId && existingType === 'monthly') {
+            try {
+              const cancelRes = await fetch(
+                `https://api.lemonsqueezy.com/v1/subscriptions/${existingSubId}`,
+                {
+                  method: 'DELETE',
+                  headers: {
+                    'Authorization': `Bearer ${process.env.LEMONSQUEEZY_API_KEY}`,
+                    'Accept': 'application/vnd.api+json',
+                    'Content-Type': 'application/vnd.api+json',
+                  },
+                }
+              );
+              if (cancelRes.ok) {
+                console.log(`✅ Auto-cancelled monthly subscription ${existingSubId} for lifetime upgrade: ${email}`);
+              } else {
+                console.warn(`⚠️ Could not auto-cancel monthly for ${email} — may need manual cancellation`);
+              }
+            } catch (e) {
+              console.warn(`⚠️ Error cancelling monthly subscription for ${email}:`, e);
+            }
+          }
+        }
+      }
+
       await db.collection('users').doc(email).set({
         email: email,
         subscription: 'premium',
@@ -85,6 +119,12 @@ export default async function handler(req, res) {
         purchaseDate: admin.firestore.FieldValue.serverTimestamp(),
         lemonSqueezyOrderId: orderId,
         productName: productName,
+        // Clear monthly-specific fields if upgrading to lifetime
+        ...(subscriptionType === 'lifetime' && {
+          subscriptionCancelled: false,
+          lemonSqueezySubscriptionId: null,
+          subscriptionStatus: 'lifetime',
+        }),
       }, { merge: true });
 
       console.log(`✅ order_created: Firestore updated for ${email} — type: ${subscriptionType}`);
