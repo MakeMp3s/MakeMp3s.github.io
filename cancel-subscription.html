@@ -635,6 +635,7 @@
         // Populate nav dropdown
         const userRef  = doc(db, "users", user.email);
         const userSnap = await getDoc(userRef);
+        const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
         const subscription = userData.subscription || 'free';
 			const subscriptionType = userData.subscriptionType || null;
 
@@ -670,7 +671,7 @@
         document.getElementById('user-email-display').textContent = user.email;
 
         // ── Decide which state to show ────────────────────────────────────────
-        const { subscriptionType, subscriptionCancelled, subscription } = userData;
+        const { subscriptionCancelled } = userData;
 
         if (subscription !== 'premium') {
             // Not a premium user — nothing to cancel
