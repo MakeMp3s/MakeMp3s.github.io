@@ -169,6 +169,13 @@
             gap: 1.25rem;
         }
 
+        .avatar-wrapper {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+        }
+
         .profile-avatar {
             width: 60px;
             height: 60px;
@@ -189,6 +196,19 @@
             height: 100%;
             object-fit: cover;
             border-radius: 50%;
+        }
+
+        .premium-crown {
+            display: none;
+            position: absolute;
+            top: -6px;
+            left: -8px;
+            font-size: 1.1rem;
+            color: #D4AF37;
+            transform: rotate(-25deg);
+            filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6));
+            z-index: 2;
+            pointer-events: none;
         }
 
         .profile-info { flex: 1; min-width: 0; }
@@ -557,8 +577,11 @@
 
                 <!-- Profile Card -->
                 <div class="card profile-card">
-                    <div class="profile-avatar" id="profile-avatar">
-                        <i class="fas fa-user"></i>
+                    <div class="avatar-wrapper">
+                        <i class="fas fa-crown premium-crown" id="premium-crown"></i>
+                        <div class="profile-avatar" id="profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
                     </div>
                     <div class="profile-info">
                         <div class="profile-email" id="profile-email">—</div>
@@ -654,9 +677,10 @@
         const { subscription, subscriptionType, subscriptionCancelled,
                 createdAt, purchaseDate, lemonSqueezyOrderId } = userData;
 
-        // Show Premium label beside title if premium
+        // Show Premium label and crown if premium
         if (subscription === 'premium') {
             document.getElementById('premium-label').style.display = 'inline-flex';
+            document.getElementById('premium-crown').style.display = 'block';
         }
 
         // Profile
