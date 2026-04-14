@@ -881,6 +881,7 @@
             }
             const userRef = doc(db, "users", user.email);
             const userSnap = await getDoc(userRef);
+            const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
             const subscription = userData.subscription || 'free';
 			const subscriptionType = userData.subscriptionType || null;
 
