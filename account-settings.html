@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>account settings – make mp3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('images/paper-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .logo { width: 40px; height: 40px; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #ffffff; }
+
+        .nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+
+        .nav-icons a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover { color: #ffffff; transform: translateY(-2px); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        /* Dropdown */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0; top: 35px;
+            background-color: #2a2a2a;
+            min-width: 260px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 15px;
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: background 0.2s;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background-color: #3a3a3a; color: #fff; }
+
+        /* Page */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem 1.5rem 6rem;
+        }
+
+        .settings-container {
+            width: 100%;
+            max-width: 560px;
+        }
+
+        .page-title {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-bottom: 1.75rem;
+            color: #ffffff;
+        }
+
+        /* Cards */
+        .card {
+            background-color: rgba(42, 42, 42, 0.6);
+            border: 1px solid #444;
+            border-radius: 14px;
+            padding: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Profile Card */
+        .profile-card {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.08);
+            border: 2px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: #b0b0b0;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .profile-info { flex: 1; min-width: 0; }
+
+        .profile-email {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-since {
+            font-size: 0.83rem;
+            color: #808080;
+            margin-top: 0.2rem;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .badge-lifetime {
+            background-color: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #D4AF37;
+        }
+
+        .badge-monthly {
+            background-color: rgba(0, 122, 255, 0.12);
+            border: 1px solid rgba(0, 122, 255, 0.35);
+            color: #4da6ff;
+        }
+
+        .badge-free {
+            background-color: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #808080;
+        }
+
+        /* Section label */
+        .section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #606060;
+            margin-bottom: 1rem;
+        }
+
+        /* Detail rows */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.93rem;
+        }
+
+        .detail-row:last-child { border-bottom: none; }
+
+        .detail-label { color: #808080; }
+
+        .detail-value {
+            color: #ffffff;
+            font-weight: bold;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-all;
+            font-size: 0.88rem;
+        }
+
+        .detail-value.gold { color: #D4AF37; }
+        .detail-value.blue { color: #4da6ff; }
+
+        /* Buttons */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-bottom: 0.65rem;
+        }
+
+        .btn:last-child { margin-bottom: 0; }
+
+        .btn-gold {
+            background-color: #D4AF37;
+            color: #1a1a1a;
+        }
+
+        .btn-gold:hover {
+            background-color: #F4D03F;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-blue {
+            background-color: #007AFF;
+            color: #ffffff;
+        }
+
+        .btn-blue:hover {
+            background-color: #0066dd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #b0b0b0;
+            border: 1.5px solid #555;
+        }
+
+        .btn-outline:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline-red {
+            background-color: transparent;
+            color: #ff6666;
+            border: 1.5px solid #ff4444;
+        }
+
+        .btn-outline-red:hover {
+            background-color: rgba(255,68,68,0.08);
+            transform: translateY(-2px);
+        }
+
+        .btn-signout {
+            background-color: transparent;
+            color: #606060;
+            border: 1.5px solid #333;
+            font-weight: normal;
+        }
+
+        .btn-signout:hover {
+            color: #b0b0b0;
+            border-color: #555;
+            transform: translateY(-2px);
+        }
+
+        /* Free upgrade prompt */
+        .upgrade-prompt {
+            background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(42,42,42,0.4));
+            border: 1px solid rgba(212,175,55,0.2);
+            border-radius: 14px;
+            padding: 1.75rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .upgrade-prompt .up-icon {
+            font-size: 1.8rem;
+            color: #D4AF37;
+            margin-bottom: 0.75rem;
+        }
+
+        .upgrade-prompt h3 {
+            font-size: 1.1rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .upgrade-prompt p {
+            color: #808080;
+            font-size: 0.88rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top-color: #D4AF37;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 3rem auto;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        #loading-state { text-align: center; }
+        #loading-state p { color: #808080; margin-top: 1rem; }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background-color: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: #b0b0b0;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .google-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .google-btn:hover { transform: translateY(-2px); background-color: #f0f0f0; }
+
+        /* Footer */
+        footer { background-color: transparent; padding: 1rem 3rem; }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem; position: relative; }
+            .hamburger { position: absolute; left: 70px; display: flex; }
+            .hamburger span { background-color: #b0b0b0; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px; left: 0; right: 0;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+            .nav-links.active { display: flex; }
+            .nav-icons { gap: 1rem; }
+            .profile-card { flex-wrap: wrap; }
+            .status-badge { margin-top: 0.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            body { background-image: none; }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background-image: url('images/paper-bg.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="feedback.html">Feedback & Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div class="account-container" style="position: relative; display: inline-block;">
+                <a href="javascript:void(0)" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="user-dropdown" class="dropdown-menu"></div>
+            </div>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+        <div class="settings-container">
+
+            <p class="page-title">Account Settings</p>
+
+            <!-- Loading -->
+            <div id="loading-state">
+                <div class="spinner"></div>
+                <p>Loading your account...</p>
+            </div>
+
+            <!-- Content (hidden until loaded) -->
+            <div id="account-content" style="display:none;">
+
+                <!-- Profile Card -->
+                <div class="card profile-card">
+                    <div class="profile-avatar" id="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <div class="profile-email" id="profile-email">—</div>
+                        <div class="profile-since" id="profile-since">Member since —</div>
+                    </div>
+                    <div id="status-badge"></div>
+                </div>
+
+                <!-- Subscription Details — premium only -->
+                <div class="card" id="subscription-card" style="display:none;">
+                    <div class="section-label">Subscription Details</div>
+                    <div id="subscription-details"></div>
+                </div>
+
+                <!-- Upgrade prompt — free users -->
+                <div class="upgrade-prompt" id="upgrade-prompt" style="display:none;">
+                    <div class="up-icon"><i class="fas fa-crown"></i></div>
+                    <h3>Unlock Make MP3s Premium</h3>
+                    <p>Unlimited downloads, automatic volume leveling, square cover art, and advanced search.</p>
+                    <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/70b5268e-227f-4d55-bb25-1786f944f580" class="btn btn-gold" target="_blank">
+                        <i class="fas fa-crown"></i> Get Premium
+                    </a>
+                </div>
+
+                <!-- Actions Card -->
+                <div class="card" id="actions-card">
+                    <div class="section-label">Actions</div>
+                    <div id="action-buttons"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color:#fff; margin-bottom:1rem;">Welcome Back</h2>
+            <p style="color:#b0b0b0; margin-bottom:2rem;">Sign in to access your Make MP3s account.</p>
+            <button onclick="handleGoogleLogin()" class="google-btn">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2026 Make MP3s | <a href="https://makemp3s.com/legal" style="color:#808080; text-decoration:none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color:#808080; text-decoration:none; font-weight:bold;">Our Story</a>
+        </div>
+    </footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+        authDomain: "make-mp3s.firebaseapp.com",
+        projectId: "make-mp3s",
+        storageBucket: "make-mp3s.firebasestorage.app",
+        messagingSenderId: "530983812032",
+        appId: "1:530983812032:web:1d059a67673771929b2625",
+        measurementId: "G-H11K90Y0CD"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    // ── Format date ───────────────────────────────────────────────────────────
+    function formatDate(timestamp) {
+        if (!timestamp) return '—';
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    // ── Build the page once we have user + firebase data ─────────────────────
+    function buildPage(user, userData) {
+        document.getElementById('loading-state').style.display = 'none';
+        document.getElementById('account-content').style.display = 'block';
+
+        const { subscription, subscriptionType, subscriptionCancelled,
+                createdAt, purchaseDate, lemonSqueezyOrderId } = userData;
+
+        // Profile
+        if (user.photoURL) {
+            document.getElementById('profile-avatar').innerHTML =
+                `<img src="${user.photoURL}" alt="Profile">`;
+        }
+        document.getElementById('profile-email').textContent = user.email;
+        document.getElementById('profile-since').textContent =
+            `Member since ${formatDate(createdAt)}`;
+
+        // Status badge
+        const badgeEl = document.getElementById('status-badge');
+        if (subscription === 'premium' && subscriptionType === 'lifetime') {
+            badgeEl.innerHTML = `<span class="status-badge badge-lifetime"><i class="fas fa-infinity"></i> Lifetime</span>`;
+        } else if (subscription === 'premium' && subscriptionType === 'monthly') {
+            if (subscriptionCancelled) {
+                badgeEl.innerHTML = `<span class="status-badge badge-monthly"><i class="fas fa-clock"></i> Cancelling</span>`;
+            } else {
+                badgeEl.innerHTML = `<span class="status-badge badge-monthly"><i class="fas fa-sync-alt"></i> Monthly</span>`;
+            }
+        } else {
+            badgeEl.innerHTML = `<span class="status-badge badge-free"><i class="fas fa-user"></i> Free</span>`;
+        }
+
+        // Subscription details — premium users only
+        if (subscription === 'premium') {
+            document.getElementById('subscription-card').style.display = 'block';
+            const detailsEl = document.getElementById('subscription-details');
+
+            const typeLabel = subscriptionType === 'lifetime'
+                ? '<span class="detail-value gold">Lifetime</span>'
+                : '<span class="detail-value blue">Monthly</span>';
+
+            const cancelledRow = subscriptionCancelled
+                ? `<div class="detail-row">
+                       <span class="detail-label">Status</span>
+                       <span class="detail-value" style="color:#ff6666;">Cancels at period end</span>
+                   </div>` : '';
+
+            detailsEl.innerHTML = `
+                <div class="detail-row">
+                    <span class="detail-label">Plan</span>
+                    ${typeLabel}
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Purchase date</span>
+                    <span class="detail-value">${formatDate(purchaseDate)}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order ID</span>
+                    <span class="detail-value">#${lemonSqueezyOrderId || '—'}</span>
+                </div>
+                ${cancelledRow}
+            `;
+        }
+
+        // Upgrade prompt for free users
+        if (subscription !== 'premium') {
+            document.getElementById('upgrade-prompt').style.display = 'block';
+        }
+
+        // Action buttons
+        const actionsEl = document.getElementById('action-buttons');
+        let buttons = '';
+
+        // Monthly users: upgrade to lifetime (if not already cancelling)
+        if (subscription === 'premium' && subscriptionType === 'monthly' && !subscriptionCancelled) {
+            buttons += `
+                <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/70b5268e-227f-4d55-bb25-1786f944f580"
+                   class="btn btn-gold" target="_blank">
+                    <i class="fas fa-infinity"></i> Upgrade to Lifetime
+                </a>`;
+        }
+
+        // Download button — all users
+        buttons += `
+            <a href="https://makemp3s.com" class="btn btn-blue">
+                <i class="fas fa-download"></i> Download Make MP3s
+            </a>`;
+
+        // Cancel subscription — monthly, not already cancelled
+        if (subscription === 'premium' && subscriptionType === 'monthly' && !subscriptionCancelled) {
+            buttons += `
+                <a href="cancel-subscription.html" class="btn btn-outline-red">
+                    <i class="fas fa-times-circle"></i> Cancel Subscription
+                </a>`;
+        }
+
+        // Refund policy — all users
+        buttons += `
+            <a href="refund-policy.html" class="btn btn-outline">
+                <i class="fas fa-file-alt"></i> Refund Policy
+            </a>`;
+
+        // Sign out — all users
+        buttons += `
+            <button class="btn btn-signout" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>`;
+
+        actionsEl.innerHTML = buttons;
+    }
+
+    // ── Auth state ────────────────────────────────────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            // Not signed in — show modal
+            document.getElementById('loading-state').style.display = 'none';
+            window.openAuthModal();
+            return;
+        }
+
+        // Populate nav dropdown
+        const userRef  = doc(db, "users", user.email);
+        const userSnap = await getDoc(userRef);
+        const userData = userSnap.exists()
+            ? userSnap.data()
+            : { subscription: 'free' };
+
+        const subType = userData.subscription || 'free';
+
+        dropdown.innerHTML = `
+            <div style="padding:15px; border-bottom:1px solid #444;">
+                <div style="color:#D4AF37; font-weight:bold; font-size:0.8rem; margin-bottom:5px;">ACCOUNT</div>
+                <div style="color:#fff; font-weight:bold;">${user.email}</div>
+                <div style="font-size:0.85rem; color:#b0b0b0; margin-top:5px;">
+                    Plan: <span style="color:${subType === 'premium' ? '#D4AF37' : '#fff'}; text-transform:uppercase; font-weight:bold;">${subType}</span>
+                </div>
+            </div>
+            <a href="account-settings.html" class="dropdown-item">Account Settings</a>
+            <a href="javascript:void(0)" onclick="handleLogout()" class="dropdown-item" style="color:#ff4444;">Log Out</a>
+        `;
+
+        buildPage(user, userData);
+    });
+
+    // ── Auth actions ──────────────────────────────────────────────────────────
+    window.handleGoogleLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+            window.closeAuthModal();
+        } catch (error) {
+            console.error("Login Failed:", error);
+        }
+    };
+
+    window.handleLogout = async () => {
+        await signOut(auth);
+        window.location.href = 'index.html';
+    };
+
+    window.toggleDropdown = () => {
+        if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+            dropdown.classList.toggle("show");
+        } else {
+            dropdown.classList.remove("show");
+            window.openAuthModal();
+        }
+    };
+
+    window.openAuthModal  = () => { authModal.style.display = "flex"; dropdown.classList.remove("show"); };
+    window.closeAuthModal = () => { authModal.style.display = "none"; };
+
+    window.onclick = (event) => {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) window.closeAuthModal();
+    };
+</script>
+
+</body>
+</html>
