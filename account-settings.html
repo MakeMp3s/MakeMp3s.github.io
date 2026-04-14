@@ -305,26 +305,27 @@
         }
 
         .btn-outline-red {
-            background-color: transparent;
-            color: #ff6666;
-            border: 1.5px solid #ff4444;
+            background-color: #ff4444 !important;
+            color: #1a1a1a !important;
+            border: none !important;
         }
 
         .btn-outline-red:hover {
-            background-color: rgba(255,68,68,0.08);
+            background-color: #ff6666 !important;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4) !important;
         }
 
         .btn-signout {
-            background-color: transparent;
-            color: #606060;
-            border: 1.5px solid #333;
-            font-weight: normal;
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #1a1a1a;
+            border: 1.5px solid #ffffff;
+            color: #000000;
+            font-weight: bold;
         }
 
         .btn-signout:hover {
-            color: #b0b0b0;
-            border-color: #555;
+            background-color: rgba(255, 255, 255, 0.18);
             transform: translateY(-2px);
         }
 
@@ -690,6 +691,12 @@
                 <i class="fas fa-download"></i> Download Make MP3s
             </a>`;
 
+        // Sign out — all users (right after download)
+        buttons += `
+            <button class="btn btn-signout" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Sign Out
+            </button>`;
+
         // Cancel subscription — monthly, not already cancelled
         if (subscription === 'premium' && subscriptionType === 'monthly' && !subscriptionCancelled) {
             buttons += `
@@ -703,12 +710,6 @@
             <a href="refund-policy.html" class="btn btn-outline">
                 <i class="fas fa-file-alt"></i> Refund Policy
             </a>`;
-
-        // Sign out — all users
-        buttons += `
-            <button class="btn btn-signout" onclick="handleLogout()">
-                <i class="fas fa-sign-out-alt"></i> Sign Out
-            </button>`;
 
         actionsEl.innerHTML = buttons;
     }
