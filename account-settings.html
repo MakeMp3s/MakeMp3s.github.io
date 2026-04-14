@@ -128,6 +128,31 @@
             color: #ffffff;
         }
 
+        .title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.75rem;
+        }
+
+        .title-row .page-title {
+            margin-bottom: 0;
+        }
+
+        .premium-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #D4AF37;
+            font-size: 0.9rem;
+            font-weight: bold;
+            letter-spacing: 0.05em;
+        }
+
+        .premium-label i {
+            font-size: 0.85rem;
+        }
+
         /* Cards */
         .card {
             background-color: rgba(42, 42, 42, 0.6);
@@ -204,9 +229,9 @@
         }
 
         .badge-monthly {
-            background-color: rgba(0, 122, 255, 0.12);
-            border: 1px solid rgba(0, 122, 255, 0.35);
-            color: #4da6ff;
+            background-color: rgba(212, 175, 55, 0.15);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #D4AF37;
         }
 
         .badge-free {
@@ -248,7 +273,7 @@
         }
 
         .detail-value.gold { color: #D4AF37; }
-        .detail-value.blue { color: #4da6ff; }
+        .detail-value.blue { color: #D4AF37; }
 
         /* Buttons */
         .btn {
@@ -514,7 +539,12 @@
     <div class="page-wrapper">
         <div class="settings-container">
 
-            <p class="page-title">Account Settings</p>
+            <div class="title-row">
+                <p class="page-title">Account Settings</p>
+                <span class="premium-label" id="premium-label" style="display:none;">
+                    <i class="fas fa-star"></i> Premium
+                </span>
+            </div>
 
             <!-- Loading -->
             <div id="loading-state">
@@ -623,6 +653,11 @@
 
         const { subscription, subscriptionType, subscriptionCancelled,
                 createdAt, purchaseDate, lemonSqueezyOrderId } = userData;
+
+        // Show Premium label beside title if premium
+        if (subscription === 'premium') {
+            document.getElementById('premium-label').style.display = 'inline-flex';
+        }
 
         // Profile
         if (user.photoURL) {
