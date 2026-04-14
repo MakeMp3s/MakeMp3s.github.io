@@ -279,42 +279,118 @@
             margin-top: 1.5rem;
         }
 
-        /* Dropdown Styles */
-        .dropdown-menu {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 35px;
-            background-color: #2a2a2a;
-            min-width: 260px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-            border-radius: 8px;
-            z-index: 1000;
-            overflow: hidden;
-            border: 1px solid #444;
-        }
+        			/* Dropdown Styles */
+			.dropdown-menu {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 42px;
+				background-color: #222222;
+				width: 280px;
+				box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+				border-radius: 14px;
+				z-index: 1000;
+				overflow: hidden;
+				border: 1px solid rgba(255,255,255,0.1);
+				padding: 0.5rem;
+			}
 
-        .dropdown-menu.show {
-            display: block;
-        }
+			.dropdown-menu.show {
+				display: block;
+			}
 
-        .dropdown-item {
-            display: block;
-            padding: 12px 15px;
-            color: #b0b0b0;
-            text-decoration: none;
-            transition: background 0.2s;
-            border-bottom: 1px solid #3a3a3a;
-        }
+			/* Header section inside dropdown */
+			.dropdown-header {
+				padding: 0.85rem 1rem;
+				margin-bottom: 0.4rem;
+				border-bottom: 1px solid rgba(255,255,255,0.07);
+			}
 
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
+			.dropdown-plan {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: #606060;
+				margin-bottom: 0.25rem;
+			}
 
-        .dropdown-item:hover {
-            background-color: #333;
-            color: #fff;
-        }
+			.dropdown-email {
+				font-size: 0.9rem;
+				color: #ffffff;
+				font-weight: bold;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.dropdown-sub {
+				font-size: 0.78rem;
+				margin-top: 0.2rem;
+			}
+
+			/* Dropdown buttons */
+			.dropdown-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				width: 100%;
+				padding: 0.75rem 1rem;
+				height: 44px;
+				border-radius: 25px;
+				font-size: 0.88rem !important;
+				font-weight: bold;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif !important;
+				cursor: pointer;
+				border: none;
+				transition: all 0.25s ease;
+				text-decoration: none;
+				margin-bottom: 0.4rem;
+				text-align: center;
+				box-sizing: border-box;
+				-webkit-appearance: none;
+				appearance: none;
+				line-height: 1;
+			}
+
+			.dropdown-btn:last-child { margin-bottom: 0; }
+
+			.dropdown-btn-gold {
+				background-color: #D4AF37;
+				color: #1a1a1a !important;
+			}
+
+			.dropdown-btn-gold:hover {
+				background-color: #F4D03F;
+				transform: translateY(-1px);
+				box-shadow: 0 4px 10px rgba(212,175,55,0.35);
+			}
+
+			.dropdown-btn-grey {
+				background-color: #b0b0b0;
+				color: #1a1a1a !important;
+			}
+
+			.dropdown-btn-grey:hover {
+				background-color: #c8c8c8;
+				transform: translateY(-1px);
+			}
+
+			.dropdown-item {
+				display: block;
+				padding: 12px 15px;
+				color: #b0b0b0;
+				text-decoration: none;
+				transition: background 0.2s;
+				border-bottom: 1px solid #3a3a3a;
+			}
+
+			.dropdown-item:last-child { border-bottom: none; }
+
+			.dropdown-item:hover {
+				background-color: #3a3a3a;
+				color: #fff;
+			}
 
         /* Footer */
         footer {
@@ -587,7 +663,7 @@
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
-            const userRef = doc(db, "users", user.uid);
+            const userRef = doc(db, "users", user.email);
             const userSnap = await getDoc(userRef);
             if (!userSnap.exists()) {
                 await setDoc(userRef, { email: user.email, subscription: "free", createdAt: new Date() });
@@ -606,21 +682,38 @@
 
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            const userRef = doc(db, "users", user.uid);
+            const userRef = doc(db, "users", user.email);
             const userSnap = await getDoc(userRef);
-            const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
-            const subType = userData.subscription || 'free';
-            dropdown.innerHTML = `
-                <div style="padding: 15px; border-bottom: 1px solid #444;">
-                    <div style="color: #D4AF37; font-weight: bold; font-size: 0.8rem; margin-bottom: 5px;">ACCOUNT</div>
-                    <div style="color: #fff; font-weight: bold;">${user.email}</div>
-                    <div style="font-size: 0.85rem; color: #b0b0b0; margin-top: 5px;">
-                        Plan: <span style="color: ${subType === 'premium' ? '#D4AF37' : '#fff'}; text-transform: uppercase; font-weight: bold;">${subType}</span>
-                    </div>
-                </div>
-                <a href="account-settings.html" class="dropdown-item">Account Settings</a>
-                <a href="javascript:void(0)" onclick="handleLogout()" class="dropdown-item" style="color: #ff4444;">Log Out</a>
-            `;
+            const subscription = userData.subscription || 'free';
+			const subscriptionType = userData.subscriptionType || null;
+
+			let planLabel = 'Free';
+			let planColor = '#ffffff';
+			if (subscription === 'premium' && subscriptionType === 'lifetime') {
+				planLabel = 'Lifetime';
+				planColor = '#D4AF37';
+			} else if (subscription === 'premium' && subscriptionType === 'monthly') {
+				planLabel = 'Monthly';
+				planColor = '#D4AF37';
+			}
+
+			dropdown.innerHTML = `
+				<div class="dropdown-header">
+					<div class="dropdown-plan">Account</div>
+					<div class="dropdown-email">${user.email}</div>
+					<div class="dropdown-sub">
+						Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span>
+					</div>
+				</div>
+				<div style="padding: 0.4rem 0.5rem 0.5rem;">
+					<a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+						<i class="fas fa-user-cog"></i> Account Settings
+					</a>
+					<button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
+						<i class="fas fa-sign-out-alt"></i> Sign Out
+					</button>
+				</div>
+			`;
         } else {
             dropdown.innerHTML = "";
             dropdown.classList.remove("show");
