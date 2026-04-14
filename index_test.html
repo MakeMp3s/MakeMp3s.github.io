@@ -525,7 +525,6 @@
 			.dropdown-btn-gold {
 				background-color: #D4AF37;
 				color: #1a1a1a !important;
-				font-size: 0.9rem;
 			}
 
 			.dropdown-btn-gold:hover {
@@ -537,7 +536,6 @@
 			.dropdown-btn-grey {
 				background-color: #b0b0b0;
 				color: #1a1a1a !important;
-				font-size: 0.9rem;
 			}
 
 			.dropdown-btn-grey:hover {
@@ -838,17 +836,29 @@
 			}
 			
 			// Normal web login (no callback)
-			const userRef = doc(db, "users", user.uid);
+			const userRef = doc(db, "users", user.email);
 			const userSnap = await getDoc(userRef);
 			const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
-			const subType = userData.subscription || 'free';
-			
+			const subscription = userData.subscription || 'free';
+			const subscriptionType = userData.subscriptionType || null;
+
+			// Build readable plan label
+			let planLabel = 'Free';
+			let planColor = '#ffffff';
+			if (subscription === 'premium' && subscriptionType === 'lifetime') {
+				planLabel = 'Lifetime';
+				planColor = '#D4AF37';
+			} else if (subscription === 'premium' && subscriptionType === 'monthly') {
+				planLabel = 'Monthly';
+				planColor = '#D4AF37';
+			}
+
 			dropdown.innerHTML = `
 				<div class="dropdown-header">
 					<div class="dropdown-plan">Account</div>
 					<div class="dropdown-email">${user.email}</div>
 					<div class="dropdown-sub">
-						Plan: <span style="color:${subType === 'premium' ? '#D4AF37' : '#ffffff'}; font-weight:bold; text-transform:uppercase;">${subType}</span>
+						Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span>
 					</div>
 				</div>
 				<div style="padding: 0.4rem 0.5rem 0.5rem;">
