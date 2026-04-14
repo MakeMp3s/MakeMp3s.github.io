@@ -686,7 +686,7 @@
         try {
             const idToken = await user.getIdToken();
 
-            const response = await fetch('/api/cancel-subscription', {
+            const response = await fetch('https://make-mp3s-github-io.vercel.app/api/cancel-subscription', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
