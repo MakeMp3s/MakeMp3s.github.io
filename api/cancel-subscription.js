@@ -14,16 +14,25 @@ if (!admin.apps.length) {
 
 const db = admin.firestore();
 
+// Allow requests from any makemp3s origin
+function setCorsHeaders(res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+}
+
 export default async function handler(req, res) {
+  setCorsHeaders(res);
+
+  // Handle preflight OPTIONS request from browser
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-
-  // Allow requests from your domain
-  res.setHeader('Access-Control-Allow-Origin', 'https://makemp3s.com');
-  res.setHeader('Access-Control-Allow-Methods', 'POST');
-  res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
 
   try {
     // 1. Verify Firebase ID token from Authorization header
