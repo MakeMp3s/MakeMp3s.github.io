@@ -15,14 +15,22 @@ if (!admin.apps.length) {
 const db = admin.firestore();
 
 // Allow requests from any makemp3s origin
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+function setCorsHeaders(req, res) {
+  const allowedOrigins = [
+    'https://makemp3s.com',
+    'https://www.makemp3s.com',
+    'https://make-mp3s-github-io.vercel.app',
+  ];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
 }
 
 export default async function handler(req, res) {
-  setCorsHeaders(res);
+  setCorsHeaders(req, res);
 
   // Handle preflight OPTIONS request from browser
   if (req.method === 'OPTIONS') {
