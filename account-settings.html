@@ -433,53 +433,202 @@
 
         /* Modal */
         .modal-overlay {
-            display: none;
-            position: fixed;
-            z-index: 2000;
-            left: 0; top: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            justify-content: center;
-            align-items: center;
-        }
+				display: none; /* Hidden by default */
+				position: fixed;
+				z-index: 2000;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.8);
+				justify-content: center;
+				align-items: center;
+			}
 
-        .modal-box {
-            background-color: #1a1a1a;
-            padding: 2.5rem;
-            border-radius: 15px;
-            border: 1px solid #444;
-            width: 90%;
-            max-width: 400px;
-            text-align: center;
-            position: relative;
-        }
+			.modal-box {
+				background-color: #1a1a1a;
+				padding: 2.5rem;
+				border-radius: 15px;
+				border: 1px solid #444;
+				width: 90%;
+				max-width: 400px;
+				text-align: center;
+				position: relative;
+			}
 
-        .close-btn {
-            position: absolute;
-            top: 15px; right: 20px;
-            color: #b0b0b0;
-            font-size: 28px;
-            cursor: pointer;
-        }
+			.close-btn {
+				position: absolute;
+				top: 15px;
+				right: 20px;
+				color: #b0b0b0;
+				font-size: 28px;
+				cursor: pointer;
+			}
 
-        .google-btn {
-            background-color: #ffffff;
-            color: #1a1a1a;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            width: 100%;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
+			.google-btn {
+				background-color: #ffffff;
+				color: #1a1a1a;
+				border: none;
+				padding: 12px 24px;
+				border-radius: 25px;
+				font-size: 1rem;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 10px;
+				width: 100%;
+				font-weight: bold;
+				transition: transform 0.2s;
+			}
 
-        .google-btn:hover { transform: translateY(-2px); background-color: #f0f0f0; }
+			.google-btn:hover {
+				transform: translateY(-2px);
+				background-color: #f0f0f0;
+			}
+
+			/* Email/password form in modal */
+			.modal-divider {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				margin: 1rem 0;
+				color: #555;
+				font-size: 0.8rem;
+			}
+
+			.modal-divider::before,
+			.modal-divider::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: #3a3a3a;
+			}
+
+			.modal-toggle {
+				background: none;
+				border: none;
+				color: #808080;
+				font-size: 0.82rem;
+				cursor: pointer;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				transition: color 0.2s;
+				padding: 0;
+				width: 100%;
+			}
+
+			.modal-toggle:hover { color: #cccccc; }
+
+			.modal-email-form {
+				display: none;
+				margin-top: 0.75rem;
+				text-align: left;
+			}
+
+			.modal-email-form.visible { display: block; }
+
+			.modal-form-group { margin-bottom: 0.75rem; }
+
+			.modal-form-group label {
+				display: block;
+				font-size: 0.78rem;
+				color: #a0a0a0;
+				margin-bottom: 0.3rem;
+			}
+
+			.modal-form-group input {
+				width: 100%;
+				background: rgba(255,255,255,0.06);
+				border: 1px solid #444;
+				border-radius: 8px;
+				padding: 10px 14px;
+				color: #ffffff;
+				font-size: 0.93rem;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				outline: none;
+				transition: border-color 0.2s;
+				box-sizing: border-box;
+			}
+
+			.modal-form-group input:focus { border-color: #007AFF; }
+			.modal-form-group input::placeholder { color: #555; }
+
+			.modal-email-btn {
+				background-color: #007AFF;
+				color: #ffffff;
+				border: none;
+				padding: 11px 24px;
+				border-radius: 25px;
+				font-size: 0.93rem;
+				cursor: pointer;
+				width: 100%;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				font-weight: bold;
+				transition: all 0.3s ease;
+				margin-top: 0.25rem;
+			}
+
+			.modal-email-btn:hover {
+				background-color: #0066dd;
+				transform: translateY(-2px);
+			}
+
+			.modal-email-btn:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+				transform: none;
+			}
+
+			.modal-error {
+				font-size: 0.8rem;
+				color: #ff6666;
+				margin-top: 0.5rem;
+				text-align: left;
+				min-height: 1rem;
+			}
+
+			.modal-switch-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 0.75rem;
+				font-size: 0.78rem;
+				color: #606060;
+			}
+
+			.modal-switch-row button {
+				background: none;
+				border: none;
+				color: #808080;
+				font-size: 0.78rem;
+				cursor: pointer;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				padding: 0;
+			}
+
+			.modal-switch-row button:hover { color: #cccccc; }
+
+			.modal-forgot {
+				background: none;
+				border: none;
+				color: #606060;
+				font-size: 0.75rem;
+				cursor: pointer;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				padding: 0;
+				display: block;
+				text-align: right;
+				margin-top: -0.3rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.modal-forgot:hover { color: #b0b0b0; }
 
         /* Footer */
         footer { background-color: transparent; padding: 1rem 3rem; }
@@ -616,17 +765,46 @@
         </div>
     </div>
 
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="modal-overlay">
-        <div class="modal-box">
-            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
-            <h2 style="color:#fff; margin-bottom:1rem;">Welcome Back</h2>
-            <p style="color:#b0b0b0; margin-bottom:2rem;">Sign in to access your Make MP3s account.</p>
-            <button onclick="handleGoogleLogin()" class="google-btn">
-                <i class="fab fa-google"></i> Continue with Google
-            </button>
-        </div>
-    </div>
+    	<div id="auth-modal" class="modal-overlay">
+		<div class="modal-box">
+			<span class="close-btn" onclick="closeAuthModal()">&times;</span>
+			<h2 style="color:#fff; margin-bottom:0.4rem;" id="modal-title">Welcome Back</h2>
+			<p style="color:#b0b0b0; margin-bottom:1.5rem; font-size:0.9rem;" id="modal-subtitle">Sign in to access your Make MP3s account.</p>
+
+			<button onclick="handleGoogleLogin()" class="google-btn" id="modal-google-btn">
+				<i class="fab fa-google"></i> Continue with Google
+			</button>
+
+			<div class="modal-divider" id="modal-divider">or</div>
+
+			<button class="modal-toggle" id="modal-toggle" onclick="toggleEmailForm()">
+				Sign in with email & password
+			</button>
+
+			<!-- Email/password form -->
+			<div class="modal-email-form" id="modal-email-form">
+				<div class="modal-form-group">
+					<label for="modal-email">Email</label>
+					<input type="email" id="modal-email" placeholder="your@email.com" autocomplete="email">
+				</div>
+				<div class="modal-form-group">
+					<label for="modal-password">Password</label>
+					<input type="password" id="modal-password" placeholder="Password" autocomplete="current-password">
+				</div>
+				<button class="modal-forgot" id="modal-forgot" onclick="handleModalForgotPassword()">Forgot password?</button>
+				<div class="modal-form-group" id="modal-confirm-group" style="display:none;">
+					<label for="modal-confirm">Confirm Password</label>
+					<input type="password" id="modal-confirm" placeholder="Confirm password" autocomplete="new-password">
+				</div>
+				<div class="modal-error" id="modal-error"></div>
+				<button class="modal-email-btn" id="modal-email-btn" onclick="handleEmailAuth()">Sign In</button>
+				<div class="modal-switch-row">
+					<span id="modal-switch-text">Don't have an account?</span>
+					<button onclick="toggleAuthMode()">Create one</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
     <!-- Footer -->
     <footer>
@@ -638,7 +816,8 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged }
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+        signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
     import { getFirestore, doc, getDoc }
         from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
@@ -859,8 +1038,174 @@
         }
     };
 
-    window.openAuthModal  = () => { authModal.style.display = "flex"; dropdown.classList.remove("show"); };
-    window.closeAuthModal = () => { authModal.style.display = "none"; };
+        window.openAuthModal = () => {
+        authModal.style.display = "flex";
+        dropdown.classList.remove("show");
+        // Reset modal to default state each time it opens
+        resetEmailForm();
+    };
+
+    window.closeAuthModal = () => {
+        authModal.style.display = "none";
+    };
+
+    // ── Email form toggle ─────────────────────────────────────────────────────
+    let emailFormVisible = false;
+    let isSignUpMode = false;
+
+    window.toggleEmailForm = () => {
+        emailFormVisible = !emailFormVisible;
+        const form     = document.getElementById('modal-email-form');
+        const toggle   = document.getElementById('modal-toggle');
+        const googleBtn = document.getElementById('modal-google-btn');
+        const divider  = document.getElementById('modal-divider');
+
+        form.classList.toggle('visible', emailFormVisible);
+        toggle.textContent = emailFormVisible ? '← Back to Google sign in' : 'Sign in with email & password';
+        googleBtn.style.display = emailFormVisible ? 'none' : 'flex';
+        divider.style.display   = emailFormVisible ? 'none' : 'flex';
+
+        if (emailFormVisible) document.getElementById('modal-email').focus();
+    };
+
+    // ── Toggle sign in / create account ──────────────────────────────────────
+    window.toggleAuthMode = () => {
+        isSignUpMode = !isSignUpMode;
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-confirm').value = '';
+
+        const confirmGroup = document.getElementById('modal-confirm-group');
+        const forgot       = document.getElementById('modal-forgot');
+        const btn          = document.getElementById('modal-email-btn');
+        const switchText   = document.getElementById('modal-switch-text');
+        const switchBtn    = document.querySelector('.modal-switch-row button');
+        const title        = document.getElementById('modal-title');
+        const subtitle     = document.getElementById('modal-subtitle');
+
+        if (isSignUpMode) {
+            confirmGroup.style.display = 'block';
+            forgot.style.display = 'none';
+            btn.textContent = 'Create Account';
+            switchText.textContent = 'Already have an account?';
+            switchBtn.textContent = 'Sign in';
+            title.textContent = 'Create Account';
+            subtitle.textContent = 'Join Make MP3s today.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'new-password');
+        } else {
+            confirmGroup.style.display = 'none';
+            forgot.style.display = 'block';
+            btn.textContent = 'Sign In';
+            switchText.textContent = "Don't have an account?";
+            switchBtn.textContent = 'Create one';
+            title.textContent = 'Welcome Back';
+            subtitle.textContent = 'Sign in to access your Make MP3s account.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'current-password');
+        }
+    };
+
+    // ── Reset form to default state ───────────────────────────────────────────
+    function resetEmailForm() {
+        emailFormVisible = false;
+        isSignUpMode = false;
+        document.getElementById('modal-email-form').classList.remove('visible');
+        document.getElementById('modal-toggle').textContent = 'Sign in with email & password';
+        document.getElementById('modal-google-btn').style.display = 'flex';
+        document.getElementById('modal-divider').style.display = 'flex';
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-email').value = '';
+        document.getElementById('modal-password').value = '';
+        document.getElementById('modal-confirm').value = '';
+        document.getElementById('modal-confirm-group').style.display = 'none';
+        document.getElementById('modal-forgot').style.display = 'block';
+        document.getElementById('modal-email-btn').textContent = 'Sign In';
+        document.getElementById('modal-switch-text').textContent = "Don't have an account?";
+        document.querySelector('.modal-switch-row button').textContent = 'Create one';
+        document.getElementById('modal-title').textContent = 'Welcome Back';
+        document.getElementById('modal-subtitle').textContent = 'Sign in to access your Make MP3s account.';
+    }
+
+    // ── Friendly error messages ───────────────────────────────────────────────
+    function friendlyError(code) {
+        return ({
+            'auth/user-not-found'       : 'No account found with that email.',
+            'auth/wrong-password'       : 'Incorrect password. Please try again.',
+            'auth/invalid-credential'   : 'Incorrect email or password.',
+            'auth/invalid-email'        : 'Please enter a valid email address.',
+            'auth/too-many-requests'    : 'Too many attempts. Please wait and try again.',
+            'auth/email-already-in-use' : 'An account with this email already exists.',
+            'auth/weak-password'        : 'Password must be at least 6 characters.',
+        })[code] || 'Something went wrong. Please try again.';
+    }
+
+    // ── Handle email sign in / sign up ────────────────────────────────────────
+    window.handleEmailAuth = async () => {
+        const email    = document.getElementById('modal-email').value.trim();
+        const password = document.getElementById('modal-password').value;
+        const confirm  = document.getElementById('modal-confirm').value;
+        const errorEl  = document.getElementById('modal-error');
+        const btn      = document.getElementById('modal-email-btn');
+
+        errorEl.textContent = '';
+
+        if (!email || !password) {
+            errorEl.textContent = 'Please enter your email and password.';
+            return;
+        }
+
+        if (isSignUpMode) {
+            if (!confirm) { errorEl.textContent = 'Please confirm your password.'; return; }
+            if (password !== confirm) { errorEl.textContent = 'Passwords do not match.'; return; }
+            if (password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters.'; return; }
+        }
+
+        btn.disabled = true;
+        btn.textContent = isSignUpMode ? 'Creating account...' : 'Signing in...';
+
+        try {
+            let result;
+            if (isSignUpMode) {
+                result = await createUserWithEmailAndPassword(auth, email, password);
+                // Create Firestore record for new user
+                const userRef = doc(db, "users", result.user.email);
+                const userSnap = await getDoc(userRef);
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        email: result.user.email,
+                        subscription: "free",
+                        createdAt: new Date()
+                    });
+                }
+            } else {
+                result = await signInWithEmailAndPassword(auth, email, password);
+            }
+            window.closeAuthModal();
+        } catch (error) {
+            errorEl.textContent = friendlyError(error.code);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = isSignUpMode ? 'Create Account' : 'Sign In';
+        }
+    };
+
+    // ── Forgot password ───────────────────────────────────────────────────────
+    window.handleModalForgotPassword = async () => {
+        const email   = document.getElementById('modal-email').value.trim();
+        const errorEl = document.getElementById('modal-error');
+        if (!email) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = 'Enter your email above first, then click Forgot password.';
+            document.getElementById('modal-email').focus();
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            errorEl.style.color = '#4CAF50';
+            errorEl.textContent = `Reset email sent to ${email}. Check your inbox.`;
+        } catch (error) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = friendlyError(error.code);
+        }
+    };
 
     window.onclick = (event) => {
         if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
