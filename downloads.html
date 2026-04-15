@@ -693,11 +693,40 @@
 	<div id="auth-modal" class="modal-overlay">
 		<div class="modal-box">
 			<span class="close-btn" onclick="closeAuthModal()">&times;</span>
-			<h2 style="color: #fff; margin-bottom: 1rem;">Welcome Back</h2>
-			<p style="color: #b0b0b0; margin-bottom: 2rem;">Sign in to access your Make MP3s account.</p>
-			<button onclick="handleGoogleLogin()" class="google-btn">
+			<h2 style="color:#fff; margin-bottom:0.4rem;" id="modal-title">Welcome Back</h2>
+			<p style="color:#b0b0b0; margin-bottom:1.5rem; font-size:0.9rem;" id="modal-subtitle">Sign in to access your Make MP3s account.</p>
+
+			<button onclick="handleGoogleLogin()" class="google-btn" id="modal-google-btn">
 				<i class="fab fa-google"></i> Continue with Google
 			</button>
+
+			<div class="modal-divider" id="modal-divider">or</div>
+
+			<button class="modal-toggle" id="modal-toggle" onclick="toggleEmailForm()">
+				Sign in with email & password
+			</button>
+
+			<div class="modal-email-form" id="modal-email-form">
+				<div class="modal-form-group">
+					<label for="modal-email">Email</label>
+					<input type="email" id="modal-email" placeholder="your@email.com" autocomplete="email">
+				</div>
+				<div class="modal-form-group">
+					<label for="modal-password">Password</label>
+					<input type="password" id="modal-password" placeholder="Password" autocomplete="current-password">
+				</div>
+				<button class="modal-forgot" id="modal-forgot" onclick="handleModalForgotPassword()">Forgot password?</button>
+				<div class="modal-form-group" id="modal-confirm-group" style="display:none;">
+					<label for="modal-confirm">Confirm Password</label>
+					<input type="password" id="modal-confirm" placeholder="Confirm password" autocomplete="new-password">
+				</div>
+				<div class="modal-error" id="modal-error"></div>
+				<button class="modal-email-btn" id="modal-email-btn" onclick="handleEmailAuth()">Sign In</button>
+				<div class="modal-switch-row">
+					<span id="modal-switch-text">Don't have an account?</span>
+					<button onclick="toggleAuthMode()">Create one</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -804,7 +833,7 @@
         }
     };
 
-        window.openAuthModal = () => {
+    window.openAuthModal = () => {
         authModal.style.display = "flex";
         dropdown.classList.remove("show");
         // Reset modal to default state each time it opens
