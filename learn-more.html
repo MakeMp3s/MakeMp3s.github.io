@@ -346,6 +346,14 @@
             flex-shrink: 0;
         }
 
+        .steps li[style*="counter-increment:none"]::before {
+            display: none;
+        }
+
+        .steps li[style*="counter-increment:none"] {
+            padding-left: 0.5rem;
+        }
+
         .steps li .sub-note {
             display: block;
             margin-top: 0.35rem;
@@ -742,25 +750,46 @@
         <!-- Sync Library -->
         <div class="section">
             <h2 class="section-title">
-                Sync Library
-                <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                <img src="images/sync_library.png" alt="Sync Library" style="height:1.4rem; width:auto; vertical-align:middle;">
+                <span class="premium-badge" style="margin-left:0.5rem;"><i class="fas fa-crown"></i> Premium</span>
             </h2>
             <p>Sync Library keeps your music folders up to date automatically. When new songs get added to a playlist, it only downloads what's missing.</p>
-            <p><strong>Setting it up:</strong></p>
-            <ol class="steps">
-                <li>In the main window, click the <strong>Sync</strong> button (to the right of the Download button)</li>
-                <li>The Sync Library opens — click <strong>Add</strong></li>
-                <li>The Add Playlist to Sync box opens</li>
-                <li>
+            <p style="margin-top:0.75rem;"><strong>Setting it up:</strong></p>
+            <ul class="steps" style="list-style:none; counter-reset:none;">
+                <li style="counter-increment:none;">
                     <div>
-                        Paste your <strong>playlist URL</strong> and click <strong>Select Folder</strong> to choose where the music will be saved
-                        <span class="sub-note">This can be a folder on your computer, or a folder on a plugged-in device like an SSD, phone, or MP3 player</span>
+                        In the main window, click the <strong>Sync</strong> button
+                        <span class="sub-note">To the right of the Download button</span>
                     </div>
                 </li>
-                <li>Click <strong>Add</strong> — your playlist will appear in the Sync Library list</li>
-                <li>Click <strong>Sync</strong> to download all the songs to your selected folder</li>
-            </ol>
-            <p><strong>Keeping it updated:</strong> When new music gets added to a playlist, just open the Sync Library and click Sync. It'll detect what's new and add only the missing songs.</p>
+                <li style="counter-increment:none;">The Sync Library opens</li>
+                <li style="counter-increment:none;">
+                    <div>
+                        Click <strong>Add</strong>
+                        <span class="sub-note">The Add Playlist to Sync box opens</span>
+                    </div>
+                </li>
+                <li style="counter-increment:none;">
+                    <div>
+                        Paste your <strong>playlist URL</strong> and click <strong>Select Folder</strong> to choose where the music will be saved
+                        <div class="tip" style="margin-top:0.6rem; padding:0.6rem 1rem;">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Select a folder on your computer, or a folder on a plugged-in device like an SSD, phone, or MP3 player.</span>
+                        </div>
+                        <div class="tip" style="margin-top:0.5rem; padding:0.6rem 1rem;">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Use your playlist's share link button to copy and paste.</span>
+                        </div>
+                    </div>
+                </li>
+                <li style="counter-increment:none;">
+                    <div>
+                        Click <strong>Add</strong>
+                        <span class="sub-note">Your playlist will appear in the Sync Library list</span>
+                    </div>
+                </li>
+            </ul>
+            <p style="margin-top:0.75rem;"><strong>Keeping it updated:</strong> When new music gets added to a playlist, just open the Sync Library and click Sync. It'll detect what's new and add only the missing songs.</p>
             <div style="margin-top: 1.25rem;">
                 <a href="/apple" class="btn btn-outline">
                     <i class="fab fa-apple"></i> Sync to Apple Device
