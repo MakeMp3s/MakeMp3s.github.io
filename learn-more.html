@@ -809,9 +809,49 @@
             </ol>
             <p style="margin-top:0.75rem;"><strong>Keeping it updated:</strong> When new music gets added to a playlist, just open the Sync Library and click <strong>Sync</strong>. It'll detect what's new and add only the missing songs.</p>
             <div style="margin-top: 1.25rem;">
-                <a href="/apple" class="btn btn-outline">
+                <button onclick="toggleAppleInstructions()" class="btn btn-outline" id="apple-btn">
                     <i class="fab fa-apple"></i> Sync to Apple Device
-                </a>
+                </button>
+            </div>
+
+            <!-- Apple Device Instructions (hidden by default) -->
+            <div id="apple-instructions" style="display:none; margin-top:1.25rem;">
+
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-size:0.95rem; font-weight:400; margin-bottom:0.75rem; color:#ffffff;">
+                        <i class="fab fa-windows" style="color:#b0b0b0; margin-right:0.4rem;"></i> Windows — iPhone or iPad
+                    </h3>
+                    <ol class="steps">
+                        <li><div>Sync your playlist in Make MP3s to a folder on your computer</div></li>
+                        <li><div>Open <strong>iTunes</strong> or <strong>Apple Music</strong> → File → <strong>Add Folder to Library</strong> → select your folder</div></li>
+                        <li><div>Connect your iPhone or iPad via USB → open iTunes or Apple Music → select your device → go to the <strong>Music</strong> tab → sync</div></li>
+                    </ol>
+                </div>
+
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-size:0.95rem; font-weight:400; margin-bottom:0.75rem; color:#ffffff;">
+                        <i class="fab fa-windows" style="color:#b0b0b0; margin-right:0.4rem;"></i> Windows — iPod Classic, Nano, or Shuffle
+                    </h3>
+                    <ol class="steps">
+                        <li><div>Sync your playlist in Make MP3s to a folder on your computer</div></li>
+                        <li><div>Open <strong>iTunes</strong> → File → <strong>Add Folder to Library</strong> → select your folder</div></li>
+                        <li><div>Connect your iPod via USB → select your device in iTunes → go to the <strong>Music</strong> tab → sync</div></li>
+                    </ol>
+                    <p class="sub-note" style="margin-top:0.5rem; display:block;">Older iPods require iTunes. Apple Music does not support them.</p>
+                </div>
+
+                <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:1.5rem;">
+                    <h3 style="font-size:0.95rem; font-weight:400; margin-bottom:0.75rem; color:#ffffff;">
+                        <i class="fab fa-apple" style="color:#b0b0b0; margin-right:0.4rem;"></i> Mac — iPhone or iPad
+                    </h3>
+                    <ol class="steps">
+                        <li><div>Sync your playlist in Make MP3s to a folder on your Mac</div></li>
+                        <li><div>Open <strong>Apple Music</strong> → File → <strong>Import</strong> → select your folder (or drag the folder into your library)</div></li>
+                        <li><div>Connect your iPhone or iPad via USB → open <strong>Finder</strong> → select your device in the sidebar → go to the <strong>Music</strong> tab → sync</div></li>
+                    </ol>
+                    <p class="sub-note" style="margin-top:0.5rem; display:block;">On Mac, device syncing is handled through Finder, not Apple Music.</p>
+                </div>
+
             </div>
         </div>
 
@@ -1140,7 +1180,17 @@
         }
     };
 
-    window.handleModalForgotPassword = async () => {
+    window.toggleAppleInstructions = () => {
+        const instructions = document.getElementById('apple-instructions');
+        const btn = document.getElementById('apple-btn');
+        const visible = instructions.style.display !== 'none';
+        instructions.style.display = visible ? 'none' : 'block';
+        btn.innerHTML = visible
+            ? '<i class="fab fa-apple"></i> Sync to Apple Device'
+            : '<i class="fab fa-apple"></i> Hide Instructions';
+    };
+
+
         const email = document.getElementById('modal-email').value.trim();
         const errorEl = document.getElementById('modal-error');
         if (!email) {
