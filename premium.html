@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>get premium – make mp3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('images/boombox.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+        }
+
+        strong, b {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* ── Navigation ─────────────────────────────────────────── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .logo { width: 40px; height: 40px; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #ffffff; }
+
+        .nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+
+        .nav-icons a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover { color: #ffffff; transform: translateY(-2px); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        /* ── Dropdown ───────────────────────────────────────────── */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 42px;
+            background-color: #222222;
+            width: 280px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+            border-radius: 14px;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-header {
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .dropdown-plan {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #606060;
+            margin-bottom: 0.25rem;
+        }
+
+        .dropdown-email {
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dropdown-sub { font-size: 0.78rem; margin-top: 0.2rem; }
+
+        .dropdown-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            height: 44px;
+            border-radius: 25px;
+            font-size: 0.88rem !important;
+            font-weight: bold;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif !important;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            margin-bottom: 0.4rem;
+            text-align: center;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            appearance: none;
+            line-height: 1;
+        }
+
+        .dropdown-btn:last-child { margin-bottom: 0; }
+        .dropdown-btn-gold { background-color: #D4AF37; color: #1a1a1a !important; }
+        .dropdown-btn-gold:hover { background-color: #F4D03F; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(212,175,55,0.35); }
+        .dropdown-btn-grey { background-color: #b0b0b0; color: #1a1a1a !important; }
+        .dropdown-btn-grey:hover { background-color: #c8c8c8; transform: translateY(-1px); }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 15px;
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: background 0.2s;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background-color: #3a3a3a; color: #fff; }
+
+        /* ── Page ───────────────────────────────────────────────── */
+        .page-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.5rem 5rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: #b0b0b0;
+            font-size: 1rem;
+        }
+
+        /* ── Pricing cards ──────────────────────────────────────── */
+        .pricing-container {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 820px;
+            margin-bottom: 1.5rem;
+        }
+
+        .pricing-card {
+            background: rgba(42, 42, 42, 0.6);
+            border: 2px solid rgba(68, 68, 68, 0.5);
+            border-radius: 16px;
+            padding: 2rem 1.75rem;
+            flex: 1;
+            min-width: 280px;
+            max-width: 380px;
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.08);
+            border-color: rgba(0, 122, 255, 0.5);
+        }
+
+        .pricing-card.popular {
+            border-color: rgba(212, 175, 55, 0.95);
+            background: linear-gradient(135deg, rgba(42, 36, 21, 0.6) 0%, rgba(42, 42, 42, 0.6) 100%);
+        }
+
+        .pricing-card.popular:hover {
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+            border-color: #D4AF37;
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -13px;
+            right: 20px;
+            background: #D4AF37;
+            color: #1a1a1a;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .plan-name {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2.4rem;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            color: #007AFF;
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: baseline;
+            gap: 0.4rem;
+        }
+
+        .price-currency {
+            font-size: 1rem;
+            font-weight: normal;
+            color: #5588cc;
+        }
+
+        .pricing-card.popular .price { color: #D4AF37; }
+        .pricing-card.popular .price-currency { color: #b0a060; }
+
+        .price-period {
+            color: #808080;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .features {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature {
+            padding: 0.4rem 0;
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .feature i { color: #34A853; font-size: 0.9rem; flex-shrink: 0; }
+
+        .cta-button {
+            background: #007AFF;
+            color: #ffffff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+
+        .cta-button:hover {
+            background: #0051D5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .pricing-card.popular .cta-button {
+            background: #D4AF37;
+            color: #1a1a1a;
+        }
+
+        .pricing-card.popular .cta-button:hover {
+            background: #F4D03F;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        /* ── Back link ──────────────────────────────────────────── */
+        .back-link {
+            color: #606060;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        .back-link:hover { color: #b0b0b0; }
+
+        .footer-note {
+            margin-top: 1.75rem;
+            color: #606060;
+            font-size: 0.8rem;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        /* ── Auth Modal ──────────────────────────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background-color: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: #b0b0b0;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .google-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .google-btn:hover { transform: translateY(-2px); background-color: #f0f0f0; }
+
+        .modal-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem 0;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        .modal-divider::before, .modal-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #3a3a3a;
+        }
+
+        .modal-toggle {
+            background: none;
+            border: none;
+            color: #808080;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+            padding: 0;
+            width: 100%;
+        }
+
+        .modal-toggle:hover { color: #cccccc; }
+
+        .modal-email-form { display: none; margin-top: 0.75rem; text-align: left; }
+        .modal-email-form.visible { display: block; }
+
+        .modal-form-group { margin-bottom: 0.75rem; }
+
+        .modal-form-group label {
+            display: block;
+            font-size: 0.78rem;
+            color: #a0a0a0;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-form-group input {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 0.93rem;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .modal-form-group input:focus { border-color: #007AFF; }
+        .modal-form-group input::placeholder { color: #555; }
+
+        .modal-email-btn {
+            background-color: #007AFF;
+            color: #ffffff;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 25px;
+            font-size: 0.93rem;
+            cursor: pointer;
+            width: 100%;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 0.25rem;
+        }
+
+        .modal-email-btn:hover { background-color: #0066dd; transform: translateY(-2px); }
+        .modal-email-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .modal-error {
+            font-size: 0.8rem;
+            color: #ff6666;
+            margin-top: 0.5rem;
+            text-align: left;
+            min-height: 1rem;
+        }
+
+        .modal-switch-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: #606060;
+        }
+
+        .modal-switch-row button {
+            background: none;
+            border: none;
+            color: #808080;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+        }
+
+        .modal-switch-row button:hover { color: #cccccc; }
+
+        .modal-forgot {
+            background: none;
+            border: none;
+            color: #606060;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+            display: block;
+            text-align: right;
+            margin-top: -0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-forgot:hover { color: #b0b0b0; }
+
+        /* ── Footer ─────────────────────────────────────────────── */
+        footer { background-color: transparent; padding: 1rem 3rem; }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* ── Responsive ──────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            nav { padding: 1rem; position: relative; }
+            .hamburger { position: absolute; left: 70px; display: flex; }
+            .hamburger span { background-color: #b0b0b0; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px; left: 0; right: 0;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+            .nav-links.active { display: flex; }
+            .nav-icons { gap: 1rem; }
+            .pricing-card { min-width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            body { background-image: none; }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background-image: url('images/boombox.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="feedback.html">Feedback & Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div class="account-container" style="position: relative; display: inline-block;">
+                <a href="javascript:void(0)" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="user-dropdown" class="dropdown-menu"></div>
+            </div>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </nav>
+
+    <!-- Page -->
+    <div class="page-wrapper">
+
+        <div class="page-header">
+            <h1>Get Premium</h1>
+            <p>Unlimited downloads and every feature, unlocked.</p>
+        </div>
+
+        <div class="pricing-container">
+
+            <!-- Lifetime -->
+            <div class="pricing-card popular">
+                <div class="popular-badge">BEST VALUE</div>
+                <div class="plan-name">Lifetime Access</div>
+                <div class="price">$39.99 <span class="price-currency">USD</span></div>
+                <div class="price-period">One-time payment</div>
+                <div class="features">
+                    <div class="feature"><i class="fas fa-check"></i> Unlimited downloads forever</div>
+                    <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
+                    <div class="feature"><i class="fas fa-check"></i> Auto volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> All future updates included</div>
+                </div>
+                <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/70b5268e-227f-4d55-bb25-1786f944f580"
+                   class="cta-button" target="_blank">
+                    Get Lifetime Access
+                </a>
+            </div>
+
+            <!-- Monthly -->
+            <div class="pricing-card">
+                <div class="plan-name">Monthly Subscription</div>
+                <div class="price">$1.99 <span class="price-currency">USD</span></div>
+                <div class="price-period">per month · cancel anytime</div>
+                <div class="features">
+                    <div class="feature"><i class="fas fa-check"></i> Unlimited downloads</div>
+                    <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
+                    <div class="feature"><i class="fas fa-check"></i> Auto volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> Cancel anytime</div>
+                </div>
+                <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/ec8bbb88-189d-47e7-a633-e80bad6949e8"
+                   class="cta-button" target="_blank">
+                    Subscribe Monthly
+                </a>
+            </div>
+
+        </div>
+
+        <a href="/learn-more" class="back-link">
+            <i class="fas fa-arrow-left" style="margin-right:0.35rem; font-size:0.75rem;"></i>Back to Learn More
+        </a>
+
+        <p class="footer-note">
+            Secure payment powered by Lemon Squeezy 🍋<br>
+            Make MP3s is intended for use with content you own or have the right to download.
+        </p>
+
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color:#fff; margin-bottom:0.4rem;" id="modal-title">Welcome Back</h2>
+            <p style="color:#b0b0b0; margin-bottom:1.5rem; font-size:0.9rem;" id="modal-subtitle">Sign in to access your Make MP3s account.</p>
+            <button onclick="handleGoogleLogin()" class="google-btn" id="modal-google-btn">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+            <div class="modal-divider" id="modal-divider">or</div>
+            <button class="modal-toggle" id="modal-toggle" onclick="toggleEmailForm()">
+                Sign in with email & password
+            </button>
+            <div class="modal-email-form" id="modal-email-form">
+                <div class="modal-form-group">
+                    <label for="modal-email">Email</label>
+                    <input type="email" id="modal-email" placeholder="your@email.com" autocomplete="email">
+                </div>
+                <div class="modal-form-group">
+                    <label for="modal-password">Password</label>
+                    <input type="password" id="modal-password" placeholder="Password" autocomplete="current-password">
+                </div>
+                <button class="modal-forgot" id="modal-forgot" onclick="handleModalForgotPassword()">Forgot password?</button>
+                <div class="modal-form-group" id="modal-confirm-group" style="display:none;">
+                    <label for="modal-confirm">Confirm Password</label>
+                    <input type="password" id="modal-confirm" placeholder="Confirm password" autocomplete="new-password">
+                </div>
+                <div class="modal-error" id="modal-error"></div>
+                <button class="modal-email-btn" id="modal-email-btn" onclick="handleEmailAuth()">Sign In</button>
+                <div class="modal-switch-row">
+                    <span id="modal-switch-text">Don't have an account?</span>
+                    <button onclick="toggleAuthMode()">Create one</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2026 Make MP3s | <a href="https://makemp3s.com/legal" style="color:#808080; text-decoration:none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color:#808080; text-decoration:none; font-weight:bold;">Our Story</a>
+        </div>
+    </footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+        signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+        authDomain: "make-mp3s.firebaseapp.com",
+        projectId: "make-mp3s",
+        storageBucket: "make-mp3s.firebasestorage.app",
+        messagingSenderId: "530983812032",
+        appId: "1:530983812032:web:1d059a67673771929b2625",
+        measurementId: "G-H11K90Y0CD"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    // ── Auth state ────────────────────────────────────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const userRef  = doc(db, "users", user.email);
+            const userSnap = await getDoc(userRef);
+            const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
+            const subscription = userData.subscription || 'free';
+            const subscriptionType = userData.subscriptionType || null;
+
+            // Already premium — redirect to premium-success
+            if (subscription === 'premium') {
+                window.location.href = 'premium-success.html';
+                return;
+            }
+
+            let planLabel = 'Free';
+            let planColor = '#ffffff';
+            if (subscription === 'premium' && subscriptionType === 'lifetime') { planLabel = 'Lifetime'; planColor = '#D4AF37'; }
+            else if (subscription === 'premium' && subscriptionType === 'monthly') { planLabel = 'Monthly'; planColor = '#D4AF37'; }
+
+            dropdown.innerHTML = `
+                <div class="dropdown-header">
+                    <div class="dropdown-plan">Account</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-sub">Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span></div>
+                </div>
+                <div style="padding: 0.4rem 0.5rem 0.5rem;">
+                    <a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+                        <i class="fas fa-user-cog"></i> Account Settings
+                    </a>
+                    <button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </button>
+                </div>
+            `;
+        } else {
+            dropdown.innerHTML = "";
+            dropdown.classList.remove("show");
+            // Not signed in — open auth modal
+            window.openAuthModal();
+        }
+    });
+
+    // ── Auth actions ──────────────────────────────────────────────────────────
+    window.handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userRef = doc(db, "users", user.email);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists()) {
+                await setDoc(userRef, { email: user.email, subscription: "free", createdAt: new Date() });
+            }
+            window.closeAuthModal();
+        } catch (error) { console.error("Login Failed:", error); }
+    };
+
+    window.handleLogout = async () => { await signOut(auth); window.location.reload(); };
+
+    window.toggleDropdown = () => {
+        if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+            dropdown.classList.toggle("show");
+        } else {
+            dropdown.classList.remove("show");
+            window.openAuthModal();
+        }
+    };
+
+    window.openAuthModal = () => {
+        authModal.style.display = "flex";
+        dropdown.classList.remove("show");
+        resetEmailForm();
+    };
+
+    window.closeAuthModal = () => { authModal.style.display = "none"; };
+
+    window.onclick = (event) => {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) window.closeAuthModal();
+    };
+
+    // ── Email/password auth ───────────────────────────────────────────────────
+    let emailFormVisible = false;
+    let isSignUpMode = false;
+
+    window.toggleEmailForm = () => {
+        emailFormVisible = !emailFormVisible;
+        const form = document.getElementById('modal-email-form');
+        const toggle = document.getElementById('modal-toggle');
+        const googleBtn = document.getElementById('modal-google-btn');
+        const divider = document.getElementById('modal-divider');
+        form.classList.toggle('visible', emailFormVisible);
+        toggle.textContent = emailFormVisible ? '← Back to Google sign in' : 'Sign in with email & password';
+        googleBtn.style.display = emailFormVisible ? 'none' : 'flex';
+        divider.style.display = emailFormVisible ? 'none' : 'flex';
+        if (emailFormVisible) document.getElementById('modal-email').focus();
+    };
+
+    window.toggleAuthMode = () => {
+        isSignUpMode = !isSignUpMode;
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-confirm').value = '';
+        const cg = document.getElementById('modal-confirm-group');
+        const fg = document.getElementById('modal-forgot');
+        const btn = document.getElementById('modal-email-btn');
+        const st = document.getElementById('modal-switch-text');
+        const sb = document.querySelector('.modal-switch-row button');
+        const title = document.getElementById('modal-title');
+        const sub = document.getElementById('modal-subtitle');
+        if (isSignUpMode) {
+            cg.style.display = 'block'; fg.style.display = 'none';
+            btn.textContent = 'Create Account'; st.textContent = 'Already have an account?'; sb.textContent = 'Sign in';
+            title.textContent = 'Create Account'; sub.textContent = 'Join Make MP3s today.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'new-password');
+        } else {
+            cg.style.display = 'none'; fg.style.display = 'block';
+            btn.textContent = 'Sign In'; st.textContent = "Don't have an account?"; sb.textContent = 'Create one';
+            title.textContent = 'Welcome Back'; sub.textContent = 'Sign in to access your Make MP3s account.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'current-password');
+        }
+    };
+
+    function resetEmailForm() {
+        emailFormVisible = false; isSignUpMode = false;
+        document.getElementById('modal-email-form').classList.remove('visible');
+        document.getElementById('modal-toggle').textContent = 'Sign in with email & password';
+        document.getElementById('modal-google-btn').style.display = 'flex';
+        document.getElementById('modal-divider').style.display = 'flex';
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-email').value = '';
+        document.getElementById('modal-password').value = '';
+        document.getElementById('modal-confirm').value = '';
+        document.getElementById('modal-confirm-group').style.display = 'none';
+        document.getElementById('modal-forgot').style.display = 'block';
+        document.getElementById('modal-email-btn').textContent = 'Sign In';
+        document.getElementById('modal-switch-text').textContent = "Don't have an account?";
+        document.querySelector('.modal-switch-row button').textContent = 'Create one';
+        document.getElementById('modal-title').textContent = 'Welcome Back';
+        document.getElementById('modal-subtitle').textContent = 'Sign in to access your Make MP3s account.';
+    }
+
+    function friendlyError(code) {
+        return ({ 'auth/user-not-found': 'No account found with that email.', 'auth/wrong-password': 'Incorrect password. Please try again.', 'auth/invalid-credential': 'Incorrect email or password.', 'auth/invalid-email': 'Please enter a valid email address.', 'auth/too-many-requests': 'Too many attempts. Please wait and try again.', 'auth/email-already-in-use': 'An account with this email already exists.', 'auth/weak-password': 'Password must be at least 6 characters.' })[code] || 'Something went wrong. Please try again.';
+    }
+
+    window.handleEmailAuth = async () => {
+        const email = document.getElementById('modal-email').value.trim();
+        const password = document.getElementById('modal-password').value;
+        const confirm = document.getElementById('modal-confirm').value;
+        const errorEl = document.getElementById('modal-error');
+        const btn = document.getElementById('modal-email-btn');
+        errorEl.textContent = '';
+        if (!email || !password) { errorEl.textContent = 'Please enter your email and password.'; return; }
+        if (isSignUpMode) {
+            if (!confirm) { errorEl.textContent = 'Please confirm your password.'; return; }
+            if (password !== confirm) { errorEl.textContent = 'Passwords do not match.'; return; }
+            if (password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters.'; return; }
+        }
+        btn.disabled = true;
+        btn.textContent = isSignUpMode ? 'Creating account...' : 'Signing in...';
+        try {
+            let result;
+            if (isSignUpMode) {
+                result = await createUserWithEmailAndPassword(auth, email, password);
+                const userRef = doc(db, "users", result.user.email);
+                const snap = await getDoc(userRef);
+                if (!snap.exists()) await setDoc(userRef, { email: result.user.email, subscription: "free", createdAt: new Date() });
+            } else {
+                result = await signInWithEmailAndPassword(auth, email, password);
+            }
+            window.closeAuthModal();
+        } catch (error) {
+            errorEl.textContent = friendlyError(error.code);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = isSignUpMode ? 'Create Account' : 'Sign In';
+        }
+    };
+
+    window.handleModalForgotPassword = async () => {
+        const email = document.getElementById('modal-email').value.trim();
+        const errorEl = document.getElementById('modal-error');
+        if (!email) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = 'Enter your email above first, then click Forgot password.';
+            document.getElementById('modal-email').focus();
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            errorEl.style.color = '#4CAF50';
+            errorEl.textContent = `Reset email sent to ${email}. Check your inbox.`;
+        } catch (error) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = friendlyError(error.code);
+        }
+    };
+</script>
+
+</body>
+</html>
