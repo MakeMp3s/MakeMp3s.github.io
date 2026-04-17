@@ -280,6 +280,8 @@
             border: 1px solid #444;
             border-radius: 12px;
             padding: 1.25rem 1.5rem;
+            display: flex;
+            flex-direction: column;
         }
 
         .plan-card.premium {
@@ -300,7 +302,14 @@
             color: #b0b0b0;
             font-size: 0.88rem;
             line-height: 1.7;
+            flex: 1;
             margin-bottom: 0 !important;
+        }
+
+        .plan-card-btn {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1.25rem;
         }
 
         /* ── Numbered steps ──────────────────────────────────────── */
@@ -710,11 +719,21 @@
             <div class="plan-grid">
                 <div class="plan-card">
                     <h4>Free Edition</h4>
-                    <p>Your first 24 hours include 100 downloads with all premium features unlocked so you can try everything out. After that, the free edition gives you 10 downloads per day.</p>
+                    <p style="margin-top:0.5rem;">Your first 24 hours include 100 downloads with all premium features unlocked so you can try everything out. After that, the free edition gives you 10 downloads per day.</p>
+                    <div style="display:flex; justify-content:center; margin-top:1rem;">
+                        <a href="downloads.html" class="btn" style="font-size:0.78rem; padding:0.4rem 1rem; background-color:#007AFF; color:#ffffff; white-space:nowrap;">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                    </div>
                 </div>
                 <div class="plan-card premium">
-                    <h4><i class="fas fa-crown" style="font-size:0.85rem; margin-right:0.3rem;"></i> Premium</h4>
-                    <p>Unlimited downloads and every feature on this page, unlocked.</p>
+                    <h4><span><i class="fas fa-crown" style="font-size:0.85rem; margin-right:0.3rem;"></i> Premium</span></h4>
+                    <p style="margin-top:0.5rem;">Unlimited downloads and every feature on this page unlocked, including Sync Library, Square Cover Art, and Auto Volume.</p>
+                    <div style="display:flex; justify-content:center; margin-top:1rem;">
+                        <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/70b5268e-227f-4d55-bb25-1786f944f580" class="btn" style="font-size:0.78rem; padding:0.4rem 1rem; background-color:#D4AF37; color:#1a1a1a; white-space:nowrap;" target="_blank">
+                            <i class="fas fa-crown"></i> Get Premium
+                        </a>
+                    </div>
                 </div>
             </div>
             <p class="legal-note">Make MP3s is intended for use with content you own or have the right to download. Please respect applicable copyright laws and the terms of service of any platform you use.</p>
@@ -733,8 +752,10 @@
                 <li>The Sync Library opens — click <strong>Add</strong></li>
                 <li>The Add Playlist to Sync box opens</li>
                 <li>
-                    Paste your playlist URL and click <strong>Select Folder</strong> to choose where the music will be saved
-                    <span class="sub-note">This can be a folder on your computer, or a folder on a plugged-in device like an SSD, phone, or MP3 player</span>
+                    <div>
+                        Paste your <strong>playlist URL</strong> and click <strong>Select Folder</strong> to choose where the music will be saved
+                        <span class="sub-note">This can be a folder on your computer, or a folder on a plugged-in device like an SSD, phone, or MP3 player</span>
+                    </div>
                 </li>
                 <li>Click <strong>Add</strong> — your playlist will appear in the Sync Library list</li>
                 <li>Click <strong>Sync</strong> to download all the songs to your selected folder</li>
@@ -751,9 +772,13 @@
         <div class="section">
             <h2 class="section-title">Downloading — Standard Method</h2>
             <ol class="steps">
-                <li>Copy the link to the playlist you want to download</li>
+                <li>
+                    <div>
+                        Copy the link to the playlist you want to download
+                        <span class="sub-note">Use your playlist's share link button</span>
+                    </div>
+                </li>
                 <li>Open Make MP3s and click <strong>Download</strong></li>
-                <li>Paste your link and start the download</li>
             </ol>
             <div class="tip">
                 <i class="fas fa-lightbulb"></i>
@@ -768,7 +793,7 @@
             <!-- Cover Art -->
             <div style="margin-bottom: 1.75rem;">
                 <h3 style="font-size:1rem; font-weight:400; margin-bottom:0.5rem;">Cover Art</h3>
-                <p>Make MP3s automatically pulls cover art so it displays when you play your music.</p>
+                <p>You can enable or disable Cover Art to display with your music.</p>
             </div>
 
             <!-- Square Crop -->
