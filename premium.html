@@ -24,7 +24,6 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #ffffff;
-            line-height: 1.6;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -169,6 +168,11 @@
         .dropdown-item:last-child { border-bottom: none; }
         .dropdown-item:hover { background-color: #3a3a3a; color: #fff; }
 
+        /* ── Text shadows ────────────────────────────────────────── */
+        h1, .subtitle, .plan-name, .price-period, .footer-note, .back-link {
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
         /* ── Page ───────────────────────────────────────────────── */
         .page-wrapper {
             flex: 1;
@@ -176,53 +180,69 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 3rem 1.5rem 5rem;
-        }
-
-        .page-header {
+            padding: 2rem 20px 4rem;
             text-align: center;
-            margin-bottom: 2.5rem;
         }
 
-        .page-header h1 {
-            font-size: 2.2rem;
-            font-weight: 400;
-            margin-bottom: 0.5rem;
+        .page-logo {
+            width: 45px;
+            height: 45px;
+            margin: 0 auto 0.8rem;
         }
 
-        .page-header p {
+        h1 {
+            font-family: 'Helvetica Neue Bold', sans-serif;
+            color: #ffffff;
+            margin-bottom: 8px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
             color: #b0b0b0;
+            margin-bottom: 20px;
             font-size: 1rem;
+        }
+
+        .user-email-badge {
+            background: rgba(42, 42, 42, 0.6);
+            padding: 10px 18px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            border: 1px solid #444;
         }
 
         /* ── Pricing cards ──────────────────────────────────────── */
         .pricing-container {
             display: flex;
-            gap: 1.25rem;
+            gap: 20px;
             justify-content: center;
+            margin-bottom: 25px;
             flex-wrap: wrap;
             width: 100%;
             max-width: 820px;
-            margin-bottom: 1.5rem;
         }
 
         .pricing-card {
             background: rgba(42, 42, 42, 0.6);
-            border: 2px solid rgba(68, 68, 68, 0.5);
-            border-radius: 16px;
-            padding: 2rem 1.75rem;
+            border: 2px solid rgba(68, 68, 68, 0.50);
+            border-radius: 15px;
+            padding: 25px 20px;
             flex: 1;
             min-width: 280px;
             max-width: 380px;
             transition: all 0.3s ease;
-            position: relative;
+            cursor: pointer;
             backdrop-filter: blur(10px);
+            position: relative;
         }
 
         .pricing-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(255,255,255,0.08);
-            border-color: rgba(0, 122, 255, 0.5);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            border-color: rgba(0, 122, 255, 0.50);
         }
 
         .pricing-card.popular {
@@ -231,80 +251,75 @@
         }
 
         .pricing-card.popular:hover {
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
-            border-color: #D4AF37;
+            box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+            border-color: rgba(212, 175, 55, 0.95);
         }
 
         .popular-badge {
             position: absolute;
-            top: -13px;
+            top: -12px;
             right: 20px;
             background: #D4AF37;
             color: #1a1a1a;
-            padding: 4px 14px;
+            padding: 5px 15px;
             border-radius: 20px;
-            font-size: 0.72rem;
+            font-size: 12px;
             font-weight: bold;
             font-family: 'Helvetica Neue Bold', sans-serif;
-            letter-spacing: 0.05em;
         }
 
         .plan-name {
-            font-size: 1.1rem;
-            font-weight: 400;
+            font-size: 20px;
+            font-weight: bold;
             color: #ffffff;
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
+            font-family: 'Helvetica Neue Bold', sans-serif;
         }
 
         .price {
-            font-size: 2.4rem;
+            font-size: 38px;
             font-weight: bold;
-            font-family: 'Helvetica Neue Bold', sans-serif;
             color: #007AFF;
-            margin-bottom: 0.25rem;
-            display: flex;
-            align-items: baseline;
-            gap: 0.4rem;
-        }
-
-        .price-currency {
-            font-size: 1rem;
-            font-weight: normal;
-            color: #5588cc;
+            margin-bottom: 8px;
+            font-family: 'Helvetica Neue Bold', sans-serif;
         }
 
         .pricing-card.popular .price { color: #D4AF37; }
-        .pricing-card.popular .price-currency { color: #b0a060; }
 
         .price-period {
-            color: #808080;
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
+            color: #b0b0b0;
+            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         .features {
             text-align: left;
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .feature {
-            padding: 0.4rem 0;
-            color: #b0b0b0;
-            font-size: 0.9rem;
+            padding: 6px 0;
+            color: #ffffff;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            line-height: 1.3;
         }
 
-        .feature i { color: #34A853; font-size: 0.9rem; flex-shrink: 0; }
+        .feature i {
+            color: #34A853;
+            margin-right: 10px;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
 
         .cta-button {
             background: #007AFF;
             color: #ffffff;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 12px 30px;
             border-radius: 25px;
-            font-size: 0.95rem;
+            font-size: 14px;
             font-weight: bold;
             font-family: 'Helvetica Neue Bold', sans-serif;
             cursor: pointer;
@@ -313,12 +328,12 @@
             text-decoration: none;
             display: block;
             text-align: center;
+            line-height: 1.4;
         }
 
         .cta-button:hover {
-            background: #0051D5;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            transform: scale(1.05);
+            background: #0066CC;
         }
 
         .pricing-card.popular .cta-button {
@@ -326,27 +341,29 @@
             color: #1a1a1a;
         }
 
-        .pricing-card.popular .cta-button:hover {
-            background: #F4D03F;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
-        }
+        .pricing-card.popular .cta-button:hover { background: #B8941F; }
 
         /* ── Back link ──────────────────────────────────────────── */
         .back-link {
-            color: #606060;
-            font-size: 0.85rem;
+            margin-top: 20px;
+            color: #b0b0b0;
             text-decoration: none;
-            transition: color 0.2s;
-            margin-top: 0.5rem;
+            font-size: 13px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            background: #444444;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-family: 'Helvetica Neue Bold', sans-serif;
         }
 
-        .back-link:hover { color: #b0b0b0; }
+        .back-link:hover { background: #555555; text-decoration: none; }
 
         .footer-note {
-            margin-top: 1.75rem;
-            color: #606060;
-            font-size: 0.8rem;
-            text-align: center;
+            margin-top: 30px;
+            color: #808080;
+            font-size: 12px;
             line-height: 1.8;
         }
 
@@ -604,10 +621,11 @@
     <!-- Page -->
     <div class="page-wrapper">
 
-        <div class="page-header">
-            <h1>Get Premium</h1>
-            <p>Unlimited downloads and every feature, unlocked.</p>
-        </div>
+        <img src="images/logo.png" alt="Make MP3s Logo" class="page-logo">
+        <h1>Upgrade to Premium</h1>
+        <p class="subtitle">Unlock unlimited downloads and advanced features</p>
+
+        <div class="user-email-badge" id="user-email-badge" style="display:none;"></div>
 
         <div class="pricing-container">
 
@@ -615,13 +633,14 @@
             <div class="pricing-card popular">
                 <div class="popular-badge">BEST VALUE</div>
                 <div class="plan-name">Lifetime Access</div>
-                <div class="price">$39.99 <span class="price-currency">USD</span></div>
+                <div class="price">$39.99 <span style="font-size:16px; font-weight:normal; color:#b0a060;">USD</span></div>
                 <div class="price-period">One-time payment</div>
                 <div class="features">
                     <div class="feature"><i class="fas fa-check"></i> Unlimited downloads forever</div>
                     <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
-                    <div class="feature"><i class="fas fa-check"></i> Auto volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Advanced volume leveling</div>
                     <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> Priority support</div>
                     <div class="feature"><i class="fas fa-check"></i> All future updates included</div>
                 </div>
                 <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/70b5268e-227f-4d55-bb25-1786f944f580"
@@ -633,13 +652,14 @@
             <!-- Monthly -->
             <div class="pricing-card">
                 <div class="plan-name">Monthly Subscription</div>
-                <div class="price">$1.99 <span class="price-currency">USD</span></div>
-                <div class="price-period">per month · cancel anytime</div>
+                <div class="price">$1.99 <span style="font-size:16px; font-weight:normal; color:#5588cc;">USD</span></div>
+                <div class="price-period">per month</div>
                 <div class="features">
                     <div class="feature"><i class="fas fa-check"></i> Unlimited downloads</div>
                     <div class="feature"><i class="fas fa-check"></i> Automatic playlist sync</div>
-                    <div class="feature"><i class="fas fa-check"></i> Auto volume leveling</div>
+                    <div class="feature"><i class="fas fa-check"></i> Advanced volume leveling</div>
                     <div class="feature"><i class="fas fa-check"></i> Square crop cover art</div>
+                    <div class="feature"><i class="fas fa-check"></i> Priority support</div>
                     <div class="feature"><i class="fas fa-check"></i> Cancel anytime</div>
                 </div>
                 <a href="https://makemp3s.lemonsqueezy.com/checkout/buy/ec8bbb88-189d-47e7-a633-e80bad6949e8"
@@ -650,9 +670,7 @@
 
         </div>
 
-        <a href="/learn-more" class="back-link">
-            <i class="fas fa-arrow-left" style="margin-right:0.35rem; font-size:0.75rem;"></i>Back to Learn More
-        </a>
+        <a href="/learn-more" class="back-link">← Back to Learn More</a>
 
         <p class="footer-note">
             Secure payment powered by Lemon Squeezy 🍋<br>
@@ -747,6 +765,11 @@
                 window.location.href = 'premium-success.html';
                 return;
             }
+
+            // Show signed-in email
+            const badge = document.getElementById('user-email-badge');
+            badge.textContent = `Signed in as: ${user.email}`;
+            badge.style.display = 'inline-block';
 
             let planLabel = 'Free';
             let planColor = '#ffffff';
