@@ -3,82 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Primary Meta Tags -->
-    <title>Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s</title>
-    <meta name="title" content="Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s">
-    <meta name="description" content="Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.">
-    <meta name="keywords" content="playlist to mp3 converter, playlist to mp3, convert playlist to mp3, spotify playlist to mp3, youtube playlist to mp3, bulk playlist downloader, large playlist to mp3 converter, spotify playlist to mp3 converter, youtube playlist to mp3 converter, download playlist as mp3">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://makemp3s.com/">
-    <meta property="og:title" content="Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s">
-    <meta property="og:description" content="Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.">
-    <meta property="og:image" content="https://makemp3s.com/og-image.png">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://makemp3s.com/">
-    <meta property="twitter:title" content="Playlist to MP3 Converter – Works with Spotify & YouTube | MakeMp3s">
-    <meta property="twitter:description" content="Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.">
-    <meta property="twitter:image" content="https://makemp3s.com/og-image.png">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://makemp3s.com/">
-    
-    <!-- Favicons -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    
-    <!-- Structured Data (Schema.org) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "MakeMp3s - Playlist to MP3 Converter",
-      "url": "https://makemp3s.com",
-      "description": "Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "Web Browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "featureList": "Spotify playlist conversion, YouTube playlist conversion, Bulk downloads, High-quality audio",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "1250"
-      }
-    }
-    </script>
-    
-	<!-- Structured Data (Schema.org) -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "MakeMp3s - Playlist to MP3 Converter",
-      "url": "https://makemp3s.com",
-      "description": "Convert playlists to MP3 fast and easily. Works with Spotify and YouTube playlists, supports large downloads, and delivers high-quality audio for personal use.",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "Web Browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "featureList": "Spotify playlist conversion, YouTube playlist conversion, Bulk downloads, High-quality audio",
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "1250"
-      }
-    }
-    </script>
-	
+    <title>Make MP3s - Convert Music Playlists to MP3s</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @font-face {
@@ -96,126 +21,131 @@
 
         body {
             font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
             background-image: url('images/boombox.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            background-color: #1a1a1a;
             color: #ffffff;
             line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            overflow-x: hidden;
+        }
+
+        .bg-section {
+        }
+
+        .content-wrapper {
+            padding-bottom: 5rem;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
         }
 
-        /* Intro Screen - Blocks all interaction until it flies away */
-        .intro-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
+        strong, b {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        nav {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            pointer-events: auto; /* Acts as a click shield */
-            animation: flyUp 1.2s cubic-bezier(0.85, 0, 0.15, 1) 2s forwards;
+            padding: 1rem 3rem;
         }
 
-        .intro-screen .intro-gif {
-            width: 400px;
-            height: auto;
-            animation: pulse 2s ease-in-out;
+        .logo {
+            width: 40px;
+            height: 40px;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes flyUp {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-130%); opacity: 0; visibility: hidden; }
-        }
-
-        /* Main Content Container - Locked until revealed */
-        .waitlist-container {
-            max-width: 850px;
-            width: 100%;
-            text-align: center;
-            opacity: 0;
-            pointer-events: none; /* Unclickable initially */
-            animation: fadeInContent 1s ease-out 2.6s forwards;
-        }
-
-        @keyframes fadeInContent {
-            to { 
-                opacity: 1; 
-                pointer-events: auto; /* Becomes clickable exactly when revealed */
-            }
-        }
-
-        .waitlist-container h1 {
-            font-size: 3.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 300;
-            line-height: 1.2;
-            white-space: nowrap;
-        }
-
-        .subheading {
-            font-size: 1.5rem;
-            color: #b0b0b0;
-            margin-bottom: 2.5rem;
-            font-weight: 300;
-        }
-
-        .form-group {
+        .nav-links {
             display: flex;
-            gap: 1rem;
-            align-items: stretch;
-            max-width: 500px;
-            margin: 0 auto;
+            gap: 2rem;
+            list-style: none;
         }
 
-        .form-group input {
-            flex: 1;
-            padding: 0.8rem 1.5rem;
-            background-color: rgba(255, 255, 255, 0.08);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
-            color: #ffffff;
-            font-size: 1rem;
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #007AFF;
-            background-color: rgba(255, 255, 255, 0.12);
+        .nav-links a:hover {
+            color: #ffffff;
+            transform: translateY(-1px);
         }
 
+        .nav-icons {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-icons a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover span {
+            background-color: #ffffff;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 300;
+        }
+
+        .hero p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Buttons */
         .btn {
-            padding: 0.8rem 2rem;
+            display: inline-block;
+            padding: 0.75rem 2rem;
             background-color: #007AFF;
             color: #ffffff;
+            text-decoration: none;
             border-radius: 25px;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             font-size: 1rem;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
             font-weight: bold;
-            font-family: 'Helvetica Neue Bold', sans-serif;
         }
 
         .btn:hover {
@@ -224,131 +154,1099 @@
             box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
         }
 
-        .success-message {
-            display: none;
-            background-color: rgba(40, 167, 69, 0.2);
-            border: 2px solid #28a745;
-            border-radius: 10px;
-            padding: 1.5rem;
+        .btn-secondary {
+            background-color: #b0b0b0;
+            color: #1a1a1a;
+            border: none;
+        }
+
+        .btn-secondary:hover {
+            background-color: #c8c8c8;
+            transform: translateY(-2px);
+            box-shadow: none;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-gold {
+            background-color: #D4AF37;
+            color: #1a1a1a;
+        }
+
+        .btn-gold:hover {
+            background-color: #F4D03F;
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Feature Sections */
+        .feature-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 3rem auto 5rem;
+            padding: 0 4rem;
+        }
+
+        .feature-section:first-of-type {
+            margin-top: 2rem;
+        }
+
+        .feature-section.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .feature-image {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 20vw;
+            min-width: 280px;
+            max-width: 450px;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-image img:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-content h2 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 400;
+        }
+
+        .feature-content h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 400;
+        }
+
+        .feature-content p {
+            color: #b0b0b0;
+            margin-bottom: 0.75rem;
+        }
+
+        .platform-icons {
+            display: flex;
+            gap: 1rem;
             margin-top: 1.5rem;
         }
 
-        .success-message.show { display: block; animation: slideIn 0.5s ease-out; }
-
-        @media (max-width: 768px) {
-            .intro-screen .intro-gif { width: 75%; }
-            .waitlist-container h1 { 
-                font-size: clamp(1.2rem, 7.8vw, 2.8rem); 
-                white-space: nowrap;
-                letter-spacing: -0.5px;
-            }
-            .subheading { font-size: 1.1rem; }
-            .form-group { flex-direction: column; }
-            .btn { width: 100%; }
+        .platform-icons img {
+            width: 40px;
+            height: 40px;
         }
 
-        /* Legal Links */
-        .legal-links {
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: #808080;
+        /* Premium Section */
+        .premium-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            padding: 2rem;
+            margin-top: -5rem;
+            background-image: none;
+            position: relative;
+            height: 360px;
+            overflow: hidden;
         }
 
-        .legal-links a {
+        .premium-section::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('images/prem-bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.75;
+            z-index: 0;
+        }
+
+        .premium-section > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-animation {
+            flex: 0 0 auto;
+            width: 18vw;
+            height: 18vw;
+            min-width: 260px;
+            min-height: 260px;
+            cursor: pointer;
+        }
+
+        .premium-animation img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .premium-animation img:hover {
+            transform: scale(1.10);
+        }
+
+        .premium-content {
+            flex: 0 0 auto;
+            text-align: center;
+        }
+
+        .premium-section h2 {
+            font-size: 2rem;
+            margin-bottom: 0.75rem;
+            font-weight: 400;
+        }
+
+        .premium-section p {
+            color: #b0b0b0;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: transparent;
+            padding: 1rem 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .footer-section p, .footer-section a {
             color: #808080;
             text-decoration: none;
-            transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
-        .legal-links a:hover {
-            color: #b0b0b0;
-            text-decoration: underline;
+        .footer-bottom {
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #808080;
+            font-size: 0.9rem;
         }
 
-        .legal-links span {
-            margin: 0 0.5rem;
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-icons a {
+            color: #808080;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+                position: relative;
+            }
+
+            .hamburger {
+                position: absolute;
+                left: 70px;
+                display: flex;
+            }
+
+            .hamburger span {
+                background-color: #b0b0b0;
+            }
+
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-icons {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .feature-section,
+            .feature-section.reverse {
+                flex-direction: column;
+                padding: 0 1rem;
+                margin: 3rem auto;
+            }
+
+            .premium-section {
+                flex-direction: column;
+                height: auto;
+                padding: 3rem 1rem 2rem;
+                gap: 1.5rem;
+            }
+
+            .premium-animation {
+                width: 250px;
+                height: 250px;
+                margin: -3rem 0;
+            }
+
+            .premium-content {
+                padding: 0 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+			/* Dropdown Styles */
+			.dropdown-menu {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 42px;
+				background-color: #222222;
+				width: 280px;
+				box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+				border-radius: 14px;
+				z-index: 1000;
+				overflow: hidden;
+				border: 1px solid rgba(255,255,255,0.1);
+				padding: 0.5rem;
+			}
+
+			.dropdown-menu.show {
+				display: block;
+			}
+
+			/* Header section inside dropdown */
+			.dropdown-header {
+				padding: 0.85rem 1rem;
+				margin-bottom: 0.4rem;
+				border-bottom: 1px solid rgba(255,255,255,0.07);
+			}
+
+			.dropdown-plan {
+				font-size: 0.7rem;
+				text-transform: uppercase;
+				letter-spacing: 0.1em;
+				color: #606060;
+				margin-bottom: 0.25rem;
+			}
+
+			.dropdown-email {
+				font-size: 0.9rem;
+				color: #ffffff;
+				font-weight: bold;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			.dropdown-sub {
+				font-size: 0.78rem;
+				margin-top: 0.2rem;
+			}
+
+			/* Dropdown buttons */
+			.dropdown-btn {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+				width: 100%;
+				padding: 0.75rem 1rem;
+				height: 44px;
+				border-radius: 25px;
+				font-size: 0.88rem !important;
+				font-weight: bold;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif !important;
+				cursor: pointer;
+				border: none;
+				transition: all 0.25s ease;
+				text-decoration: none;
+				margin-bottom: 0.4rem;
+				text-align: center;
+				box-sizing: border-box;
+				-webkit-appearance: none;
+				appearance: none;
+				line-height: 1;
+			}
+
+			.dropdown-btn:last-child { margin-bottom: 0; }
+
+			.dropdown-btn-gold {
+				background-color: #D4AF37;
+				color: #1a1a1a !important;
+			}
+
+			.dropdown-btn-gold:hover {
+				background-color: #F4D03F;
+				transform: translateY(-1px);
+				box-shadow: 0 4px 10px rgba(212,175,55,0.35);
+			}
+
+			.dropdown-btn-grey {
+				background-color: #b0b0b0;
+				color: #1a1a1a !important;
+			}
+
+			.dropdown-btn-grey:hover {
+				background-color: #c8c8c8;
+				transform: translateY(-1px);
+			}
+
+			.dropdown-item {
+				display: block;
+				padding: 12px 15px;
+				color: #b0b0b0;
+				text-decoration: none;
+				transition: background 0.2s;
+				border-bottom: 1px solid #3a3a3a;
+			}
+
+			.dropdown-item:last-child { border-bottom: none; }
+
+			.dropdown-item:hover {
+				background-color: #3a3a3a;
+				color: #fff;
+			}
+
+			/* Modal Styles */
+			.modal-overlay {
+				display: none; /* Hidden by default */
+				position: fixed;
+				z-index: 2000;
+				left: 0;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0.8);
+				justify-content: center;
+				align-items: center;
+			}
+
+			.modal-box {
+				background-color: #1a1a1a;
+				padding: 2.5rem;
+				border-radius: 15px;
+				border: 1px solid #444;
+				width: 90%;
+				max-width: 400px;
+				text-align: center;
+				position: relative;
+			}
+
+			.close-btn {
+				position: absolute;
+				top: 15px;
+				right: 20px;
+				color: #b0b0b0;
+				font-size: 28px;
+				cursor: pointer;
+			}
+
+			.google-btn {
+				background-color: #ffffff;
+				color: #1a1a1a;
+				border: none;
+				padding: 12px 24px;
+				border-radius: 25px;
+				font-size: 1rem;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 10px;
+				width: 100%;
+				font-weight: bold;
+				transition: transform 0.2s;
+			}
+
+			.google-btn:hover {
+				transform: translateY(-2px);
+				background-color: #f0f0f0;
+			}
+
+			/* Email/password form in modal */
+			.modal-divider {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				margin: 1rem 0;
+				color: #555;
+				font-size: 0.8rem;
+			}
+
+			.modal-divider::before,
+			.modal-divider::after {
+				content: '';
+				flex: 1;
+				height: 1px;
+				background: #3a3a3a;
+			}
+
+			.modal-toggle {
+				background: none;
+				border: none;
+				color: #808080;
+				font-size: 0.82rem;
+				cursor: pointer;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				transition: color 0.2s;
+				padding: 0;
+				width: 100%;
+			}
+
+			.modal-toggle:hover { color: #cccccc; }
+
+			.modal-email-form {
+				display: none;
+				margin-top: 0.75rem;
+				text-align: left;
+			}
+
+			.modal-email-form.visible { display: block; }
+
+			.modal-form-group { margin-bottom: 0.75rem; }
+
+			.modal-form-group label {
+				display: block;
+				font-size: 0.78rem;
+				color: #a0a0a0;
+				margin-bottom: 0.3rem;
+			}
+
+			.modal-form-group input {
+				width: 100%;
+				background: rgba(255,255,255,0.06);
+				border: 1px solid #444;
+				border-radius: 8px;
+				padding: 10px 14px;
+				color: #ffffff;
+				font-size: 0.93rem;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				outline: none;
+				transition: border-color 0.2s;
+				box-sizing: border-box;
+			}
+
+			.modal-form-group input:focus { border-color: #007AFF; }
+			.modal-form-group input::placeholder { color: #555; }
+
+			.modal-email-btn {
+				background-color: #007AFF;
+				color: #ffffff;
+				border: none;
+				padding: 11px 24px;
+				border-radius: 25px;
+				font-size: 0.93rem;
+				cursor: pointer;
+				width: 100%;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				font-weight: bold;
+				transition: all 0.3s ease;
+				margin-top: 0.25rem;
+			}
+
+			.modal-email-btn:hover {
+				background-color: #0066dd;
+				transform: translateY(-2px);
+			}
+
+			.modal-email-btn:disabled {
+				opacity: 0.6;
+				cursor: not-allowed;
+				transform: none;
+			}
+
+			.modal-error {
+				font-size: 0.8rem;
+				color: #ff6666;
+				margin-top: 0.5rem;
+				text-align: left;
+				min-height: 1rem;
+			}
+
+			.modal-switch-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 0.75rem;
+				font-size: 0.78rem;
+				color: #606060;
+			}
+
+			.modal-switch-row button {
+				background: none;
+				border: none;
+				color: #808080;
+				font-size: 0.78rem;
+				cursor: pointer;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				padding: 0;
+			}
+
+			.modal-switch-row button:hover { color: #cccccc; }
+
+			.modal-forgot {
+				background: none;
+				border: none;
+				color: #606060;
+				font-size: 0.75rem;
+				cursor: pointer;
+				font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+				text-decoration: underline;
+				text-underline-offset: 3px;
+				padding: 0;
+				display: block;
+				text-align: right;
+				margin-top: -0.3rem;
+				margin-bottom: 0.5rem;
+			}
+
+			.modal-forgot:hover { color: #b0b0b0; }
+
+        @media (max-width: 768px) {
+            body {
+                background-image: none;
+            }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url('images/boombox.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
+    <nav>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="https://makemp3s.github.io/feedback.html">Feedback & Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+			<div class="account-container" style="position: relative; display: inline-block;">
+				<a href="javascript:void(0)" onclick="toggleDropdown()">
+					<i class="fas fa-user"></i>
+				</a>
+				<div id="user-dropdown" class="dropdown-menu">
+					</div>
+			</div>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </nav>
 
-    <div class="intro-screen">
-        <img src="images/prem-spin.gif" alt="MakeMp3s Playlist to MP3 Converter Loading" class="intro-gif">
-    </div>
+    <!-- Hero Section -->
+    <div class="content-wrapper">
+    <section class="hero">
+        <h1>A Better Way to Convert Music Playlists to MP3s</h1>
+        <p>Designed for artists, music collectors, and DJs who need clean, consistent MP3s.</p>
+        <a href="downloads.html" class="btn">Download Make MP3s Free Edition</a>
+    </section>
 
-    <div class="waitlist-container">
-        <h1>From Playlists to MP3s</h1>
-        <p class="subheading">Own your music again</p>
-        
-        <div class="waitlist-form">
-            <form id="waitlist-form">
-                <div class="form-group">
-                    <input type="email" id="email-input" placeholder="Enter your email" required aria-label="Email address">
-                    <button type="submit" class="btn" id="submit-btn">Join Waitlist</button>
-                </div>
-                <div class="error-message" id="error-message" style="display:none; color: #ff6b6b; margin-top: 1rem;"></div>
-                <div class="success-message" id="success-message">
-                    <i class="fas fa-check-circle"></i>
-                    <p><strong>You're on the list!</strong></p>
-                    <p>We'll notify you when Make MP3s Premium launches.</p>
-                </div>
-            </form>
+    <!-- What is Make MP3s Section -->
+    <section class="feature-section">
+        <div class="feature-image">
+            <img src="images/app-screenshot.png" alt="Make MP3s Screenshot">
+        </div>
+        <div class="feature-content">
+            <h2>What is Make MP3s?</h2>
+            <p>Make MP3s is a free, reliable, and simple music conversion software tool designed to convert your favorite songs, full playlists, or even mixes into high quality MP3 files from supported sources in seconds. No complicated setup. Just clean, quick, accurate conversions.</p>
+            <p>With Make MP3s, you can automatically add cover art, and even detect music video alternatives for better quality sources. Works on both mac and windows devices.</p>
+            <p>Perfect for creators who need consistency, speed, and responsible downloading options.</p>
+            <p>Free version is now available. Go Premium for more features and unlimited downloads.</p>
+        </div>
+    </section>
 
-            <div class="legal-links">
-                <a href="legal.html">Terms of Service</a>
-                <span>•</span>
-                <a href="legal.html">Privacy Policy</a>
+    <!-- Make MP3s Free Version Section -->
+    <section class="feature-section">
+        <div class="feature-image">
+            <img src="images/app-icon.png" alt="Make MP3s Icon">
+        </div>
+        <div class="feature-content">
+            <h2>Make MP3s</h2>
+            <h3>Free Edition Beta</h3>
+            <p>Convert your favorite songs or entire playlists into your very own MP3 files. Works with a wide range of supported sources. Try free with 100 downloads in your first 24 hours, then 10 per day after that. Unlock unlimited and more with Premium.</p>
+            <div class="button-group">
+                <a href="downloads.html" class="btn">Download</a>
+                <a href="/learn-more" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
+    </section>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    <!-- Premium Section -->
+    <section class="premium-section">
+        <a href="/premium" class="premium-animation">
+            <img src="images/prem-spin.gif" alt="Premium Animation">
+        </a>
+        <div class="premium-content">
+            <h2>Make MP3s Premium Edition</h2>
+            <p>Unlimited Downloads, automatic volume leveling, square cover art, search engine</p>
+            <a href="/premium" class="btn btn-gold">Get Premium Edition</a>
+        </div>
+    </section>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
-            authDomain: "make-mp3s.firebaseapp.com",
-            projectId: "make-mp3s",
-            storageBucket: "make-mp3s.firebasestorage.app",
-            messagingSenderId: "530983812032",
-            appId: "1:530983812032:web:1d059a67673771929b2625",
-            measurementId: "G-H11K90Y0CD"
-        };
+	<!-- Modal -->
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+	<div id="auth-modal" class="modal-overlay">
+		<div class="modal-box">
+			<span class="close-btn" onclick="closeAuthModal()">&times;</span>
+			<h2 style="color:#fff; margin-bottom:0.4rem;" id="modal-title">Welcome Back</h2>
+			<p style="color:#b0b0b0; margin-bottom:1.5rem; font-size:0.9rem;" id="modal-subtitle">Sign in to access your Make MP3s account.</p>
 
-        const form = document.getElementById('waitlist-form');
-        const emailInput = document.getElementById('email-input');
-        const submitBtn = document.getElementById('submit-btn');
-        const successMessage = document.getElementById('success-message');
+			<button onclick="handleGoogleLogin()" class="google-btn" id="modal-google-btn">
+				<i class="fab fa-google"></i> Continue with Google
+			</button>
 
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = emailInput.value.trim().toLowerCase();
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Joining...';
+			<div class="modal-divider" id="modal-divider">or</div>
 
-            try {
-                const emailDoc = doc(db, "waitlist", email);
-                const docSnap = await getDoc(emailDoc);
-                if (docSnap.exists()) {
-                    alert('This email is already on the waitlist!');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Join Waitlist';
-                    return;
-                }
-                await setDoc(emailDoc, { email, timestamp: serverTimestamp(), source: 'website' });
-                successMessage.classList.add('show');
-                emailInput.value = '';
-                submitBtn.textContent = '✓ Added';
-            } catch (error) {
-                alert('Oops! Something went wrong.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Join Waitlist';
+			<button class="modal-toggle" id="modal-toggle" onclick="toggleEmailForm()">
+				Sign in with email & password
+			</button>
+
+			<!-- Email/password form -->
+			<div class="modal-email-form" id="modal-email-form">
+				<div class="modal-form-group">
+					<label for="modal-email">Email</label>
+					<input type="email" id="modal-email" placeholder="your@email.com" autocomplete="email">
+				</div>
+				<div class="modal-form-group">
+					<label for="modal-password">Password</label>
+					<input type="password" id="modal-password" placeholder="Password" autocomplete="current-password">
+				</div>
+				<button class="modal-forgot" id="modal-forgot" onclick="handleModalForgotPassword()">Forgot password?</button>
+				<div class="modal-form-group" id="modal-confirm-group" style="display:none;">
+					<label for="modal-confirm">Confirm Password</label>
+					<input type="password" id="modal-confirm" placeholder="Confirm password" autocomplete="new-password">
+				</div>
+				<div class="modal-error" id="modal-error"></div>
+				<button class="modal-email-btn" id="modal-email-btn" onclick="handleEmailAuth()">Sign In</button>
+				<div class="modal-switch-row">
+					<span id="modal-switch-text">Don't have an account?</span>
+					<button onclick="toggleAuthMode()">Create one</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <p style="text-align:center; color:#808080; font-size:0.78rem; padding: 0.75rem 3rem 0;">Make MP3s is intended for use with content you own or have the right to download.</p>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2025 Make MP3s | <a href="https://makemp3s.com/legal" style="color: #808080; text-decoration: none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color: #808080; text-decoration: none; font-weight: bold;">Our Story</a>
+        </div>
+    </footer>
+	
+<script type="module">
+    // Import Firebase SDKs
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { 
+      getAuth, 
+      signInWithPopup, 
+      GoogleAuthProvider, 
+      signOut, 
+      onAuthStateChanged,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      sendPasswordResetEmail
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // --- PASTE YOUR FIREBASE CONFIG HERE ---
+	const firebaseConfig = {
+	  apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+	  authDomain: "make-mp3s.firebaseapp.com",
+	  projectId: "make-mp3s",
+	  storageBucket: "make-mp3s.firebasestorage.app",
+	  messagingSenderId: "530983812032",
+	  appId: "1:530983812032:web:1d059a67673771929b2625",
+	  measurementId: "G-H11K90Y0CD"
+	};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // --- DOM Elements ---
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    // --- Auth Logic ---
+    
+    // 1. Handle Google Login
+    window.handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            
+            // Check if user exists in Firestore, if not create them
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+
+            if (!userSnap.exists()) {
+                await setDoc(userRef, {
+                    email: user.email,
+                    subscription: "free", // Default to free
+                    createdAt: new Date()
+                });
             }
-        });
-    </script>
+            
+            window.closeAuthModal();
+        } catch (error) {
+            console.error("Login Failed:", error);
+            alert("Login failed. Please try again.");
+        }
+    };
+
+    // 2. Handle Logout
+    window.handleLogout = async () => {
+        await signOut(auth);
+        window.location.reload();
+    };
+
+    // 3. Listen for Auth State Changes
+	onAuthStateChanged(auth, async (user) => {
+		if (user) {
+			// Check if this is a callback from desktop app
+			const urlParams = new URLSearchParams(window.location.search);
+			const callbackUrl = urlParams.get('callback');
+			
+			if (callbackUrl) {
+				// Desktop app login flow
+				try {
+					const idToken = await user.getIdToken();
+					
+					// Redirect to desktop app with token
+					window.location.href = `http://${callbackUrl}/auth?token=${idToken}`;
+					
+					// Show loading message while redirecting
+					document.body.innerHTML = `
+						<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #1a1a1a; color: white; font-family: Arial;">
+							<div style="text-align: center;">
+								<h2>✅ Authentication Successful</h2>
+								<p>Returning to Make MP3s...</p>
+								<p style="color: #666; font-size: 0.9rem;">You can close this window if it doesn't close automatically.</p>
+							</div>
+						</div>
+					`;
+					
+					return; // Don't process normal web login
+					
+				} catch (error) {
+					console.error('Token error:', error);
+					alert('Authentication failed. Please try again.');
+				}
+			}
+			
+			// Normal web login (no callback)
+			const userRef = doc(db, "users", user.email);
+			const userSnap = await getDoc(userRef);
+			const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
+			const subscription = userData.subscription || 'free';
+			const subscriptionType = userData.subscriptionType || null;
+
+			// Build readable plan label
+			let planLabel = 'Free';
+			let planColor = '#ffffff';
+			if (subscription === 'premium' && subscriptionType === 'lifetime') {
+				planLabel = 'Lifetime';
+				planColor = '#D4AF37';
+			} else if (subscription === 'premium' && subscriptionType === 'monthly') {
+				planLabel = 'Monthly';
+				planColor = '#D4AF37';
+			}
+
+			dropdown.innerHTML = `
+				<div class="dropdown-header">
+					<div class="dropdown-plan">Account</div>
+					<div class="dropdown-email">${user.email}</div>
+					<div class="dropdown-sub">
+						Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span>
+					</div>
+				</div>
+				<div style="padding: 0.4rem 0.5rem 0.5rem;">
+					<a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+						<i class="fas fa-user-cog"></i> Account Settings
+					</a>
+					<button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
+						<i class="fas fa-sign-out-alt"></i> Sign Out
+					</button>
+				</div>
+			`;
+		} else {
+			dropdown.innerHTML = "";
+			dropdown.classList.remove("show");
+		}
+	});
+
+    // --- UI Functions ---
+	window.toggleDropdown = () => {
+		// Check if user is logged in by checking both auth.currentUser and dropdown content
+		if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+			// User is logged in: Show the account menu
+			dropdown.classList.toggle("show");
+		} else {
+			// User is logged out: Make sure dropdown is hidden, then open login modal
+			dropdown.classList.remove("show");
+			window.openAuthModal();
+		}
+	};
+
+    window.openAuthModal = () => {
+        authModal.style.display = "flex";
+        dropdown.classList.remove("show");
+        // Reset modal to default state each time it opens
+        resetEmailForm();
+    };
+
+    window.closeAuthModal = () => {
+        authModal.style.display = "none";
+    };
+
+    // ── Email form toggle ─────────────────────────────────────────────────────
+    let emailFormVisible = false;
+    let isSignUpMode = false;
+
+    window.toggleEmailForm = () => {
+        emailFormVisible = !emailFormVisible;
+        const form     = document.getElementById('modal-email-form');
+        const toggle   = document.getElementById('modal-toggle');
+        const googleBtn = document.getElementById('modal-google-btn');
+        const divider  = document.getElementById('modal-divider');
+
+        form.classList.toggle('visible', emailFormVisible);
+        toggle.textContent = emailFormVisible ? '← Back to Google sign in' : 'Sign in with email & password';
+        googleBtn.style.display = emailFormVisible ? 'none' : 'flex';
+        divider.style.display   = emailFormVisible ? 'none' : 'flex';
+
+        if (emailFormVisible) document.getElementById('modal-email').focus();
+    };
+
+    // ── Toggle sign in / create account ──────────────────────────────────────
+    window.toggleAuthMode = () => {
+        isSignUpMode = !isSignUpMode;
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-confirm').value = '';
+
+        const confirmGroup = document.getElementById('modal-confirm-group');
+        const forgot       = document.getElementById('modal-forgot');
+        const btn          = document.getElementById('modal-email-btn');
+        const switchText   = document.getElementById('modal-switch-text');
+        const switchBtn    = document.querySelector('.modal-switch-row button');
+        const title        = document.getElementById('modal-title');
+        const subtitle     = document.getElementById('modal-subtitle');
+
+        if (isSignUpMode) {
+            confirmGroup.style.display = 'block';
+            forgot.style.display = 'none';
+            btn.textContent = 'Create Account';
+            switchText.textContent = 'Already have an account?';
+            switchBtn.textContent = 'Sign in';
+            title.textContent = 'Create Account';
+            subtitle.textContent = 'Join Make MP3s today.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'new-password');
+        } else {
+            confirmGroup.style.display = 'none';
+            forgot.style.display = 'block';
+            btn.textContent = 'Sign In';
+            switchText.textContent = "Don't have an account?";
+            switchBtn.textContent = 'Create one';
+            title.textContent = 'Welcome Back';
+            subtitle.textContent = 'Sign in to access your Make MP3s account.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'current-password');
+        }
+    };
+
+    // ── Reset form to default state ───────────────────────────────────────────
+    function resetEmailForm() {
+        emailFormVisible = false;
+        isSignUpMode = false;
+        document.getElementById('modal-email-form').classList.remove('visible');
+        document.getElementById('modal-toggle').textContent = 'Sign in with email & password';
+        document.getElementById('modal-google-btn').style.display = 'flex';
+        document.getElementById('modal-divider').style.display = 'flex';
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-email').value = '';
+        document.getElementById('modal-password').value = '';
+        document.getElementById('modal-confirm').value = '';
+        document.getElementById('modal-confirm-group').style.display = 'none';
+        document.getElementById('modal-forgot').style.display = 'block';
+        document.getElementById('modal-email-btn').textContent = 'Sign In';
+        document.getElementById('modal-switch-text').textContent = "Don't have an account?";
+        document.querySelector('.modal-switch-row button').textContent = 'Create one';
+        document.getElementById('modal-title').textContent = 'Welcome Back';
+        document.getElementById('modal-subtitle').textContent = 'Sign in to access your Make MP3s account.';
+    }
+
+    // ── Friendly error messages ───────────────────────────────────────────────
+    function friendlyError(code) {
+        return ({
+            'auth/user-not-found'       : 'No account found with that email.',
+            'auth/wrong-password'       : 'Incorrect password. Please try again.',
+            'auth/invalid-credential'   : 'Incorrect email or password.',
+            'auth/invalid-email'        : 'Please enter a valid email address.',
+            'auth/too-many-requests'    : 'Too many attempts. Please wait and try again.',
+            'auth/email-already-in-use' : 'An account with this email already exists.',
+            'auth/weak-password'        : 'Password must be at least 6 characters.',
+        })[code] || 'Something went wrong. Please try again.';
+    }
+
+    // ── Handle email sign in / sign up ────────────────────────────────────────
+    window.handleEmailAuth = async () => {
+        const email    = document.getElementById('modal-email').value.trim();
+        const password = document.getElementById('modal-password').value;
+        const confirm  = document.getElementById('modal-confirm').value;
+        const errorEl  = document.getElementById('modal-error');
+        const btn      = document.getElementById('modal-email-btn');
+
+        errorEl.textContent = '';
+
+        if (!email || !password) {
+            errorEl.textContent = 'Please enter your email and password.';
+            return;
+        }
+
+        if (isSignUpMode) {
+            if (!confirm) { errorEl.textContent = 'Please confirm your password.'; return; }
+            if (password !== confirm) { errorEl.textContent = 'Passwords do not match.'; return; }
+            if (password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters.'; return; }
+        }
+
+        btn.disabled = true;
+        btn.textContent = isSignUpMode ? 'Creating account...' : 'Signing in...';
+
+        try {
+            let result;
+            if (isSignUpMode) {
+                result = await createUserWithEmailAndPassword(auth, email, password);
+                // Create Firestore record for new user
+                const userRef = doc(db, "users", result.user.email);
+                const userSnap = await getDoc(userRef);
+                if (!userSnap.exists()) {
+                    await setDoc(userRef, {
+                        email: result.user.email,
+                        subscription: "free",
+                        createdAt: new Date()
+                    });
+                }
+            } else {
+                result = await signInWithEmailAndPassword(auth, email, password);
+            }
+            window.closeAuthModal();
+        } catch (error) {
+            errorEl.textContent = friendlyError(error.code);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = isSignUpMode ? 'Create Account' : 'Sign In';
+        }
+    };
+
+    // ── Forgot password ───────────────────────────────────────────────────────
+    window.handleModalForgotPassword = async () => {
+        const email   = document.getElementById('modal-email').value.trim();
+        const errorEl = document.getElementById('modal-error');
+        if (!email) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = 'Enter your email above first, then click Forgot password.';
+            document.getElementById('modal-email').focus();
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            errorEl.style.color = '#4CAF50';
+            errorEl.textContent = `Reset email sent to ${email}. Check your inbox.`;
+        } catch (error) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = friendlyError(error.code);
+        }
+    };
+
+    // Close dropdowns if clicking outside
+    window.onclick = function(event) {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) {
+            window.closeAuthModal();
+        }
+    }
+</script>
+	
 </body>
 </html>
