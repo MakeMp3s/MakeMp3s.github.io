@@ -212,6 +212,8 @@
             color: #ffffff;
             font-size: 0.9rem;
             border: 1px solid #444;
+            min-width: 200px;
+            min-height: 1.2em;
         }
 
         /* ── Pricing cards ──────────────────────────────────────── */
@@ -625,7 +627,7 @@
         <h1>Upgrade to Premium</h1>
         <p class="subtitle">Unlock unlimited downloads and advanced features</p>
 
-        <div class="user-email-badge" id="user-email-badge" style="display:none;"></div>
+        <div class="user-email-badge" id="user-email-badge">Loading...</div>
 
         <div class="pricing-container">
 
@@ -769,7 +771,6 @@
             // Show signed-in email
             const badge = document.getElementById('user-email-badge');
             badge.textContent = `Signed in as: ${user.email}`;
-            badge.style.display = 'inline-block';
 
             let planLabel = 'Free';
             let planColor = '#ffffff';
@@ -794,6 +795,8 @@
         } else {
             dropdown.innerHTML = "";
             dropdown.classList.remove("show");
+            document.getElementById('user-email-badge').textContent = 'Sign in to continue';
+            document.getElementById('user-email-badge').style.color = '#808080';
             // Not signed in — open auth modal
             window.openAuthModal();
         }
