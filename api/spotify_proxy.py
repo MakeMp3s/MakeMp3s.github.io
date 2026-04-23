@@ -35,6 +35,19 @@ _token_lock   = threading.Lock()
 _access_token: str | None = None
 _token_expiry: float = 0.0
 
+# ── Short-TTL playlist cache — reduces Spotify API calls under load ───────────
+# Keyed by playlist_id -> {"data": dict, "expires": float}
+# 60-second TTL: short enough that new songs are detected promptly during sync
+# refresh, long enough to absorb bursts of the same popular playlist.
+_playlist_cache: dict = {}
+_playlist_cache_lock  = threading.Lock()
+PLAYLIST_CACHE_TTL    = 60  # seconds
+
+# ── Retry budget for rate-limited requests ────────────────────────────────────
+# The proxy retries 429s silently so the client just waits.
+# All other errors (403 private, 404 not found) pass through immediately.
+RETRY_MAX_SECONDS = 40  # stop retrying and surface the error after this long
+
 
 def _get_spotify_token() -> str:
     """Fetch (or return cached) Spotify client-credentials token."""
@@ -62,16 +75,78 @@ def _get_spotify_token() -> str:
 
 
 def _spotify_get(path: str, params: dict | None = None) -> dict:
-    """Make an authenticated GET request to the Spotify Web API."""
-    token = _get_spotify_token()
-    resp = _requests.get(
-        f"https://api.spotify.com/v1/{path}",
-        headers={"Authorization": f"Bearer {token}"},
-        params=params or {},
-        timeout=10,
-    )
-    resp.raise_for_status()
-    return resp.json()
+    """
+    Make an authenticated GET request to the Spotify Web API.
+
+    Retries automatically on 429 (rate limited) using the Retry-After header,
+    up to RETRY_MAX_SECONDS total.  All other error codes (403 private playlist,
+    404 not found, 5xx, etc.) are raised immediately so the caller can surface
+    a meaningful error to the user without waiting.
+    """
+    deadline = time.time() + RETRY_MAX_SECONDS
+
+    while True:
+        token = _get_spotify_token()
+        resp  = _requests.get(
+            f"https://api.spotify.com/v1/{path}",
+            headers={"Authorization": f"Bearer {token}"},
+            params=params or {},
+            timeout=10,
+        )
+
+        if resp.status_code != 429:
+            # Not rate-limited — raise on any other HTTP error, return data on success
+            resp.raise_for_status()
+            return resp.json()
+
+        # 429: honour Spotify's Retry-After header, defaulting to 2 s
+        retry_after = int(resp.headers.get("Retry-After", 2))
+        remaining   = deadline - time.time()
+
+        if remaining <= 0 or retry_after > remaining:
+            # Out of retry budget — surface the 429 to the client
+            resp.raise_for_status()
+
+        time.sleep(retry_after)
+
+
+def _fetch_paginated_playlist(playlist_id: str) -> dict:
+    """
+    Fetch a playlist with full track pagination, using the in-process cache.
+    Returns cached data if still within PLAYLIST_CACHE_TTL seconds.
+    """
+    # Return cached response if still fresh
+    with _playlist_cache_lock:
+        cached = _playlist_cache.get(playlist_id)
+        if cached and time.time() < cached["expires"]:
+            return cached["data"]
+
+    # Cache miss — fetch from Spotify (retry logic lives in _spotify_get)
+    playlist  = _spotify_get(f"playlists/{playlist_id}")
+    tracks    = playlist.get("tracks", {})
+    all_items = list(tracks.get("items", []))
+
+    next_url = tracks.get("next")
+    while next_url:
+        token = _get_spotify_token()
+        page  = _requests.get(
+            next_url,
+            headers={"Authorization": f"Bearer {token}"},
+            timeout=10,
+        ).json()
+        all_items.extend(page.get("items", []))
+        next_url = page.get("next")
+
+    playlist["tracks"]["items"] = all_items
+
+    # Store in cache
+    with _playlist_cache_lock:
+        _playlist_cache[playlist_id] = {
+            "data": playlist,
+            "expires": time.time() + PLAYLIST_CACHE_TTL,
+        }
+
+    return playlist
 
 
 # ── Vercel handler ────────────────────────────────────────────────────────────
@@ -131,24 +206,8 @@ class handler(BaseHTTPRequestHandler):
                 if not playlist_id:
                     self._send_json(400, {"error": "Missing id parameter"})
                     return
-                # Fetch all tracks via pagination
-                playlist  = _spotify_get(f"playlists/{playlist_id}")
-                tracks    = playlist.get("tracks", {})
-                all_items = list(tracks.get("items", []))
-
-                next_url = tracks.get("next")
-                while next_url:
-                    token = _get_spotify_token()
-                    page  = _requests.get(
-                        next_url,
-                        headers={"Authorization": f"Bearer {token}"},
-                        timeout=10,
-                    ).json()
-                    all_items.extend(page.get("items", []))
-                    next_url = page.get("next")
-
-                playlist["tracks"]["items"] = all_items
-                self._send_json(200, playlist)
+                # Cached + paginated fetch (replaces the old inline pagination block)
+                self._send_json(200, _fetch_paginated_playlist(playlist_id))
 
             elif action == "album":
                 album_id = (qs.get("id") or [""])[0]
