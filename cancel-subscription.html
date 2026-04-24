@@ -400,6 +400,43 @@
 
         .skip-link:hover { color: #b0b0b0; }
 
+        /* Lemon Squeezy fallback */
+        .ls-fallback-link {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.82rem;
+            color: #606060;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .ls-fallback-link span {
+            color: #808080;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .ls-fallback-link:hover span { color: #b0b0b0; }
+
+        .ls-fallback-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+            font-size: 0.82rem;
+            color: #808080;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid #444;
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+
+        .ls-fallback-btn:hover {
+            color: #ffffff;
+            border-color: #666;
+        }
+
         /* Error message */
         .error-msg {
             color: #ff6666;
@@ -745,7 +782,14 @@
                     <i class="fas fa-times" style="margin-right:0.5rem;"></i>Yes, Cancel My Subscription
                 </button>
                 <a href="index.html" class="btn btn-outline">Keep My Subscription</a>
-                <div class="error-msg" id="cancel-error"></div>
+                <div class="error-msg" id="cancel-error">
+                    <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" class="ls-fallback-btn">
+                        <i class="fas fa-external-link-alt"></i> Manage via Lemon Squeezy instead
+                    </a>
+                </div>
+                <a href="https://app.lemonsqueezy.com/my-orders" target="_blank" class="ls-fallback-link">
+                    Cancel not working? <span>Try via Lemon Squeezy</span>
+                </a>
             </div>
 
             <!-- Cancelling... -->
@@ -975,7 +1019,7 @@
                 } else {
                     showState('state-confirm');
                     const errEl = document.getElementById('cancel-error');
-                    errEl.textContent = data.message || 'Something went wrong. Please try again or contact support.';
+                    errEl.querySelector('a') && (errEl.innerHTML = `<span style="color:#ff6666; font-size:0.88rem;">${data.message || 'Something went wrong. Please try again or contact support.'}</span><a href="https://app.lemonsqueezy.com/my-orders" target="_blank" class="ls-fallback-btn" style="margin-top:0.75rem;"><i class="fas fa-external-link-alt"></i> Manage via Lemon Squeezy instead</a>`);
                     errEl.style.display = 'block';
                 }
                 return;
@@ -988,7 +1032,7 @@
             console.error('Cancel error:', err);
             showState('state-confirm');
             const errEl = document.getElementById('cancel-error');
-            errEl.textContent = 'A network error occurred. Please try again.';
+            errEl.innerHTML = `<span style="color:#ff6666; font-size:0.88rem;">A network error occurred. Please try again.</span><a href="https://app.lemonsqueezy.com/my-orders" target="_blank" class="ls-fallback-btn" style="margin-top:0.75rem;"><i class="fas fa-external-link-alt"></i> Manage via Lemon Squeezy instead</a>`;
             errEl.style.display = 'block';
         }
     };
