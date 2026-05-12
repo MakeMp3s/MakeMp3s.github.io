@@ -7,8 +7,8 @@ import urllib.error
 from http.server import BaseHTTPRequestHandler
 
 TEAM_ID = os.environ.get("APPLE_MUSIC_TEAM_ID", "")
-KEY_ID = os.environ.get("APPLE_MUSIC_KEY_ID", "")
-P8_KEY = os.environ.get("APPLE_MUSIC_P8_KEY", "").replace("\\n", "\n")
+KEY_ID  = os.environ.get("APPLE_MUSIC_KEY_ID", "")
+P8_KEY  = os.environ.get("APPLE_MUSIC_P8_KEY", "").replace("\\n", "\n")
 
 def _generate_token():
     now = int(time.time())
@@ -20,49 +20,74 @@ def _generate_token():
     return jwt.encode(payload, P8_KEY, algorithm="ES256",
                       headers={"kid": KEY_ID})
 
-def _fetch_tracks(storefront, playlist_id):
-    token = _generate_token()
-    url = f"https://api.music.apple.com/v1/catalog/{storefront}/playlists/{playlist_id}?include=tracks"
+def _api_get(url, token):
+    """Make a single authenticated GET to the Apple Music API."""
     req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
     with urllib.request.urlopen(req, timeout=15) as resp:
-        data = json.loads(resp.read())
-    tracks = data["data"][0]["relationships"]["tracks"]["data"]
+        return json.loads(resp.read())
+
+def _fetch_all_tracks(storefront, playlist_id):
+    """
+    Fetch all tracks for a playlist, following pagination via the `next` field.
+    Apple Music returns max 100 tracks per page; we keep fetching until `next`
+    is absent, mirroring the Spotify proxy's _fetch_paginated_playlist pattern.
+    """
+    token = _generate_token()
+
+    # First page
+    first_url = (
+        f"https://api.music.apple.com/v1/catalog/{storefront}"
+        f"/playlists/{playlist_id}?include=tracks"
+    )
+    data       = _api_get(first_url, token)
+    tracks_rel = data["data"][0]["relationships"]["tracks"]
+    all_tracks = list(tracks_rel.get("data", []))
+
+    # Paginate via `next`
+    next_path = tracks_rel.get("next")
+    while next_path:
+        next_url  = f"https://api.music.apple.com{next_path}"
+        page      = _api_get(next_url, token)
+        all_tracks.extend(page.get("data", []))
+        next_path = page.get("next")
+
     results = []
-    for t in tracks:
+    for t in all_tracks:
         attr = t.get("attributes", {})
         results.append({
-            "title": attr.get("name", ""),
+            "title":  attr.get("name", ""),
             "artist": attr.get("artistName", "")
         })
     return results
 
+
 class handler(BaseHTTPRequestHandler):
+    def log_message(self, format, *args):
+        pass  # suppress default logging
+
+    def _send_json(self, status, payload):
+        body = json.dumps(payload).encode()
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_GET(self):
         from urllib.parse import urlparse, parse_qs
-        qs = parse_qs(urlparse(self.path).query)
-        storefront = qs.get("storefront", ["us"])[0]
+        qs          = parse_qs(urlparse(self.path).query)
+        storefront  = qs.get("storefront", ["us"])[0]
         playlist_id = qs.get("id", [""])[0]
 
         if not playlist_id:
-            self.send_response(400)
-            self.end_headers()
-            self.wfile.write(b'{"error": "missing id"}')
+            self._send_json(400, {"error": "missing id"})
             return
 
         try:
-            tracks = _fetch_tracks(storefront, playlist_id)
-            body = json.dumps({"tracks": tracks}).encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(body)
+            tracks = _fetch_all_tracks(storefront, playlist_id)
+            self._send_json(200, {"tracks": tracks})
         except urllib.error.HTTPError as e:
             body = e.read().decode()
-            self.send_response(e.code)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": str(e.code), "detail": body}).encode())
+            self._send_json(e.code, {"error": str(e.code), "detail": body})
         except Exception as e:
-            self.send_response(500)
-            self.end_headers()
-            self.wfile.write(json.dumps({"error": str(e)}).encode())
+            self._send_json(500, {"error": str(e)})
