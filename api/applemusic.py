@@ -57,9 +57,11 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(body)
         except urllib.error.HTTPError as e:
+            body = e.read().decode()
             self.send_response(e.code)
+            self.send_header("Content-Type", "application/json")
             self.end_headers()
-            self.wfile.write(json.dumps({"error": str(e.code)}).encode())
+            self.wfile.write(json.dumps({"error": str(e.code), "detail": body}).encode())
         except Exception as e:
             self.send_response(500)
             self.end_headers()
