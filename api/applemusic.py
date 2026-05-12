@@ -8,7 +8,7 @@ from http.server import BaseHTTPRequestHandler
 
 TEAM_ID = os.environ.get("APPLE_MUSIC_TEAM_ID", "")
 KEY_ID = os.environ.get("APPLE_MUSIC_KEY_ID", "")
-P8_KEY = os.environ.get("APPLE_MUSIC_P8_KEY", "")
+P8_KEY = os.environ.get("APPLE_MUSIC_P8_KEY", "").replace("\\n", "\n")
 
 def _generate_token():
     now = int(time.time())
