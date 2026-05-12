@@ -22,7 +22,7 @@ def _generate_token():
 
 def _fetch_tracks(storefront, playlist_id):
     token = _generate_token()
-    url = f"https://api.music.apple.com/v1/catalog/{storefront}/playlists/{playlist_id}?include=tracks&limit=100"
+    url = f"https://api.music.apple.com/v1/catalog/{storefront}/playlists/{playlist_id}?include=tracks"
     req = urllib.request.Request(url, headers={"Authorization": f"Bearer {token}"})
     with urllib.request.urlopen(req, timeout=15) as resp:
         data = json.loads(resp.read())
