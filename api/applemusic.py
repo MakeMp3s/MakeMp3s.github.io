@@ -128,11 +128,12 @@ def _fetch_all_tracks(storefront: str, playlist_id: str) -> list:
         all_tracks.extend(page.get("data", []))
         next_path  = page.get("next")
 
-    # Normalise to title/artist dicts
+    # Normalise to title/artist/id dicts
     results = []
     for t in all_tracks:
         attr = t.get("attributes", {})
         results.append({
+            "id":     t.get("id", ""),
             "title":  attr.get("name", ""),
             "artist": attr.get("artistName", "")
         })
