@@ -834,7 +834,7 @@
             <div class="badge"><i class="fas fa-shield-alt" style="margin-right:0.4rem;"></i>Refund Policy</div>
             <h1>Refund Policy</h1>
             <p>We want you to have a smooth experience with Make MP3s. Because of the nature of digital software, refunds are limited and handled carefully.</p>
-            <div class="last-updated">Last updated: April 2026</div>
+            <div class="last-updated">Last updated: June 21, 2026</div>
         </div>
 
         <!-- Eligibility -->
@@ -843,7 +843,8 @@
                 <div class="section-icon"><i class="fas fa-clock"></i></div>
                 <h2>Refund Eligibility</h2>
             </div>
-            <p>Refunds are only considered when <strong>both</strong> of the following conditions are met:</p>
+            <p>If Make MP3s isn't working the way it should, we want to make it right. Here's how refunds work.</p>
+            <p>Refunds are considered when <strong>both</strong> of the following conditions are met:</p>
             <ul class="policy-list check">
                 <li><span class="icon"><i class="fas fa-check-circle"></i></span> The request is made within <span class="highlight-window">48 hours</span> of purchase</li>
                 <li><span class="icon"><i class="fas fa-check-circle"></i></span> The software is not working as intended due to a verified technical issue</li>
@@ -875,14 +876,26 @@
             </div>
             <ul class="policy-list cross">
                 <li><span class="icon"><i class="fas fa-times-circle"></i></span> Change of mind after purchase</li>
-                <li><span class="icon"><i class="fas fa-times-circle"></i></span> Accidental purchases</li>
                 <li><span class="icon"><i class="fas fa-times-circle"></i></span> Lack of understanding of features (please review the product page before purchasing)</li>
                 <li><span class="icon"><i class="fas fa-times-circle"></i></span> Requests made after the 48-hour window</li>
                 <li><span class="icon"><i class="fas fa-times-circle"></i></span> Cases where the software was successfully used</li>
             </ul>
         </div>
 
-        <!-- Abuse Protection -->
+        <!-- Service Discontinuation -->
+        <div class="policy-section">
+            <div class="section-header">
+                <div class="section-icon"><i class="fas fa-power-off"></i></div>
+                <h2>Service Discontinuation</h2>
+            </div>
+            <p>In the event that Make MP3s is discontinued or its services are taken offline for any reason, no refunds will be issued for existing purchases. The only exception is purchases made within the preceding <span class="highlight-window">48 hours</span>, which remain eligible under our standard refund window provided a verified technical issue is present.</p>
+            <div class="callout callout-info" style="margin-top:1rem;">
+                <span class="callout-icon"><i class="fas fa-info-circle"></i></span>
+                <p>We recommend all users review the product and its features thoroughly before purchasing. Lifetime licenses are sold as-is with no guarantee of indefinite service availability.</p>
+            </div>
+        </div>
+
+                <!-- Abuse Protection -->
         <div class="policy-section">
             <div class="section-header">
                 <div class="section-icon"><i class="fas fa-shield-alt"></i></div>
@@ -918,14 +931,14 @@
                 <div class="section-icon"><i class="fas fa-paper-plane"></i></div>
                 <h2>How to Request a Refund</h2>
             </div>
-            <p>To submit a refund request, please contact us through our feedback page and include:</p>
+            <p>To submit a refund request, email us at <a href="mailto:makemp3smusic+refund@gmail.com" style="color:#007AFF;">makemp3smusic+refund@gmail.com</a> and include:</p>
             <ul class="policy-list neutral">
                 <li><span class="icon"><i class="fas fa-envelope"></i></span> The email address used at checkout</li>
                 <li><span class="icon"><i class="fas fa-align-left"></i></span> A clear description of the issue you experienced</li>
             </ul>
             <div class="callout callout-info" style="margin-top:1rem;">
                 <span class="callout-icon"><i class="fas fa-clock"></i></span>
-                <p>We aim to respond to all refund requests within <strong>24–48 hours</strong>.</p>
+                <p>We aim to respond to all refund requests within <strong>1–3 business days</strong>.</p>
             </div>
         </div>
 
@@ -942,8 +955,8 @@
         <div class="cta-section">
             <div class="cta-icon"><i class="fas fa-headset"></i></div>
             <h2>Need Help or Have a Question?</h2>
-            <p>If you're experiencing a problem or want to submit a refund request, reach out to our support team. We're here to help and typically respond within 24–48 hours.</p>
-            <a href="feedback.html" class="btn"><i class="fas fa-paper-plane" style="margin-right:0.5rem;"></i>Contact Support</a>
+            <p>If you're experiencing a problem or want to submit a refund request, reach out to our support team. We're here to help and typically respond within 1–3 business days.</p>
+            <a href="mailto:makemp3smusic+refund@gmail.com" class="btn"><i class="fas fa-envelope" style="margin-right:0.5rem;"></i>Contact Support</a>
         </div>
 
         <div class="final-note">
@@ -1111,7 +1124,7 @@
         }
     };
 
-        window.openAuthModal = () => {
+    window.openAuthModal = () => {
         authModal.style.display = "flex";
         dropdown.classList.remove("show");
         // Reset modal to default state each time it opens
