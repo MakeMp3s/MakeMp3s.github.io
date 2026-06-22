@@ -646,10 +646,21 @@
             <h1>We'd Love Your Feedback</h1>
             <p>Help us improve Make MP3s by sharing your thoughts and suggestions</p>
 
-            <div class="feedback-form">
-                <div data-fs-success style="display:none; color: #34A853; text-align: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(52, 168, 83, 0.1); border-radius: 8px;">
-                    <i class="fas fa-check-circle"></i> Thanks for your feedback! We'll get back to you soon.
+            <div class="feedback-form" id="feedback-form-card">
+
+                <!-- Success state -->
+                <div id="feedback-success" style="display:none; text-align:center; padding: 1rem 0;">
+                    <div style="font-size:3rem; color:#D4AF37; margin-bottom:1rem;">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h2 style="font-size:1.4rem; font-weight:400; margin-bottom:0.75rem;">Thank you!</h2>
+                    <p style="color:#b0b0b0; font-size:0.95rem; margin-bottom:2rem;">Your feedback has been submitted. We appreciate you taking the time.</p>
+                    <a href="index.html" class="btn" style="background-color:#007AFF; color:#ffffff; text-decoration:none; display:inline-flex; align-items:center; gap:0.5rem;">
+                        <i class="fas fa-home"></i> Back to Home
+                    </a>
                 </div>
+
+                <!-- Error state -->
                 <div data-fs-error style="display:none; color: #FF3B30; text-align: center; margin-bottom: 1.5rem; padding: 1rem; background: rgba(255, 59, 48, 0.1); border-radius: 8px;"></div>
 
                 <form id="feedback-form">
@@ -742,6 +753,12 @@
     <script>
         window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
         formspree('initForm', { formElement: '#feedback-form', formId: 'xojppplp' });
+
+        // Show custom success state on submission
+        document.getElementById('feedback-form').addEventListener('formspree:success', function() {
+            document.getElementById('feedback-form').style.display = 'none';
+            document.getElementById('feedback-success').style.display = 'block';
+        });
     </script>
     <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
