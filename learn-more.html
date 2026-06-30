@@ -427,6 +427,64 @@
         .quality-item strong { color: #ffffff; display: block; margin-bottom: 0.1rem; }
 
         /* ── Legal note ──────────────────────────────────────────── */
+        /* ── Legal note ──────────────────────────────────────────── */
+        .smartscreen-tip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.12);
+            color: #b0b0b0;
+            font-size: 0.7rem;
+            font-style: italic;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            position: relative;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        .smartscreen-tip:hover,
+        .smartscreen-tip:focus {
+            background-color: rgba(255,255,255,0.22);
+            color: #ffffff;
+            opacity: 0.92;
+        }
+
+        .smartscreen-tip .tip-bubble {
+            display: none;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 230px;
+            background-color: #2a2a2a;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 0.65rem 0.8rem;
+            font-size: 0.78rem;
+            font-style: normal;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            color: #c8c8c8;
+            line-height: 1.45;
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            z-index: 50;
+        }
+
+        .smartscreen-tip:hover .tip-bubble,
+        .smartscreen-tip:focus .tip-bubble {
+            display: block;
+        }
+
+        .dl-with-tip {
+            display: inline-flex;
+            align-items: center;
+        }
+
         .legal-note {
             color: #606060;
             font-size: 0.82rem;
@@ -732,7 +790,10 @@
                     <h4>Free Edition</h4>
                     <p style="margin-top:0.5rem;">Your first 24 hours include 100 downloads with all premium features unlocked so you can try everything out. After that, the free edition gives you 10 downloads per day.</p>
                     <div style="display:flex; justify-content:center; margin-top:1rem;">
-                        <span id="lm-dl-btn"></span>
+                        <span class="dl-with-tip">
+                            <span id="lm-dl-btn"></span>
+                            <span class="smartscreen-tip" tabindex="0">i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span></span>
+                        </span>
                     </div>
                 </div>
                 <div class="plan-card premium">
