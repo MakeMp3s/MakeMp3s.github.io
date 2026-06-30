@@ -233,12 +233,10 @@
         .mobile-dl-note {
             color: #b0b0b0;
             font-size: 0.85rem;
-            position: absolute;
-            top: 100%;
-            left: 0;
             margin-top: 0.6rem;
             opacity: 0;
-            pointer-events: none;
+            max-height: 0;
+            overflow: hidden;
             transition: opacity 0.35s ease;
             width: 100%;
             text-align: center;
@@ -252,6 +250,7 @@
 
         .mobile-dl-note.visible {
             opacity: 1;
+            max-height: 3.2rem;
         }
 
         .button-group {
@@ -1439,7 +1438,7 @@
             const note = document.createElement('div');
             note.className = 'mobile-dl-note';
             note.innerHTML = 'Available on Mac and Windows<br><span class="mobile-dl-subnote">Go to makemp3s.com on your computer</span>';
-            wrapper.appendChild(note);
+            wrapper.insertAdjacentElement('afterend', note);
         }
     }
 
