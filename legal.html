@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy & Terms - Make MP3s Waitlist</title>
+    <title>Terms of Service & Privacy Policy - Make MP3s</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @font-face {
@@ -13,11 +13,7 @@
             font-style: normal;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
@@ -31,10 +27,7 @@
             font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
+        .container { max-width: 800px; margin: 0 auto; }
 
         .back-button {
             display: inline-flex;
@@ -46,77 +39,91 @@
             font-size: 0.95rem;
             transition: all 0.3s ease;
         }
+        .back-button:hover { color: #0051D5; transform: translateX(-3px); }
+        .back-button i { font-size: 0.9rem; }
 
-        .back-button:hover {
-            color: #0051D5;
-            transform: translateX(-3px);
+        .page-header { margin-bottom: 3rem; }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 300; }
+
+        .last-updated { color: #808080; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        .intro-text {
+            color: #d0d0d0;
+            font-size: 1.05rem;
+            margin-bottom: 0;
+            line-height: 1.7;
         }
+        .intro-text strong { color: #ffffff; }
 
-        .back-button i {
-            font-size: 0.9rem;
-        }
+        /* Sections */
+        .section { margin-bottom: 2.5rem; }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 300;
-        }
-
-        .last-updated {
-            color: #808080;
-            font-size: 0.9rem;
-            margin-bottom: 3rem;
-        }
-
-        .section {
-            margin-bottom: 2.5rem;
+        .section-label {
+            font-size: 0.72rem;
+            color: #505050;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.2rem;
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             margin-bottom: 1rem;
-            margin-top: 2rem;
             font-weight: 400;
             color: #007AFF;
         }
 
         h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
+            font-size: 0.82rem;
+            margin-bottom: 0.6rem;
             margin-top: 1.5rem;
-            font-weight: 400;
+            font-weight: 600;
+            color: #909090;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
         }
 
-        p {
-            color: #b0b0b0;
-            margin-bottom: 1rem;
+        p { color: #b0b0b0; margin-bottom: 1rem; }
+
+        ul { margin-left: 2rem; margin-bottom: 1rem; }
+        li { color: #b0b0b0; margin-bottom: 0.5rem; }
+
+        a { color: #007AFF; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Document title */
+        .doc-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #2a2a2a;
         }
 
-        ul {
-            margin-left: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        li {
-            color: #b0b0b0;
-            margin-bottom: 0.5rem;
-        }
-
-        a {
+        /* Table */
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th {
+            text-align: left;
+            padding: 0.6rem 1rem;
+            background-color: rgba(0, 122, 255, 0.1);
             color: #007AFF;
-            text-decoration: none;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
-
-        a:hover {
-            text-decoration: underline;
+        td {
+            padding: 0.65rem 1rem;
+            color: #b0b0b0;
+            border-bottom: 1px solid #2a2a2a;
+            font-size: 0.95rem;
         }
+        tr:last-child td { border-bottom: none; }
 
-        .divider {
-            border: none;
-            border-top: 1px solid #2a2a2a;
-            margin: 3rem 0;
-        }
-
+        /* Contact box */
         .contact-box {
             background-color: rgba(42, 42, 42, 0.6);
             border: 1px solid #3a3a3a;
@@ -124,152 +131,280 @@
             padding: 1.5rem;
             margin-top: 2rem;
         }
+        .contact-box p { margin-bottom: 0; }
 
-        .contact-box h3 {
-            margin-top: 0;
-        }
-
-        .notice-box {
-            background-color: rgba(0, 122, 255, 0.1);
-            border: 1px solid #007AFF;
-            border-radius: 10px;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .notice-box p {
-            color: #ffffff;
-            margin: 0;
+        .divider {
+            border: none;
+            border-top: 1px solid #2a2a2a;
+            margin: 4rem 0;
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            h2 {
-                font-size: 1.5rem;
-            }
-
-            h3 {
-                font-size: 1.2rem;
-            }
+            body { padding: 1rem; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.4rem; }
+            th, td { padding: 0.5rem 0.75rem; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-button">
-            <i class="fas fa-arrow-left"></i> Back to Waitlist
+
+        <a href="https://makemp3s.github.io" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back
         </a>
 
-        <h1>Privacy & Terms</h1>
-        <p class="last-updated">Last Updated: January 31, 2025</p>
-
-        <div class="notice-box">
-            <p><strong>Note:</strong> Make MP3s is currently in development. These terms apply to our waitlist. Full terms will be available when the software launches.</p>
+        <div class="page-header">
+            <h1>Terms of Service & Privacy Policy</h1>
+            <p class="last-updated">Last updated: June 21, 2026</p>
+            <p class="intro-text"><strong>Make MP3s is built by one person who genuinely loves music.</strong> The goal is simple: help you keep the music you love, the way you want it. We've kept these terms as straightforward as possible. We don't track what you download, we don't sell your data, and we're not here to cause problems for anyone. The details below exist to protect both of us. Thanks for taking a second to read them.</p>
         </div>
 
-        <!-- PRIVACY POLICY -->
+        <!-- TERMS OF SERVICE -->
+        <div class="doc-title">Terms of Service</div>
+
         <div class="section">
-            <h2>Privacy Policy</h2>
+            <div class="section-label">Section 1</div>
+            <h2>Acceptance of Terms</h2>
+            <p>By downloading, installing, or using Make MP3s ("the Software"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree, do not use the Software. Make MP3s is operated by Prodwest, a sole proprietorship registered in Ontario, Canada ("we," "us," or "our").</p>
+        </div>
 
-            <h3>What Information We Collect</h3>
-            <p>When you join our waitlist, we collect:</p>
+        <div class="section">
+            <div class="section-label">Section 2</div>
+            <h2>Description of the Software</h2>
+            <p>Make MP3s is a desktop application that reads playlist metadata from third-party music platforms (such as Spotify and Apple Music) via their official APIs, and downloads corresponding audio from YouTube using yt-dlp, an open-source tool. Make MP3s does not host, stream, store, or distribute any copyrighted audio content. All downloads are initiated solely by the user.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 3</div>
+            <h2>User Responsibilities</h2>
+            <p>By using Make MP3s, you represent and agree that:</p>
             <ul>
-                <li><strong>Email Address:</strong> To notify you when Make MP3s launches</li>
-                <li><strong>Signup Timestamp:</strong> To track when you joined the waitlist</li>
+                <li>You will only use the Software to download content you own, have purchased, or otherwise have the legal right to download.</li>
+                <li>You are solely responsible for ensuring your use of the Software complies with all applicable laws, including copyright law, and with the terms of service of any third-party platforms (including but not limited to Spotify, Apple Music, and YouTube).</li>
+                <li>You will not use the Software for any unlawful purpose or in any way that could expose Prodwest to legal liability.</li>
+                <li>You are at least 13 years of age.</li>
             </ul>
-            <p>That's it. We don't collect any other personal information at this stage.</p>
+            <p>We are not responsible for how you use the Software or what content you choose to download.</p>
+        </div>
 
-            <h3>How We Use Your Email</h3>
-            <p>Your email will be used solely to:</p>
-            <ul>
-                <li>Notify you when Make MP3s Premium launches</li>
-                <li>Send important updates about the product development</li>
-                <li>Provide early access or special launch offers (optional)</li>
-            </ul>
-            <p>We will never spam you or send unrelated marketing emails.</p>
+        <div class="section">
+            <div class="section-label">Section 4</div>
+            <h2>Third-Party Services</h2>
+            <p>Make MP3s integrates with third-party services including Spotify, Apple Music, YouTube, and Google Analytics. Your use of those services is governed by their respective terms of service and privacy policies. We are not affiliated with, endorsed by, or sponsored by any of these platforms.</p>
+            <p>Audio is downloaded via yt-dlp, an independent open-source project. We are not responsible for the functionality, availability, or legal standing of yt-dlp or YouTube.</p>
+        </div>
 
-            <h3>Data Storage & Security</h3>
-            <p>Your email is stored securely using Google Firebase, a trusted cloud platform with industry-standard encryption. Your data is protected and only accessible by authorized personnel.</p>
+        <div class="section">
+            <div class="section-label">Section 5</div>
+            <h2>Payments and Subscriptions</h2>
+            <p>Payments are processed by Lemon Squeezy. By purchasing a subscription or lifetime license, you agree to Lemon Squeezy's terms of service. All prices are listed in USD.</p>
+            <p>Prodwest reserves the right to modify pricing at any time. Existing monthly subscribers will be honoured at their original rate.</p>
+        </div>
 
-            <h3>We Don't Sell Your Data</h3>
-            <p>We will never sell, rent, or share your email address with third parties for marketing purposes. Your email is yours, and we respect that.</p>
+        <div class="section">
+            <div class="section-label">Section 6</div>
+            <h2>Refund Policy</h2>
+            <p>Refunds are considered for verified technical issues reported within 48 hours of purchase. All refund requests must be submitted to <a href="mailto:makemp3smusic+refund@gmail.com" style="color:#007AFF;">makemp3smusic+refund@gmail.com</a>. Please refer to our <a href="https://makemp3s.com/refund-policy">Refund Policy</a> page for full details.</p>
+        </div>
 
-            <h3>Your Rights</h3>
-            <p>You have the right to:</p>
-            <ul>
-                <li><strong>Unsubscribe:</strong> Opt-out at any time by clicking unsubscribe in our emails</li>
-                <li><strong>Request Deletion:</strong> Ask us to delete your email from our waitlist</li>
-                <li><strong>Access Your Data:</strong> Request a copy of the information we have about you</li>
-            </ul>
+        <div class="section">
+            <div class="section-label">Section 7</div>
+            <h2>Trial and Free Tier</h2>
+            <p>Make MP3s offers a one-time free trial per device. Trial eligibility is determined by a machine identifier stored locally and on our servers solely for this purpose. Machine identifiers are purged annually, at which point trial eligibility resets. We do not use machine identifiers for any other purpose.</p>
+        </div>
 
-            <h3>Cookies</h3>
-            <p>Our waitlist page uses minimal cookies from Firebase to maintain your session. We don't use advertising or tracking cookies.</p>
+        <div class="section">
+            <div class="section-label">Section 8</div>
+            <h2>Intellectual Property</h2>
+            <p>Make MP3s, its design, branding, and underlying code are the intellectual property of Prodwest. You may not reverse engineer, redistribute, resell, or modify the Software without explicit written permission.</p>
+        </div>
 
-            <h3>Updates to Privacy Policy</h3>
-            <p>When Make MP3s launches, we'll update this policy to reflect the full product. We'll notify waitlist members of any significant changes.</p>
+        <div class="section">
+            <div class="section-label">Section 9</div>
+            <h2>Disclaimer of Warranties</h2>
+            <p>The Software is provided "as is" without warranties of any kind, express or implied. We do not guarantee uninterrupted availability, compatibility with all systems, or that the Software will remain functional as third-party platforms update their services. Use the Software at your own risk.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 10</div>
+            <h2>Limitation of Liability</h2>
+            <p>To the fullest extent permitted by applicable law, Prodwest shall not be liable for any indirect, incidental, special, consequential, or statutory damages arising from your use of the Software, including but not limited to loss of data, loss of income, or legal claims arising from your use of downloaded content. Our total liability to you shall not exceed the amount you paid us in the 12 months preceding the claim.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 11</div>
+            <h2>DMCA / Copyright Complaints</h2>
+            <p>Make MP3s respects intellectual property rights. If you believe content accessible through our Software infringes your copyright, please contact us at <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a>. We will respond to valid DMCA notices in accordance with applicable law.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 12</div>
+            <h2>Termination</h2>
+            <p>We reserve the right to suspend or terminate your access to Make MP3s at any time, with or without notice, if we believe you are violating these Terms or applicable law. Upon termination, your license to use the Software is revoked.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 13</div>
+            <h2>Governing Law</h2>
+            <p>These Terms are governed by the laws of the Province of Ontario and the federal laws of Canada applicable therein. Any disputes shall be resolved in the courts of Ontario, Canada.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 14</div>
+            <h2>Changes to These Terms</h2>
+            <p>We may update these Terms at any time. Continued use of the Software after changes are posted constitutes acceptance of the revised Terms. We will update the "Last updated" date at the top of this page.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 15</div>
+            <h2>Contact</h2>
+            <p>For questions about these Terms, contact us at <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a>.</p>
+        </div>
+
+        <div class="contact-box">
+            <p>Questions about our Terms? <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a></p>
         </div>
 
         <hr class="divider">
 
-        <!-- TERMS OF SERVICE -->
+        <!-- PRIVACY POLICY -->
+        <div class="doc-title">Privacy Policy</div>
+
         <div class="section">
-            <h2>Waitlist Terms</h2>
-
-            <h3>Joining the Waitlist</h3>
-            <p>By submitting your email to the Make MP3s waitlist, you agree to receive notifications about the product launch. This is not a contract or commitment to purchase.</p>
-
-            <h3>No Guarantees</h3>
-            <p>Joining the waitlist does not guarantee:</p>
-            <ul>
-                <li>A specific launch date for Make MP3s</li>
-                <li>Early access or beta testing opportunities</li>
-                <li>Pricing or feature availability</li>
-                <li>That the product will definitely launch (though we're working hard on it!)</li>
-            </ul>
-
-            <h3>No Obligation</h3>
-            <p>Being on the waitlist doesn't obligate you to:</p>
-            <ul>
-                <li>Download or purchase Make MP3s when it launches</li>
-                <li>Take any action beyond receiving email updates</li>
-            </ul>
-            <p>You can unsubscribe at any time with no questions asked.</p>
-
-            <h3>Communication</h3>
-            <p>We may send you:</p>
-            <ul>
-                <li>Launch announcements</li>
-                <li>Development updates (optional)</li>
-                <li>Early access invitations (if applicable)</li>
-                <li>Special launch offers or discounts</li>
-            </ul>
-            <p>We aim to keep emails infrequent and valuable. We won't overwhelm your inbox.</p>
-
-            <h3>Changes to Terms</h3>
-            <p>We may update these waitlist terms as needed. Any changes will be posted on this page with an updated date. Continued participation in the waitlist after changes constitutes acceptance of the new terms.</p>
-
-            <h3>Termination</h3>
-            <p>We reserve the right to remove anyone from the waitlist at our discretion, though we have no reason to do so unless there's abuse or suspicious activity.</p>
+            <div class="section-label">Section 1</div>
+            <h2>Overview</h2>
+            <p>This Privacy Policy explains what information Prodwest ("we," "us," "our") collects when you use Make MP3s, how we use it, and your rights regarding that information. We are committed to handling your data minimally and responsibly.</p>
+            <p>Make MP3s is intended for users in Canada, the United States, and other regions outside the European Union. If you are an EU resident, please be aware that this service is not specifically designed to comply with GDPR requirements.</p>
         </div>
 
-        <!-- CONTACT SECTION -->
+        <div class="section">
+            <div class="section-label">Section 2</div>
+            <h2>Information We Collect</h2>
+
+            <h3>Account Information</h3>
+            <p>When you create an account, we collect your email address. Your email serves as your account identifier across Firebase Authentication and our database.</p>
+
+            <h3>Machine Identifier</h3>
+            <p>To administer our free trial, the Software generates and stores a machine identifier on your device and on our servers. This identifier is used solely to determine trial eligibility. It is purged from our servers annually. We do not use it to identify you personally or track your behaviour.</p>
+
+            <h3>Session and Subscription Status</h3>
+            <p>We store information about whether you are logged in, whether your account is in trial, free, or premium status, and subscription activity (active, cancelled, etc.). This is necessary to deliver the service.</p>
+
+            <h3>Website Analytics</h3>
+            <p>Our website (makemp3s.com) uses Google Analytics and Vercel analytics to understand how visitors find and navigate the site, and to measure aggregate conversion and subscription metrics. This may include standard analytics data such as pages visited, referral source, browser type, and general geographic region. This data is aggregate and not linked to your Make MP3s account.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 3</div>
+            <h2>What We Do Not Collect</h2>
+            <ul>
+                <li>We do not track, log, or store records of what content you download.</li>
+                <li>We do not track download counts on our servers.</li>
+                <li>We do not collect IP addresses directly through the Software.</li>
+                <li>We do not sell your data to any third party.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 4</div>
+            <h2>How We Use Your Information</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Email</td>
+                        <td>Account login, subscription management, support</td>
+                    </tr>
+                    <tr>
+                        <td>Machine ID</td>
+                        <td>Trial eligibility enforcement</td>
+                    </tr>
+                    <tr>
+                        <td>Session / subscription status</td>
+                        <td>Delivering the correct app experience</td>
+                    </tr>
+                    <tr>
+                        <td>Website analytics</td>
+                        <td>Understanding site traffic and improving the product</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 5</div>
+            <h2>Third-Party Services</h2>
+            <p>We use the following third-party services, each with their own privacy practices:</p>
+            <ul>
+                <li><strong>Firebase (Google)</strong> — Authentication and database</li>
+                <li><strong>Lemon Squeezy</strong> — Payment processing and subscription management</li>
+                <li><strong>Google Analytics</strong> — Website analytics</li>
+                <li><strong>Vercel</strong> — Backend hosting and analytics</li>
+                <li><strong>Spotify API / Apple MusicKit</strong> — Playlist metadata only; we do not receive or store your streaming account credentials or listening history</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 6</div>
+            <h2>Data Retention</h2>
+            <ul>
+                <li>Your account data is retained as long as your account exists.</li>
+                <li>Machine identifiers used for trial enforcement are purged annually.</li>
+                <li>You may request deletion of your account and associated data at any time by contacting us.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 7</div>
+            <h2>Children's Privacy</h2>
+            <p>Make MP3s is not intended for users under the age of 13. We do not knowingly collect personal information from children under 13. If you believe a child has provided us with personal information, please contact us and we will delete it promptly.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 8</div>
+            <h2>Your Rights</h2>
+            <p>Depending on your jurisdiction, you may have the right to:</p>
+            <ul>
+                <li>Access the personal information we hold about you</li>
+                <li>Request correction of inaccurate data</li>
+                <li>Request deletion of your data</li>
+                <li>Withdraw consent where processing is based on consent</li>
+            </ul>
+            <p>To exercise any of these rights, contact us at <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a>.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 9</div>
+            <h2>Security</h2>
+            <p>We take reasonable technical measures to protect your information, including encrypted storage via Firebase and secure payment processing via Lemon Squeezy. No system is completely secure, and we cannot guarantee absolute security.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 10</div>
+            <h2>Changes to This Policy</h2>
+            <p>We may update this Privacy Policy from time to time. We will update the "Last updated" date when we do. Continued use of the Software constitutes acceptance of the revised Policy.</p>
+        </div>
+
+        <div class="section">
+            <div class="section-label">Section 11</div>
+            <h2>Contact</h2>
+            <p>For privacy-related questions or data requests, contact us at <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a>.</p>
+        </div>
+
         <div class="contact-box">
-            <h3>Questions?</h3>
-            <p>If you have any questions about privacy or the waitlist, contact us:</p>
-            <p><strong>Feedback Form:</strong> <a href="https://makemp3s.github.io/feedback.html">makemp3s.github.io/feedback</a></p>
-            <p><strong>Website:</strong> <a href="https://makemp3s.github.io">makemp3s.github.io</a></p>
+            <p>Privacy questions or data requests? <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a></p>
         </div>
 
-        <a href="index.html" class="back-button" style="margin-top: 3rem;">
-            <i class="fas fa-arrow-left"></i> Back to Waitlist
+        <a href="https://makemp3s.github.io" class="back-button" style="margin-top: 3rem; display: inline-flex;">
+            <i class="fas fa-arrow-left"></i> Back
         </a>
+
     </div>
 </body>
 </html>
