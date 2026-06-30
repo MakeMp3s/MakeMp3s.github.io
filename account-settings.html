@@ -893,6 +893,35 @@
     </footer>
 
 <script type="module">
+    // ── OS Detection & Smart Download ────────────────────────────────────────
+    const WIN_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe';
+    const MAC_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Mac-Installer.dmg';
+
+    function getOS() {
+        const ua = navigator.userAgent;
+        const platform = navigator.platform || '';
+        if (/android/i.test(ua) || /iphone|ipad|ipod/i.test(ua)) return 'mobile';
+        if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
+        if (/mac/i.test(platform) || /macintosh/i.test(ua)) return 'mac';
+        if (/linux/i.test(platform)) return 'linux';
+        return 'unknown';
+    }
+
+    function getSmartDownloadHTML(classes) {
+        const os = getOS();
+        if (os === 'windows') {
+            return `<a href="${WIN_URL}" class="${classes}" download><i class="fab fa-windows"></i> Download for Windows</a>`;
+        } else if (os === 'mac') {
+            return `<a href="${MAC_URL}" class="${classes}" download><i class="fab fa-apple"></i> Download for Mac</a>`;
+        } else if (os === 'mobile') {
+            return `<span class="${classes}" style="cursor:default;"><i class="fas fa-desktop"></i> Available on Mac and Windows</span>`;
+        } else if (os === 'linux') {
+            return `<span class="${classes}" style="cursor:default;"><i class="fab fa-linux"></i> Linux version coming soon</span>`;
+        } else {
+            return `<a href="downloads.html" class="${classes}"><i class="fas fa-download"></i> Download Make MP3s</a>`;
+        }
+    }
+
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
         signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
@@ -1013,11 +1042,8 @@
                 </a>`;
         }
 
-        // Download button — all users
-        buttons += `
-            <a href="https://makemp3s.com" class="btn btn-blue">
-                <i class="fas fa-download"></i> Download Make MP3s
-            </a>`;
+        // Download button — all users (OS-aware)
+        buttons += getSmartDownloadHTML('btn btn-blue');
 
         // Sign out — all users (right after download)
         buttons += `
