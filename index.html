@@ -223,6 +223,23 @@
             align-items: center;
         }
 
+        .mobile-dl-note {
+            color: #b0b0b0;
+            font-size: 0.85rem;
+            margin-top: 0.6rem;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.35s ease;
+            width: 100%;
+            text-align: center;
+        }
+
+        .mobile-dl-note.visible {
+            opacity: 1;
+            max-height: 2rem;
+        }
+
         .button-group {
             display: flex;
             gap: 1rem;
@@ -914,10 +931,7 @@
     <section class="hero">
         <h1>A Better Way to Convert Music Playlists to MP3s</h1>
         <p>Designed for artists, music collectors, and DJs who need clean, consistent MP3s.</p>
-        <span class="dl-with-tip">
-            <span id="hero-dl-btn"></span>
-            <span class="smartscreen-tip" tabindex="0">i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span></span>
-        </span>
+        <span id="hero-dl-btn"></span>
     </section>
 
     <!-- What is Make MP3s Section -->
@@ -944,10 +958,7 @@
             <h3>Free Edition Beta</h3>
             <p>Convert your favorite songs or entire playlists into your very own MP3 files. Works with a wide range of supported sources. Try free with 100 downloads in your first 24 hours, then 10 per day after that. Unlock unlimited and more with Premium.</p>
             <div class="button-group">
-                <span class="dl-with-tip">
-                    <span id="feature-dl-btn"></span>
-                    <span class="smartscreen-tip" tabindex="0">i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span></span>
-                </span>
+                <span id="feature-dl-btn"></span>
                 <a href="/learn-more" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
@@ -1367,8 +1378,17 @@
             el.setAttribute('download', '');
             el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
         } else if (os === 'mobile') {
-            el.style.cursor = 'default';
-            el.innerHTML = '<i class="fas fa-desktop"></i> Available on Mac and Windows';
+            el.style.cursor = 'pointer';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+            el.addEventListener('click', function() {
+                const wrapper = el.parentElement;
+                const msg = wrapper.nextElementSibling;
+                if (msg && msg.classList.contains('mobile-dl-note')) {
+                    msg.classList.add('visible');
+                    clearTimeout(msg._fadeTimer);
+                    msg._fadeTimer = setTimeout(() => msg.classList.remove('visible'), 2800);
+                }
+            });
         } else if (os === 'linux') {
             el.style.cursor = 'default';
             el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
@@ -1379,9 +1399,39 @@
         return el;
     }
 
+    function buildDownloadGroup(btnId, classes) {
+        const placeholder = document.getElementById(btnId);
+        if (!placeholder) return;
+        const os = getOS();
+        const wrapper = document.createElement('span');
+        wrapper.className = 'dl-with-tip';
+
+        const btn = smartDownloadButton(classes);
+        wrapper.appendChild(btn);
+
+        // Tooltip only on desktop (windows/mac), hidden on mobile/linux/unknown
+        if (os === 'windows' || os === 'mac') {
+            const tip = document.createElement('span');
+            tip.className = 'smartscreen-tip';
+            tip.tabIndex = 0;
+            tip.innerHTML = 'i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span>';
+            wrapper.appendChild(tip);
+        }
+
+        placeholder.replaceWith(wrapper);
+
+        // Mobile-only fade note, appended after the wrapper
+        if (os === 'mobile') {
+            const note = document.createElement('div');
+            note.className = 'mobile-dl-note';
+            note.textContent = 'Available on Mac and Windows';
+            wrapper.insertAdjacentElement('afterend', note);
+        }
+    }
+
     // Render smart download buttons
-    document.getElementById('hero-dl-btn').replaceWith(smartDownloadButton('btn'));
-    document.getElementById('feature-dl-btn').replaceWith(smartDownloadButton('btn'));
+    buildDownloadGroup('hero-dl-btn', 'btn');
+    buildDownloadGroup('feature-dl-btn', 'btn');
 
     // Close dropdowns if clicking outside
     window.onclick = function(event) {
