@@ -563,6 +563,37 @@
 
         .modal-forgot:hover { color: #b0b0b0; }
 
+        /* ── Premium content gate ───────────────────────────────── */
+        #premium-content {
+            display: none;
+            flex: 1;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 20px 1.5rem;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        #premium-content.visible {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* Loading state shown while Firebase resolves */
+        #auth-gate-loading {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #606060;
+            font-size: 0.9rem;
+        }
+
+        /* Remove close button when modal is gated */
+        .modal-overlay.gated .close-btn { display: none; }
+
         /* ── Footer ─────────────────────────────────────────────── */
         footer { background-color: transparent; padding: 1rem 3rem; }
 
@@ -636,8 +667,11 @@
         </div>
     </nav>
 
-    <!-- Page -->
-    <div class="page-wrapper">
+    <!-- Auth Gate Loading -->
+    <div id="auth-gate-loading"><span>Loading...</span></div>
+
+    <!-- Page (hidden until logged in) -->
+    <div id="premium-content">
 
         <img src="images/logo.png" alt="Make MP3s Logo" class="page-logo">
         <h1>Upgrade to Premium</h1>
@@ -737,7 +771,7 @@
     </div>
 
     <!-- Footer -->
-    <footer>
+    <footer id="main-footer" style="display:none;">
         <div class="footer-bottom">
             <p>© 2026 Make MP3s | <a href="https://makemp3s.com/legal" style="color:#808080; text-decoration:none;">Terms and Policies</a></p>
             <a href="https://makemp3s.com/ourstory" style="color:#808080; text-decoration:none; font-weight:bold;">Our Story</a>
@@ -801,6 +835,17 @@
                 return;
             }
 
+            // Hide loading, reveal premium content
+            document.getElementById('auth-gate-loading').style.display = 'none';
+            authModal.classList.remove('gated');
+            const premiumContent = document.getElementById('premium-content');
+            premiumContent.style.display = 'flex';
+            // Trigger fade-in on next frame
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => premiumContent.classList.add('visible'));
+            document.getElementById('main-footer').style.display = 'block';
+            });
+
             // Show signed-in email
             const badge = document.getElementById('user-email-badge');
             badge.textContent = `Signed in as: ${user.email}`;
@@ -829,9 +874,10 @@
         } else {
             dropdown.innerHTML = "";
             dropdown.classList.remove("show");
-            document.getElementById('user-email-badge').textContent = 'Sign in to continue';
-            document.getElementById('user-email-badge').style.color = '#808080';
-            // Not signed in — open auth modal
+            // Hide loading spinner
+            document.getElementById('auth-gate-loading').style.display = 'none';
+            // Open modal in gated mode (no close button)
+            authModal.classList.add('gated');
             window.openAuthModal();
         }
     });
@@ -873,7 +919,10 @@
         if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
             dropdown.classList.remove('show');
         }
-        if (event.target === authModal) window.closeAuthModal();
+        // Only allow backdrop-click to close when NOT in gated mode
+        if (event.target === authModal && !authModal.classList.contains('gated')) {
+            window.closeAuthModal();
+        }
     };
 
     // ── Email/password auth ───────────────────────────────────────────────────
