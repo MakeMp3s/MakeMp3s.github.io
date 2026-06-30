@@ -198,10 +198,13 @@
         /* ── Page Layout ─────────────────────────────────────────── */
         .content-wrapper {
             flex: 1;
-            max-width: 780px;
-            margin: 0 auto;
-            padding: 3rem 3rem 6rem;
+            max-width: 860px;
+            margin: 1.5rem auto;
+            padding: 3rem 5rem 4rem;
             width: 100%;
+            background-color: rgba(35, 35, 35, 0.45);
+            border: 1px solid #333;
+            border-radius: 16px;
         }
 
         /* ── Page Header ─────────────────────────────────────────── */
@@ -729,9 +732,7 @@
                     <h4>Free Edition</h4>
                     <p style="margin-top:0.5rem;">Your first 24 hours include 100 downloads with all premium features unlocked so you can try everything out. After that, the free edition gives you 10 downloads per day.</p>
                     <div style="display:flex; justify-content:center; margin-top:1rem;">
-                        <a href="downloads.html" class="btn" style="font-size:0.78rem; padding:0.4rem 1rem; background-color:#007AFF; color:#ffffff; white-space:nowrap;">
-                            <i class="fas fa-download"></i> Download
-                        </a>
+                        <span id="lm-dl-btn"></span>
                     </div>
                 </div>
                 <div class="plan-card premium">
@@ -775,13 +776,17 @@
             <p style="margin-top:0.75rem;"><strong>Setting it up:</strong></p>
             <ol class="steps">
                 <li>
-                    <div style="display:flex; align-items:center; justify-content:flex-start; gap:0.75rem;">
-                        <div>In the main window, click the <strong>Sync</strong> button</div>
-                        <img src="images/sync-symbol-but.png" alt="Sync button" style="height:52px; width:auto; border-radius:6px; flex-shrink:0;">
+                    <div>
+                        <div style="display:flex; align-items:center; gap:0.75rem; flex-wrap:wrap;">
+                            <span>In the main window, click the <strong>Sync</strong> button</span>
+                            <img src="images/sync-symbol-but.png" alt="Sync button" style="height:52px; width:auto; border-radius:6px; flex-shrink:0;">
+                        </div>
+                        <span class="sub-note">To the right of the Download button</span>
+                        <span class="sub-note">The Sync Library opens</span>
                     </div>
                 </li>
                 <li>
-                    <div style="display:flex; align-items:center; justify-content:flex-start; gap:0.75rem;">
+                    <div style="display:flex; align-items:flex-start; justify-content:flex-start; gap:0.75rem;">
                         <div>Click <strong>Add</strong></div>
                         <img src="images/add-but.png" alt="Add button" style="height:52px; width:auto; border-radius:6px; flex-shrink:0;">
                     </div>
@@ -804,7 +809,7 @@
                     <div>Click <strong>Add</strong> - your playlist will appear in the Sync Library list</div>
                 </li>
                 <li>
-                    <div style="display:flex; align-items:center; justify-content:flex-start; gap:0.75rem;">
+                    <div style="display:flex; align-items:flex-start; justify-content:flex-start; gap:0.75rem;">
                         <div>Click <strong>Sync</strong> to download all songs to your selected folder</div>
                         <img src="images/sync2-but.png" alt="Sync button" style="height:52px; width:auto; border-radius:6px; flex-shrink:0;">
                     </div>
@@ -1231,6 +1236,50 @@
             errorEl.textContent = friendlyError(error.code);
         }
     };
+
+    // ── OS Detection & Smart Download ────────────────────────────────────────
+    const WIN_URL_LM = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe';
+    const MAC_URL_LM = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Mac-Installer.dmg';
+
+    function getOS_LM() {
+        const ua = navigator.userAgent;
+        const platform = navigator.platform || '';
+        if (/android/i.test(ua) || /iphone|ipad|ipod/i.test(ua)) return 'mobile';
+        if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
+        if (/mac/i.test(platform) || /macintosh/i.test(ua)) return 'mac';
+        if (/linux/i.test(platform)) return 'linux';
+        return 'unknown';
+    }
+
+    (function() {
+        const placeholder = document.getElementById('lm-dl-btn');
+        if (!placeholder) return;
+        const os = getOS_LM();
+        const isDesktop = os === 'windows' || os === 'mac';
+        const el = document.createElement(isDesktop ? 'a' : 'span');
+        el.className = 'btn';
+        el.setAttribute('style', 'font-size:0.78rem; padding:0.4rem 1rem; background-color:#007AFF; color:#ffffff; white-space:nowrap;');
+        if (os === 'windows') {
+            el.href = WIN_URL_LM;
+            el.setAttribute('download', '');
+            el.innerHTML = '<i class="fab fa-windows"></i> Download for Windows';
+        } else if (os === 'mac') {
+            el.href = MAC_URL_LM;
+            el.setAttribute('download', '');
+            el.innerHTML = '<i class="fab fa-apple"></i> Download for Mac';
+        } else if (os === 'mobile') {
+            el.style.cursor = 'default';
+            el.innerHTML = '<i class="fas fa-desktop"></i> Available on Mac and Windows';
+        } else if (os === 'linux') {
+            el.style.cursor = 'default';
+            el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
+        } else {
+            el.href = 'downloads.html';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        }
+        placeholder.replaceWith(el);
+    })();
+
 </script>
 
 </body>
