@@ -485,6 +485,28 @@
             align-items: center;
         }
 
+        .lm-mobile-dl-note {
+            color: #b0b0b0;
+            font-size: 0.78rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.35s ease;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .lm-mobile-dl-subnote {
+            color: #909090;
+            font-size: 0.68rem;
+        }
+
+        .lm-mobile-dl-note.visible {
+            opacity: 1;
+            max-height: 3.2rem;
+        }
+
         .legal-note {
             color: #606060;
             font-size: 0.82rem;
@@ -1317,20 +1339,34 @@
         if (!placeholder) return;
         const os = getOS_LM();
         const isDesktop = os === 'windows' || os === 'mac';
+        const btnStyle = 'font-size:0.78rem; padding:0.4rem 1rem; background-color:#007AFF; color:#ffffff; white-space:nowrap;';
+
+        const wrapper = document.createElement('span');
+        wrapper.style.cssText = 'display:inline-flex; flex-direction:column; align-items:center;';
+
         const el = document.createElement(isDesktop ? 'a' : 'span');
         el.className = 'btn';
-        el.setAttribute('style', 'font-size:0.78rem; padding:0.4rem 1rem; background-color:#007AFF; color:#ffffff; white-space:nowrap;');
+        el.setAttribute('style', btnStyle);
+
         if (os === 'windows') {
             el.href = WIN_URL_LM;
             el.setAttribute('download', '');
-            el.innerHTML = '<i class="fab fa-windows"></i> Download for Windows';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
         } else if (os === 'mac') {
             el.href = MAC_URL_LM;
             el.setAttribute('download', '');
-            el.innerHTML = '<i class="fab fa-apple"></i> Download for Mac';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
         } else if (os === 'mobile') {
-            el.style.cursor = 'default';
-            el.innerHTML = '<i class="fas fa-desktop"></i> Available on Mac and Windows';
+            el.style.cursor = 'pointer';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+            el.addEventListener('click', function() {
+                const msg = wrapper.querySelector('.lm-mobile-dl-note');
+                if (msg) {
+                    msg.classList.add('visible');
+                    clearTimeout(msg._fadeTimer);
+                    msg._fadeTimer = setTimeout(() => msg.classList.remove('visible'), 5500);
+                }
+            });
         } else if (os === 'linux') {
             el.style.cursor = 'default';
             el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
@@ -1338,7 +1374,17 @@
             el.href = 'downloads.html';
             el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
         }
-        placeholder.replaceWith(el);
+
+        wrapper.appendChild(el);
+
+        if (os === 'mobile') {
+            const note = document.createElement('div');
+            note.className = 'lm-mobile-dl-note';
+            note.innerHTML = 'Available on Mac and Windows<br><span class="lm-mobile-dl-subnote">Go to makemp3s.com on your computer</span>';
+            wrapper.appendChild(note);
+        }
+
+        placeholder.replaceWith(wrapper);
     })();
 
 </script>
