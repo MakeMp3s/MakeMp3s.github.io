@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>our story – make mp3s</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('images/boombox.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+        }
+
+        strong, b {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* ── Navigation ─────────────────────────────────────────── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .logo { width: 40px; height: 40px; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: #b0b0b0; text-decoration: none; transition: all 0.3s ease; }
+        .nav-links a:hover { color: #ffffff; }
+        .nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+        .nav-icons a { color: #b0b0b0; text-decoration: none; font-size: 1.2rem; transition: all 0.3s ease; }
+        .nav-icons a:hover { color: #ffffff; transform: translateY(-2px); }
+
+        .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 4px; }
+        .hamburger span { width: 25px; height: 3px; background-color: #b0b0b0; transition: all 0.3s ease; }
+
+        /* ── Dropdown ───────────────────────────────────────────── */
+        .dropdown-menu {
+            display: none; position: absolute; right: 0; top: 42px;
+            background-color: #222222; width: 280px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+            border-radius: 14px; z-index: 1000; overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1); padding: 0.5rem;
+        }
+        .dropdown-menu.show { display: block; }
+        .dropdown-header { padding: 0.85rem 1rem; margin-bottom: 0.4rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .dropdown-plan { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: #606060; margin-bottom: 0.25rem; }
+        .dropdown-email { font-size: 0.9rem; color: #ffffff; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .dropdown-sub { font-size: 0.78rem; margin-top: 0.2rem; }
+        .dropdown-btn {
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            width: 100%; padding: 0.75rem 1rem; height: 44px; border-radius: 25px;
+            font-size: 0.88rem !important; font-weight: bold;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif !important;
+            cursor: pointer; border: none; transition: all 0.25s ease;
+            text-decoration: none; margin-bottom: 0.4rem; text-align: center;
+            box-sizing: border-box; -webkit-appearance: none; appearance: none; line-height: 1;
+        }
+        .dropdown-btn:last-child { margin-bottom: 0; }
+        .dropdown-btn-gold { background-color: #D4AF37; color: #1a1a1a !important; }
+        .dropdown-btn-gold:hover { background-color: #F4D03F; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(212,175,55,0.35); }
+        .dropdown-btn-grey { background-color: #b0b0b0; color: #1a1a1a !important; }
+        .dropdown-btn-grey:hover { background-color: #c8c8c8; transform: translateY(-1px); }
+
+        /* ── Buttons ────────────────────────────────────────────── */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.6rem; padding: 0.75rem 2rem; border-radius: 25px;
+            font-size: 1rem; font-weight: bold;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            cursor: pointer; border: none; transition: all 0.3s ease; text-decoration: none;
+        }
+        .btn-gold { background-color: #D4AF37; color: #1a1a1a; }
+        .btn-gold:hover { background-color: #F4D03F; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.4); }
+        .btn-blue { background-color: #007AFF; color: #ffffff; }
+        .btn-blue:hover { background-color: #0051D5; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,122,255,0.3); }
+        .btn-outline { background-color: transparent; color: #b0b0b0; border: 1.5px solid #555; }
+        .btn-outline:hover { border-color: #ffffff; color: #ffffff; transform: translateY(-2px); }
+
+        /* ── Auth Modal ─────────────────────────────────────────── */
+        .modal-overlay {
+            display: none; position: fixed; z-index: 2000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8); justify-content: center; align-items: center;
+        }
+        .modal-box { background-color: #1a1a1a; padding: 2.5rem; border-radius: 15px; border: 1px solid #444; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .close-btn { position: absolute; top: 15px; right: 20px; color: #b0b0b0; font-size: 28px; cursor: pointer; }
+        .google-btn { background-color: #ffffff; color: #1a1a1a; border: none; padding: 12px 24px; border-radius: 25px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; font-weight: bold; transition: transform 0.2s; }
+        .google-btn:hover { transform: translateY(-2px); background-color: #f0f0f0; }
+        .modal-divider { display: flex; align-items: center; gap: 10px; margin: 1rem 0; color: #555; font-size: 0.8rem; }
+        .modal-divider::before, .modal-divider::after { content: ''; flex: 1; height: 1px; background: #3a3a3a; }
+        .modal-toggle { background: none; border: none; color: #808080; font-size: 0.82rem; cursor: pointer; font-family: Helvetica, 'Segoe UI', Arial, sans-serif; text-decoration: underline; text-underline-offset: 3px; transition: color 0.2s; padding: 0; width: 100%; }
+        .modal-toggle:hover { color: #cccccc; }
+        .modal-email-form { display: none; margin-top: 0.75rem; text-align: left; }
+        .modal-email-form.visible { display: block; }
+        .modal-form-group { margin-bottom: 0.75rem; }
+        .modal-form-group label { display: block; font-size: 0.78rem; color: #a0a0a0; margin-bottom: 0.3rem; }
+        .modal-form-group input { width: 100%; background: rgba(255,255,255,0.06); border: 1px solid #444; border-radius: 8px; padding: 10px 14px; color: #ffffff; font-size: 0.93rem; font-family: Helvetica, 'Segoe UI', Arial, sans-serif; outline: none; transition: border-color 0.2s; box-sizing: border-box; }
+        .modal-form-group input:focus { border-color: #007AFF; }
+        .modal-form-group input::placeholder { color: #555; }
+        .modal-email-btn { background-color: #007AFF; color: #ffffff; border: none; padding: 11px 24px; border-radius: 25px; font-size: 0.93rem; cursor: pointer; width: 100%; font-family: Helvetica, 'Segoe UI', Arial, sans-serif; font-weight: bold; transition: all 0.3s ease; margin-top: 0.25rem; }
+        .modal-email-btn:hover { background-color: #0066dd; transform: translateY(-2px); }
+        .modal-email-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+        .modal-error { font-size: 0.8rem; color: #ff6666; margin-top: 0.5rem; text-align: left; min-height: 1rem; }
+        .modal-switch-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.75rem; font-size: 0.78rem; color: #606060; }
+        .modal-switch-row button { background: none; border: none; color: #808080; font-size: 0.78rem; cursor: pointer; font-family: Helvetica, 'Segoe UI', Arial, sans-serif; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
+        .modal-switch-row button:hover { color: #cccccc; }
+        .modal-forgot { background: none; border: none; color: #606060; font-size: 0.75rem; cursor: pointer; font-family: Helvetica, 'Segoe UI', Arial, sans-serif; text-decoration: underline; text-underline-offset: 3px; padding: 0; display: block; text-align: right; margin-top: -0.3rem; margin-bottom: 0.5rem; }
+        .modal-forgot:hover { color: #b0b0b0; }
+
+        /* ── Footer ─────────────────────────────────────────────── */
+        footer { background-color: transparent; padding: 1rem 3rem; }
+        .footer-bottom { padding-top: 1rem; display: flex; justify-content: space-between; align-items: center; color: #808080; font-size: 0.9rem; }
+
+        /* ── Our Story page styles ───────────────────────────────── */
+        .content-wrapper {
+            flex: 1;
+            padding: 3rem 3rem 6rem;
+            max-width: 760px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .story-eyebrow {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: #606060;
+            margin-bottom: 0.6rem;
+        }
+
+        .story-title {
+            font-size: 2rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 0.4rem;
+            line-height: 1.2;
+        }
+
+        .story-subtitle {
+            color: #606060;
+            font-size: 0.9rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .story-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            margin: 2rem 0;
+        }
+
+        .story-section {
+            margin-bottom: 2rem;
+        }
+
+        .story-section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: #505050;
+            margin-bottom: 0.75rem;
+        }
+
+        .story-section h2 {
+            font-size: 1.15rem;
+            font-weight: 400;
+            color: #ffffff;
+            margin-bottom: 0.65rem;
+        }
+
+        .story-section p {
+            color: #b0b0b0;
+            font-size: 0.97rem;
+            line-height: 1.85;
+            margin-bottom: 0.85rem;
+        }
+
+        .story-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Pull quote */
+        .story-pullquote {
+            border-left: 3px solid #D4AF37;
+            padding: 0.6rem 1.25rem;
+            margin: 1.5rem 0;
+            color: #c8c8c8;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* Milestone stat row */
+        .story-milestone {
+            background: rgba(42, 42, 42, 0.5);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 12px;
+            padding: 1.1rem 1.4rem;
+            margin: 1.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .story-milestone i {
+            color: #D4AF37;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        .story-milestone p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        .story-milestone strong {
+            color: #ffffff;
+        }
+
+        /* CTA block */
+        .story-cta {
+            background: rgba(42, 42, 42, 0.5);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 2rem 1.75rem;
+            text-align: center;
+            margin-top: 2.5rem;
+        }
+
+        .story-cta p {
+            color: #b0b0b0;
+            margin-bottom: 1.25rem;
+            font-size: 0.97rem;
+            line-height: 1.7;
+        }
+
+        .story-cta-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ── Responsive ─────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            nav { padding: 1rem; position: relative; }
+            .hamburger { position: absolute; left: 70px; display: flex; }
+            .hamburger span { background-color: #b0b0b0; }
+            .nav-links {
+                display: none; position: absolute; top: 60px; left: 0; right: 0;
+                background-color: #1a1a1a; flex-direction: column;
+                padding: 1rem; gap: 0.5rem; z-index: 1000;
+            }
+            .nav-links.active { display: flex; }
+            .nav-icons { gap: 1rem; }
+            .content-wrapper { padding: 2rem 1.25rem 5rem; }
+            .story-title { font-size: 1.6rem; }
+            .story-cta-buttons { flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 768px) {
+            body { background-image: none; }
+            body::before {
+                content: '';
+                position: fixed; top: 0; left: 0;
+                width: 100%; height: 100%;
+                background-image: url('images/boombox.jpg');
+                background-size: cover; background-position: center; z-index: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="downloads.html">Downloads</a></li>
+            <li><a href="donate.html">Donate</a></li>
+            <li><a href="feedback.html">Feedback & Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div class="account-container" style="position: relative; display: inline-block;">
+                <a href="javascript:void(0)" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="user-dropdown" class="dropdown-menu"></div>
+            </div>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="content-wrapper">
+
+        <p class="story-eyebrow">Make MP3s</p>
+        <h1 class="story-title">Our Story</h1>
+        <p class="story-subtitle">How a lifelong love of music became a tool for everyone.</p>
+
+        <hr class="story-divider">
+
+        <!-- Chapter 1 -->
+        <div class="story-section">
+            <p class="story-section-label">The Beginning</p>
+            <h2>Music has always been everything to me.</h2>
+            <p>
+                I've been a music lover my whole life. Growing up, I was always finding ways to get closer to it. I was collecting songs on iTunes, loading up MP3 players and iPods, and watching my friends stuff their PSPs with tracks they loved. When the Nintendo DSi dropped, I figured out how to get music on that too. And then I found Flipnote Hatena, this platform where people made hand drawn animations. I started making animated music videos and skits right there on that little device, spending hours on it just because I genuinely loved mixing music with something visual.
+            </p>
+            <p>
+                When Flipnote Hatena got shut down, I didn't really stop. I picked up GarageBand, started making beats, and had a blast with it. That led me into cinematography and visual effects, and before long I went from making action short films for fun to shooting real music videos with local artists I knew in Toronto. I found FL Studio after that, and even though I never went all the way into music production, everything I'd learned making movies gave me a solid foundation in sound design. Friends would come to me to help mix their vocals because I understood enough of the fundamentals and I genuinely loved experimenting with it.
+            </p>
+        </div>
+
+        <hr class="story-divider">
+
+        <!-- Chapter 2 -->
+        <div class="story-section">
+            <p class="story-section-label">The Problem</p>
+            <h2>I wanted to DJ. Then reality hit.</h2>
+            <p>
+                With all the playlists I'd built up over the years, I figured DJing was the next natural move. I was ready to get into it and mix the music I actually loved. But when I started looking into it, I ran into a wall pretty quick.
+            </p>
+
+            <div class="story-pullquote">
+                "Owning music to actually mix on a DJ set was way harder than I expected, and most of the MP3s I'd collected over the years were just gone."
+            </div>
+
+            <p>
+                So I went looking for solutions. Every tool I found was either too complicated, too limited, or couldn't keep up when you added new songs to a playlist. None of them solved the actual problem. You find a new track, it goes into your playlist, and now your local library is already behind. It was frustrating because the answer felt like it should exist already.
+            </p>
+        </div>
+
+        <hr class="story-divider">
+
+        <!-- Chapter 3 -->
+        <div class="story-section">
+            <p class="story-section-label">The Idea</p>
+            <h2>So I built it myself.</h2>
+            <p>
+                The idea was straightforward. A tool that converts any playlist you own into your own MP3 files, and when new songs get added to that playlist, syncs them to your library with a single click. No re-scanning. No manual downloads. Just your music, always up to date.
+            </p>
+            <p>
+                I spent close to a year figuring out everything it would take to make that actually work. The software, the infrastructure, all of it. At some point it hit me though. Why keep this to myself when other people are clearly dealing with the same thing?
+            </p>
+            <p>
+                That's when Make MP3s was born.
+            </p>
+        </div>
+
+        <hr class="story-divider">
+
+        <!-- Chapter 4 -->
+        <div class="story-section">
+            <p class="story-section-label">Building the Community</p>
+            <h2>One reel changed everything.</h2>
+            <p>
+                I made an Instagram page, <a href="https://www.instagram.com/makemp3s/" target="_blank" style="color: #b0b0b0; text-decoration: underline; text-underline-offset: 3px;">@makemp3s</a>, and started posting music content I loved while I kept building. I wanted people to know something was coming. The first few reels I posted went nowhere. A few views here and there, nothing that made it feel like it was going to land.
+            </p>
+            <p>
+                Then I made one that clicked.
+            </p>
+
+            <div class="story-milestone">
+                <i class="fas fa-chart-line"></i>
+                <p>Within the first 3 days it went from 20 views to 2,000, then 5,000. A month later it hit <strong>over 1.1 million views</strong> with zero advertising.</p>
+            </div>
+
+            <p>
+                That moment showed me something real. There's a massive community of music lovers out there who feel exactly the same way I do about owning their music. People who remember what it felt like to have a collection that was actually theirs.
+            </p>
+        </div>
+
+        <hr class="story-divider">
+
+        <!-- Closing -->
+        <div class="story-section">
+            <p>
+                I'm writing this a week before launch day and honestly I can't wait for you to try it. This whole thing started because I wanted to DJ my own playlists without jumping through a hundred hoops, and I have a feeling a lot of you know exactly what that's like.
+            </p>
+            <p>
+                Thanks for taking interest and being part of this. Welcome to the community.
+            </p>
+        </div>
+
+                <!-- CTA -->
+        <div class="story-cta">
+            <p>Make MP3s is free to download. Try it and own your music again.</p>
+            <div class="story-cta-buttons">
+                <a href="downloads.html" class="btn btn-blue">
+                    <i class="fas fa-download"></i> Download Free
+                </a>
+                <a href="/premium" class="btn btn-gold">
+                    <i class="fas fa-crown"></i> Get Premium
+                </a>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color:#fff; margin-bottom:0.4rem;" id="modal-title">Welcome Back</h2>
+            <p style="color:#b0b0b0; margin-bottom:1.5rem; font-size:0.9rem;" id="modal-subtitle">Sign in to access your Make MP3s account.</p>
+            <button onclick="handleGoogleLogin()" class="google-btn" id="modal-google-btn">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+            <div class="modal-divider" id="modal-divider">or</div>
+            <button class="modal-toggle" id="modal-toggle" onclick="toggleEmailForm()">
+                Sign in with email & password
+            </button>
+            <div class="modal-email-form" id="modal-email-form">
+                <div class="modal-form-group">
+                    <label for="modal-email">Email</label>
+                    <input type="email" id="modal-email" placeholder="your@email.com" autocomplete="email">
+                </div>
+                <div class="modal-form-group">
+                    <label for="modal-password">Password</label>
+                    <input type="password" id="modal-password" placeholder="Password" autocomplete="current-password">
+                </div>
+                <button class="modal-forgot" id="modal-forgot" onclick="handleModalForgotPassword()">Forgot password?</button>
+                <div class="modal-form-group" id="modal-confirm-group" style="display:none;">
+                    <label for="modal-confirm">Confirm Password</label>
+                    <input type="password" id="modal-confirm" placeholder="Confirm password" autocomplete="new-password">
+                </div>
+                <div class="modal-error" id="modal-error"></div>
+                <button class="modal-email-btn" id="modal-email-btn" onclick="handleEmailAuth()">Sign In</button>
+                <div class="modal-switch-row">
+                    <span id="modal-switch-text">Don't have an account?</span>
+                    <button onclick="toggleAuthMode()">Create one</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© 2026 Make MP3s | <a href="https://makemp3s.com/legal" style="color:#808080; text-decoration:none;">Terms and Policies</a></p>
+            <a href="https://makemp3s.com/ourstory" style="color:#808080; text-decoration:none; font-weight:bold;">Our Story</a>
+        </div>
+    </footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+        signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+        authDomain: "make-mp3s.firebaseapp.com",
+        projectId: "make-mp3s",
+        storageBucket: "make-mp3s.firebasestorage.app",
+        messagingSenderId: "530983812032",
+        appId: "1:530983812032:web:1d059a67673771929b2625",
+        measurementId: "G-H11K90Y0CD"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            const userRef  = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
+            const subscription = userData.subscription || 'free';
+            const subscriptionType = userData.subscriptionType || null;
+
+            let planLabel = 'Free';
+            let planColor = '#ffffff';
+            if (subscription === 'premium' && subscriptionType === 'lifetime') { planLabel = 'Lifetime'; planColor = '#D4AF37'; }
+            else if (subscription === 'premium' && subscriptionType === 'monthly') { planLabel = 'Monthly'; planColor = '#D4AF37'; }
+
+            dropdown.innerHTML = `
+                <div class="dropdown-header">
+                    <div class="dropdown-plan">Account</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-sub">Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span></div>
+                </div>
+                <div style="padding: 0.4rem 0.5rem 0.5rem;">
+                    <a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+                        <i class="fas fa-user-cog"></i> Account Settings
+                    </a>
+                    <button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </button>
+                </div>
+            `;
+        } else {
+            dropdown.innerHTML = "";
+            dropdown.classList.remove("show");
+        }
+    });
+
+    window.handleGoogleLogin = async () => {
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            if (!userSnap.exists()) {
+                await setDoc(userRef, { email: user.email, subscription: "free", createdAt: new Date() });
+            }
+            window.closeAuthModal();
+        } catch (error) { console.error("Login Failed:", error); }
+    };
+
+    window.handleLogout = async () => { await signOut(auth); window.location.reload(); };
+
+    window.toggleDropdown = () => {
+        if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+            dropdown.classList.toggle("show");
+        } else {
+            dropdown.classList.remove("show");
+            window.openAuthModal();
+        }
+    };
+
+    window.openAuthModal = () => { authModal.style.display = "flex"; dropdown.classList.remove("show"); resetEmailForm(); };
+    window.closeAuthModal = () => { authModal.style.display = "none"; };
+
+    window.onclick = (event) => {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) window.closeAuthModal();
+    };
+
+    let emailFormVisible = false;
+    let isSignUpMode = false;
+
+    window.toggleEmailForm = () => {
+        emailFormVisible = !emailFormVisible;
+        const form = document.getElementById('modal-email-form');
+        const toggle = document.getElementById('modal-toggle');
+        const googleBtn = document.getElementById('modal-google-btn');
+        const divider = document.getElementById('modal-divider');
+        form.classList.toggle('visible', emailFormVisible);
+        toggle.textContent = emailFormVisible ? '← Back to Google sign in' : 'Sign in with email & password';
+        googleBtn.style.display = emailFormVisible ? 'none' : 'flex';
+        divider.style.display = emailFormVisible ? 'none' : 'flex';
+        if (emailFormVisible) document.getElementById('modal-email').focus();
+    };
+
+    window.toggleAuthMode = () => {
+        isSignUpMode = !isSignUpMode;
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-confirm').value = '';
+        const cg = document.getElementById('modal-confirm-group');
+        const fg = document.getElementById('modal-forgot');
+        const btn = document.getElementById('modal-email-btn');
+        const st = document.getElementById('modal-switch-text');
+        const sb = document.querySelector('.modal-switch-row button');
+        const title = document.getElementById('modal-title');
+        const sub = document.getElementById('modal-subtitle');
+        if (isSignUpMode) {
+            cg.style.display = 'block'; fg.style.display = 'none';
+            btn.textContent = 'Create Account'; st.textContent = 'Already have an account?'; sb.textContent = 'Sign in';
+            title.textContent = 'Create Account'; sub.textContent = 'Join Make MP3s today.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'new-password');
+        } else {
+            cg.style.display = 'none'; fg.style.display = 'block';
+            btn.textContent = 'Sign In'; st.textContent = "Don't have an account?"; sb.textContent = 'Create one';
+            title.textContent = 'Welcome Back'; sub.textContent = 'Sign in to access your Make MP3s account.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'current-password');
+        }
+    };
+
+    function resetEmailForm() {
+        emailFormVisible = false; isSignUpMode = false;
+        document.getElementById('modal-email-form').classList.remove('visible');
+        document.getElementById('modal-toggle').textContent = 'Sign in with email & password';
+        document.getElementById('modal-google-btn').style.display = 'flex';
+        document.getElementById('modal-divider').style.display = 'flex';
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-email').value = '';
+        document.getElementById('modal-password').value = '';
+        document.getElementById('modal-confirm').value = '';
+        document.getElementById('modal-confirm-group').style.display = 'none';
+        document.getElementById('modal-forgot').style.display = 'block';
+        document.getElementById('modal-email-btn').textContent = 'Sign In';
+        document.getElementById('modal-switch-text').textContent = "Don't have an account?";
+        document.querySelector('.modal-switch-row button').textContent = 'Create one';
+        document.getElementById('modal-title').textContent = 'Welcome Back';
+        document.getElementById('modal-subtitle').textContent = 'Sign in to access your Make MP3s account.';
+    }
+
+    function friendlyError(code) {
+        return ({ 'auth/user-not-found': 'No account found with that email.', 'auth/wrong-password': 'Incorrect password. Please try again.', 'auth/invalid-credential': 'Incorrect email or password.', 'auth/invalid-email': 'Please enter a valid email address.', 'auth/too-many-requests': 'Too many attempts. Please wait and try again.', 'auth/email-already-in-use': 'An account with this email already exists.', 'auth/weak-password': 'Password must be at least 6 characters.' })[code] || 'Something went wrong. Please try again.';
+    }
+
+    window.handleEmailAuth = async () => {
+        const email = document.getElementById('modal-email').value.trim();
+        const password = document.getElementById('modal-password').value;
+        const confirm = document.getElementById('modal-confirm').value;
+        const errorEl = document.getElementById('modal-error');
+        const btn = document.getElementById('modal-email-btn');
+        errorEl.textContent = '';
+        if (!email || !password) { errorEl.textContent = 'Please enter your email and password.'; return; }
+        if (isSignUpMode) {
+            if (!confirm) { errorEl.textContent = 'Please confirm your password.'; return; }
+            if (password !== confirm) { errorEl.textContent = 'Passwords do not match.'; return; }
+            if (password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters.'; return; }
+        }
+        btn.disabled = true;
+        btn.textContent = isSignUpMode ? 'Creating account...' : 'Signing in...';
+        try {
+            let result;
+            if (isSignUpMode) {
+                result = await createUserWithEmailAndPassword(auth, email, password);
+                const userRef = doc(db, "users", result.user.uid);
+                const snap = await getDoc(userRef);
+                if (!snap.exists()) await setDoc(userRef, { email: result.user.email, subscription: "free", createdAt: new Date() });
+            } else {
+                result = await signInWithEmailAndPassword(auth, email, password);
+            }
+            window.closeAuthModal();
+        } catch (error) {
+            errorEl.textContent = friendlyError(error.code);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = isSignUpMode ? 'Create Account' : 'Sign In';
+        }
+    };
+
+    window.handleModalForgotPassword = async () => {
+        const email = document.getElementById('modal-email').value.trim();
+        const errorEl = document.getElementById('modal-error');
+        if (!email) { errorEl.style.color = '#ff6666'; errorEl.textContent = 'Enter your email above first, then click Forgot password.'; document.getElementById('modal-email').focus(); return; }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            errorEl.style.color = '#4CAF50';
+            errorEl.textContent = `Reset email sent to ${email}. Check your inbox.`;
+        } catch (error) { errorEl.style.color = '#ff6666'; errorEl.textContent = friendlyError(error.code); }
+    };
+</script>
+
+</body>
+</html>
