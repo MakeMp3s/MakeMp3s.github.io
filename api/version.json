@@ -2,7 +2,7 @@
   "version": "1.0.1",
   "version_name": "Beta v1.0.1",
   "download_url": "https://makemp3s.github.io/downloads.html",
-  "release_notes": "Initial beta release",
-  "released_at": "2026-07-05T17:12:40.829249+00:00",
-  "_sig": "7025347396b6a42979fd8af37512fa92107f26f90ec70dcf071d185964280679"
+  "release_notes": "Improved tooltips, fixed Apple Music compatibility on macOS, fixed YouTube and YouTube Music playlist cap, improved song and album matching accuracy",
+  "released_at": "2026-07-05T06:08:09.121789+00:00",
+  "_sig": "b2b8005f827bc8c888810e63ba5c13dab75377d23d235f79ab71c78302e2fd3d"
 }
