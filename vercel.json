@@ -8,6 +8,6 @@
   "rewrites": [
     { "source": "/api/webhook", "destination": "/api/webhook.js" },
     { "source": "/downloads", "destination": "/downloads.html" },
-    { "source": "/((?!api|images|font|fonts|assets).*)$", "destination": "/index.html" }
+    { "source": "/((?!api|images|font|fonts|assets).*)$", "destination": "/" }
   ]
 }
