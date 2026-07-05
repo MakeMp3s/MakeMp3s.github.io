@@ -622,6 +622,65 @@
                 z-index: -1;
             }
         }
+        /* SmartScreen tooltip */
+        .dl-with-tip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .smartscreen-tip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.12);
+            color: #b0b0b0;
+            font-size: 0.7rem;
+            font-style: italic;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            position: absolute;
+            left: calc(100% + 0.5rem);
+            flex-shrink: 0;
+        }
+
+        .smartscreen-tip:hover,
+        .smartscreen-tip:focus {
+            background-color: rgba(255,255,255,0.22);
+            color: #ffffff;
+            outline: none;
+        }
+
+        .smartscreen-tip .tip-bubble {
+            display: none;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 230px;
+            background-color: #2a2a2a;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 0.65rem 0.8rem;
+            font-size: 0.78rem;
+            font-style: normal;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            color: #c8c8c8;
+            line-height: 1.45;
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        .smartscreen-tip:hover .tip-bubble,
+        .smartscreen-tip:focus .tip-bubble {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -664,7 +723,12 @@
                     <i class="fab fa-windows"></i>
                     <h3>Windows</h3>
                     <p>Compatible with Windows 10 and above</p>
-                    <a href="https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe" class="btn" download>Download for Windows</a>
+                    <div style="display: flex; justify-content: center; align-items: center;">
+                        <span class="dl-with-tip">
+                            <a href="https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe" class="btn" download>Download for Windows</a>
+                            <span class="smartscreen-tip" tabindex="0">i<span class="tip-bubble">Windows may show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span></span>
+                        </span>
+                    </div>
                     <div class="version-info">Version 1.0.1 Beta</div>
                 </div>
 
