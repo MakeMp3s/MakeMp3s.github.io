@@ -1,6 +1,10 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/index",      "destination": "/", "permanent": true },
+    { "source": "/index.html", "destination": "/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/webhook", "destination": "/api/webhook.js" },
     { "source": "/downloads", "destination": "/downloads.html" },
