@@ -765,10 +765,10 @@
             <span></span><span></span><span></span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="donate.html">Donate</a></li>
-            <li><a href="feedback.html">Feedback & Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/donate">Donate</a></li>
+            <li><a href="/feedback">Feedback & Contact</a></li>
         </ul>
         <div class="nav-icons">
             <div class="account-container" style="position: relative; display: inline-block;">
@@ -918,7 +918,7 @@
         } else if (os === 'linux') {
             return `<span class="${classes}" style="cursor:default;"><i class="fab fa-linux"></i> Linux version coming soon</span>`;
         } else {
-            return `<a href="downloads.html" class="${classes}"><i class="fas fa-download"></i> Download Make MP3s</a>`;
+            return `<a href="/downloads" class="${classes}"><i class="fas fa-download"></i> Download Make MP3s</a>`;
         }
     }
 
@@ -1054,14 +1054,14 @@
         // Cancel subscription — monthly, not already cancelled
         if (subscription === 'premium' && subscriptionType === 'monthly' && !subscriptionCancelled) {
             buttons += `
-                <a href="cancel-subscription.html" class="btn btn-outline-red">
+                <a href="/cancel-subscription" class="btn btn-outline-red">
                     <i class="fas fa-times-circle"></i> Cancel Subscription
                 </a>`;
         }
 
         // Refund policy — all users
         buttons += `
-            <a href="refund-policy.html" class="btn btn-outline">
+            <a href="/refund-policy" class="btn btn-outline">
                 <i class="fas fa-file-alt"></i> Refund Policy
             </a>`;
 
@@ -1106,7 +1106,7 @@
 					</div>
 				</div>
 				<div style="padding: 0.4rem 0.5rem 0.5rem;">
-					<a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+					<a href="/account-settings" class="dropdown-btn dropdown-btn-gold">
 						<i class="fas fa-user-cog"></i> Account Settings
 					</a>
 					<button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
