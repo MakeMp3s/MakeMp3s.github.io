@@ -32,13 +32,38 @@
         body {
             font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
             background-color: #1a1a1a;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        /* Dedicated background layer for images/boombox.jpg — kept
+           separate from body itself so its opacity can be faded
+           independently, without fading the page's actual content along
+           with it (fading body's own opacity would do exactly that).
+           Starts invisible; JS decides below whether it should fade in
+           smoothly or just appear instantly. */
+        #bg-boombox {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
             background-image: url('images/boombox.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            color: #ffffff;
-            line-height: 1.6;
+            opacity: 0;
+        }
+
+        /* Only added when the image is genuinely loading for the first
+           time (not already cached from a previous page) — see the
+           bg-boombox script near the end of the body for the cache check
+           that decides which of these two classes gets used. */
+        #bg-boombox.bg-fade {
+            transition: opacity 0.6s ease;
+        }
+
+        #bg-boombox.bg-loaded {
+            opacity: 1;
         }
 
         .bg-section {
@@ -374,8 +399,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 0.6s ease;
+            opacity: 0.75;
             z-index: 0;
             -webkit-mask-image: linear-gradient(
                 to right,
@@ -391,15 +415,6 @@
                 black 85%,
                 transparent 100%
             );
-        }
-
-        /* Set by JS once images/prem-bg.png has actually finished loading —
-           fades in smoothly instead of popping in abruptly the moment the
-           browser finally has the image, which is what was happening
-           before (background-image on a ::before has no native loading
-           state, so it just sits empty until the image arrives). */
-        .premium-section.bg-loaded::before {
-            opacity: 0.75;
         }
 
         .premium-section::after {
@@ -948,6 +963,7 @@
     </style>
 </head>
 <body>
+    <div id="bg-boombox"></div>
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
@@ -1508,21 +1524,34 @@
     </script>
 
     <script>
-        // Fade in the premium section's background once it's actually
-        // loaded, instead of it popping in abruptly the moment the browser
-        // finishes fetching it. background-image on a ::before has no
-        // native "loaded" event the way a real <img> tag does, so this
-        // uses a throwaway Image() object purely to detect completion —
-        // same URL as the CSS, so the browser reuses its own in-flight
-        // request/cache rather than fetching the image a second time.
+        // Fades in images/boombox.jpg the first time it loads, but shows
+        // it instantly on later pages where it's already cached — a
+        // repeated fade every time someone navigates between pages that
+        // all share this same background would feel slow and repetitive,
+        // even though the image itself loads instantly from cache.
+        //
+        // img.complete is true immediately after setting .src if the
+        // browser already has this exact image cached — that's the
+        // signal used to tell "already loaded elsewhere" apart from
+        // "genuinely fetching this for the first time". The .bg-fade
+        // class (which enables the CSS transition) is only added in the
+        // second case — added unconditionally, it would still animate
+        // the opacity change even when the underlying image was already
+        // cached, since a CSS transition animates any change to the
+        // property regardless of how it was triggered.
         (function () {
-            var section = document.querySelector('.premium-section');
-            if (!section) return;
+            var bg = document.getElementById('bg-boombox');
+            if (!bg) return;
             var img = new Image();
-            img.onload = function () {
-                section.classList.add('bg-loaded');
-            };
-            img.src = 'images/prem-bg.png';
+            img.src = 'images/boombox.jpg';
+            if (img.complete) {
+                bg.classList.add('bg-loaded');
+            } else {
+                bg.classList.add('bg-fade');
+                img.onload = function () {
+                    bg.classList.add('bg-loaded');
+                };
+            }
         })();
     </script>
 </body>
