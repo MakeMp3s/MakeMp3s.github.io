@@ -270,6 +270,15 @@
             vertical-align: middle;
         }
 
+        .new-badge {
+            color: #D4AF37;
+            font-size: 0.72rem;
+            font-weight: bold;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            vertical-align: middle;
+        }
+
         /* ── Free vs Premium cards ───────────────────────────────── */
         .plan-grid {
             display: grid;
@@ -779,10 +788,10 @@
             <span></span><span></span><span></span>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="donate.html">Donate</a></li>
-            <li><a href="feedback.html">Feedback & Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/donate">Donate</a></li>
+            <li><a href="/feedback">Feedback & Contact</a></li>
         </ul>
         <div class="nav-icons">
             <div class="account-container" style="position: relative; display: inline-block;">
@@ -869,7 +878,7 @@
                     </div>
                 </li>
                 <li>
-                    <div style="display:flex; align-items:flex-start; justify-content:flex-start; gap:0.75rem;">
+                    <div style="display:flex; align-items:center; justify-content:flex-start; gap:0.75rem;">
                         <div>Click <strong>Add</strong></div>
                         <img src="images/add-but.png" alt="Add button" style="height:52px; width:auto; border-radius:6px; flex-shrink:0;">
                     </div>
@@ -1010,6 +1019,26 @@
                 <p>Choose where your music saves by clicking <strong>Change</strong> under Download Location.</p>
             </div>
 
+            <!-- Explicit Content -->
+            <div style="margin-bottom: 1.75rem;">
+                <h3 style="font-size:1rem; font-weight:400; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+                    Explicit Content
+                    <span class="new-badge">New</span>
+                </h3>
+                <p>Choose whether downloaded songs prefer the explicit or clean version when both exist for a track.</p>
+                <p>Find the <strong>Explicit Content</strong> dropdown in Settings. Choose <strong>Auto</strong> for the fastest downloads, <strong>Explicit</strong> to prefer uncensored versions, or <strong>Clean</strong> to prefer censored versions.</p>
+            </div>
+
+            <!-- Silence Trimming -->
+            <div style="margin-bottom: 1.75rem;">
+                <h3 style="font-size:1rem; font-weight:400; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+                    Silence Trimming
+                    <span class="new-badge">New</span>
+                </h3>
+                <p>Automatically trims silent dead air from the start and end of downloaded songs. Only trims files that actually need it, so your other songs are left untouched.</p>
+                <p>Turn on <strong>Silence Trimming</strong> in Settings to apply it to future downloads, or use it in the Edit Music window to clean up songs you've already downloaded.</p>
+            </div>
+
             <!-- Auto Volume -->
             <div style="margin-bottom: 1.75rem;">
                 <h3 style="font-size:1rem; font-weight:400; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
@@ -1024,6 +1053,17 @@
             <div style="margin-bottom: 1.75rem;">
                 <h3 style="font-size:1rem; font-weight:400; margin-bottom:0.5rem;">Stats After Downloads</h3>
                 <p>Get a summary after each download including success rates, errors, and more.</p>
+            </div>
+
+            <!-- Edit Music -->
+            <div style="margin-bottom: 1.75rem;">
+                <h3 style="font-size:1rem; font-weight:400; margin-bottom:0.5rem; display:flex; align-items:center; gap:0.5rem;">
+                    Edit Music
+                    <span class="new-badge">New</span>
+                    <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+                </h3>
+                <p>A batch-editing tool for songs you've already downloaded. Apply cover art cropping, volume adjustment, and silence trimming to an entire folder or a specific selection of files, all at once.</p>
+                <p>Open <strong>Edit Music</strong> from the main window, choose a folder or select specific files, check which options to apply, then click <strong>Apply</strong>.</p>
             </div>
 
             <!-- Updates -->
@@ -1141,7 +1181,7 @@
                     <div class="dropdown-sub">Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span></div>
                 </div>
                 <div style="padding: 0.4rem 0.5rem 0.5rem;">
-                    <a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+                    <a href="/account-settings" class="dropdown-btn dropdown-btn-gold">
                         <i class="fas fa-user-cog"></i> Account Settings
                     </a>
                     <button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
@@ -1371,7 +1411,7 @@
             el.style.cursor = 'default';
             el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
         } else {
-            el.href = 'downloads.html';
+            el.href = '/downloads';
             el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
         }
 
