@@ -32,38 +32,13 @@
         body {
             font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
             background-color: #1a1a1a;
-            color: #ffffff;
-            line-height: 1.6;
-        }
-
-        /* Dedicated background layer for images/boombox.jpg — kept
-           separate from body itself so its opacity can be faded
-           independently, without fading the page's actual content along
-           with it (fading body's own opacity would do exactly that).
-           Starts invisible; JS decides below whether it should fade in
-           smoothly or just appear instantly. */
-        #bg-boombox {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
             background-image: url('images/boombox.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            opacity: 0;
-        }
-
-        /* Only added when the image is genuinely loading for the first
-           time (not already cached from a previous page) — see the
-           bg-boombox script near the end of the body for the cache check
-           that decides which of these two classes gets used. */
-        #bg-boombox.bg-fade {
-            transition: opacity 0.6s ease;
-        }
-
-        #bg-boombox.bg-loaded {
-            opacity: 1;
+            color: #ffffff;
+            line-height: 1.6;
         }
 
         .bg-section {
@@ -941,43 +916,28 @@
 			.modal-forgot:hover { color: #b0b0b0; }
 
         @media (max-width: 768px) {
-            /* Mobile browsers (address bar showing/hiding) miscalculate a
-               plain "fixed, full height" background, which is what was
-               making it look zoomed in after boombox.jpg moved onto its
-               own #bg-boombox layer — that layer's base rule uses inset:0,
-               which doesn't get this same correction. This restores the
-               same explicit, JS-measured height (--vh, set by the
-               setViewportHeight script near the end of the body) the
-               original mobile fix already used, just applied to the new
-               layer instead of the old body::before. Deliberately doesn't
-               touch opacity here — the fade-in logic stays exactly as
-               built, this only overrides sizing.
-               */
-            #bg-boombox {
+            body {
+                background-image: none;
+                background-attachment: scroll;
+            }
+            body::before {
+                content: '';
+                position: fixed;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100dvh;
                 height: calc(var(--vh, 1vh) * 100);
-                bottom: auto;
+                background-image: url('images/boombox.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
                 transition: height 0.3s ease;
-            }
-
-            /* .bg-fade (ID+class) has higher specificity than the plain
-               #bg-boombox rule above, so without this override it would
-               completely replace "transition: height 0.3s ease" with
-               "transition: opacity 0.6s ease" rather than the two
-               coexisting — silently losing the smooth address-bar-height
-               adjustment for as long as the fade-in class is present.
-               This combines both into one declaration instead. */
-            #bg-boombox.bg-fade {
-                transition: opacity 0.6s ease, height 0.3s ease;
             }
         }
     </style>
 </head>
 <body>
-    <div id="bg-boombox"></div>
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
@@ -1535,38 +1495,6 @@
         } else {
             window.addEventListener('resize', setViewportHeight);
         }
-    </script>
-
-    <script>
-        // Fades in images/boombox.jpg the first time it loads, but shows
-        // it instantly on later pages where it's already cached — a
-        // repeated fade every time someone navigates between pages that
-        // all share this same background would feel slow and repetitive,
-        // even though the image itself loads instantly from cache.
-        //
-        // img.complete is true immediately after setting .src if the
-        // browser already has this exact image cached — that's the
-        // signal used to tell "already loaded elsewhere" apart from
-        // "genuinely fetching this for the first time". The .bg-fade
-        // class (which enables the CSS transition) is only added in the
-        // second case — added unconditionally, it would still animate
-        // the opacity change even when the underlying image was already
-        // cached, since a CSS transition animates any change to the
-        // property regardless of how it was triggered.
-        (function () {
-            var bg = document.getElementById('bg-boombox');
-            if (!bg) return;
-            var img = new Image();
-            img.src = 'images/boombox.jpg';
-            if (img.complete) {
-                bg.classList.add('bg-loaded');
-            } else {
-                bg.classList.add('bg-fade');
-                img.onload = function () {
-                    bg.classList.add('bg-loaded');
-                };
-            }
-        })();
     </script>
 </body>
 </html>
