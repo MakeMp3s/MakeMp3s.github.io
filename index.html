@@ -941,23 +941,37 @@
 			.modal-forgot:hover { color: #b0b0b0; }
 
         @media (max-width: 768px) {
-            body {
-                background-image: none;
-                background-attachment: scroll;
-            }
-            body::before {
-                content: '';
-                position: fixed;
+            /* Mobile browsers (address bar showing/hiding) miscalculate a
+               plain "fixed, full height" background, which is what was
+               making it look zoomed in after boombox.jpg moved onto its
+               own #bg-boombox layer — that layer's base rule uses inset:0,
+               which doesn't get this same correction. This restores the
+               same explicit, JS-measured height (--vh, set by the
+               setViewportHeight script near the end of the body) the
+               original mobile fix already used, just applied to the new
+               layer instead of the old body::before. Deliberately doesn't
+               touch opacity here — the fade-in logic stays exactly as
+               built, this only overrides sizing.
+               */
+            #bg-boombox {
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100dvh;
                 height: calc(var(--vh, 1vh) * 100);
-                background-image: url('images/boombox.jpg');
-                background-size: cover;
-                background-position: center;
-                z-index: -1;
+                bottom: auto;
                 transition: height 0.3s ease;
+            }
+
+            /* .bg-fade (ID+class) has higher specificity than the plain
+               #bg-boombox rule above, so without this override it would
+               completely replace "transition: height 0.3s ease" with
+               "transition: opacity 0.6s ease" rather than the two
+               coexisting — silently losing the smooth address-bar-height
+               adjustment for as long as the fade-in class is present.
+               This combines both into one declaration instead. */
+            #bg-boombox.bg-fade {
+                transition: opacity 0.6s ease, height 0.3s ease;
             }
         }
     </style>
