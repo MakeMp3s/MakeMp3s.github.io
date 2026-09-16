@@ -787,6 +787,39 @@
                 </div>
             </div>
 
+            <!-- Future Platforms Waitlist -->
+            <div style="margin-top: 4rem; max-width: 500px; margin-left: auto; margin-right: auto; text-align: center;">
+                <h3 style="font-size: 1.2rem; font-weight: 400; margin-bottom: 0.4rem; line-height: 1.5;">Interested in more devices?<br>Help us decide what to build next.</h3>
+                <p style="color: #808080; font-size: 0.85rem; margin-bottom: 1.25rem;">The more support a platform gets, the sooner we make it happen.</p>
+
+                <form id="platform-waitlist-form" style="background-color: rgba(42, 42, 42, 0.6); border: 1px solid #444; border-radius: 15px; padding: 1.5rem;">
+
+                    <div id="platform-waitlist-inputrow" style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                        <input type="email" id="platform-waitlist-email" placeholder="Enter your email" required
+                            style="flex: 1; min-width: 180px; padding: 0.6rem 1rem; background-color: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); border-radius: 20px; color: #ffffff; font-size: 0.88rem;">
+                        <button type="submit" id="platform-waitlist-btn" class="btn" style="font-size: 0.85rem; padding: 0.6rem 1.5rem; white-space: nowrap;">Join Waitlist</button>
+                    </div>
+
+                    <div id="platform-waitlist-checkboxes" style="max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s ease, opacity 0.4s ease, margin-top 0.4s ease; display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap; font-size: 0.85rem; color: #b0b0b0;">
+                        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                            <input type="checkbox" name="platform" value="Mac Intel" style="accent-color: #007AFF;"> Mac Intel
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                            <input type="checkbox" name="platform" value="Linux" style="accent-color: #007AFF;"> Linux
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                            <input type="checkbox" name="platform" value="Phone App" style="accent-color: #007AFF;"> Phone App
+                        </label>
+                    </div>
+
+                    <div id="platform-waitlist-error" style="display:none; color: #ff6b6b; font-size: 0.82rem; margin-top: 0.75rem;"></div>
+                    <div id="platform-waitlist-success" style="display:none; color: #4CAF50; font-size: 0.9rem; margin-top: 0.75rem;">
+                        <i class="fas fa-check-circle"></i> Thank you for your support!
+                    </div>
+
+                </form>
+            </div>
+
             <!-- Previous Versions Section -->
             <div style="margin-top: 5rem; max-width: 700px; margin-left: auto; margin-right: auto;">
                 <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem; font-weight: 300;">Previous Versions</h2>
@@ -883,7 +916,7 @@
       createUserWithEmailAndPassword,
       sendPasswordResetEmail
     } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
@@ -1150,6 +1183,62 @@
         if (event.target === authModal) {
             window.closeAuthModal();
         }
+    }
+
+    // Future Platforms Waitlist
+    const platformForm = document.getElementById('platform-waitlist-form');
+    if (platformForm) {
+        const platformCheckboxes = document.getElementById('platform-waitlist-checkboxes');
+        const platformEmailInput = document.getElementById('platform-waitlist-email');
+
+        platformEmailInput.addEventListener('focus', () => {
+            platformCheckboxes.style.maxHeight = '80px';
+            platformCheckboxes.style.opacity = '1';
+            platformCheckboxes.style.marginTop = '1.25rem';
+        });
+
+        platformForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('platform-waitlist-email');
+            const btn = document.getElementById('platform-waitlist-btn');
+            const errorEl = document.getElementById('platform-waitlist-error');
+            const successEl = document.getElementById('platform-waitlist-success');
+            const email = emailInput.value.trim().toLowerCase();
+
+            const platforms = Array.from(document.querySelectorAll('input[name="platform"]:checked')).map(cb => cb.value);
+
+            errorEl.style.display = 'none';
+
+            if (platforms.length === 0) {
+                errorEl.textContent = 'Please select at least one platform.';
+                errorEl.style.display = 'block';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Joining...';
+
+            try {
+                const emailDoc = doc(db, "future-platforms-waitlist", email);
+                const docSnap = await getDoc(emailDoc);
+                if (docSnap.exists()) {
+                    errorEl.textContent = 'This email is already on the waitlist!';
+                    errorEl.style.display = 'block';
+                    btn.disabled = false;
+                    btn.textContent = 'Join Waitlist';
+                    return;
+                }
+                await setDoc(emailDoc, { email, platforms, timestamp: serverTimestamp(), source: 'downloads-page' });
+                document.getElementById('platform-waitlist-checkboxes').style.display = 'none';
+                document.getElementById('platform-waitlist-inputrow').style.display = 'none';
+                successEl.style.display = 'block';
+            } catch (error) {
+                errorEl.textContent = 'Something went wrong. Please try again.';
+                errorEl.style.display = 'block';
+                btn.disabled = false;
+                btn.textContent = 'Join Waitlist';
+            }
+        });
     }
 </script>
 
