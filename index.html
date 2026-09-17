@@ -915,6 +915,22 @@
 
 			.modal-forgot:hover { color: #b0b0b0; }
 
+        #bg-load-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            z-index: 99999;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        #bg-load-overlay.hidden {
+            opacity: 0;
+        }
+
         @media (max-width: 768px) {
             body {
                 background-image: none;
@@ -938,6 +954,7 @@
     </style>
 </head>
 <body>
+    <div id="bg-load-overlay"></div>
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
@@ -1495,6 +1512,31 @@
         } else {
             window.addEventListener('resize', setViewportHeight);
         }
+    </script>
+
+    <script>
+        // Fade out the load overlay once the background image is ready.
+        // Skips the fade entirely if it's already been shown this session.
+        (function() {
+            const overlay = document.getElementById('bg-load-overlay');
+            if (!overlay) return;
+
+            if (localStorage.getItem('bgLoaded') === '1') {
+                overlay.remove();
+                return;
+            }
+
+            const img = new Image();
+            img.onload = revealPage;
+            img.onerror = revealPage;
+            img.src = 'images/boombox.jpg';
+
+            function revealPage() {
+                overlay.classList.add('hidden');
+                localStorage.setItem('bgLoaded', '1');
+                setTimeout(() => overlay.remove(), 450);
+            }
+        })();
     </script>
 </body>
 </html>
