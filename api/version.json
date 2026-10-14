@@ -1,8 +1,8 @@
 {
-  "version": "2.0.0",
-  "version_name": "Beta v2.0.0",
+  "version": "2.0.1",
+  "version_name": "Beta v2.0.1",
   "download_url": "https://makemp3s.github.io/downloads.html",
-  "release_notes": "Silence trimming, explicit content options, Edit Music mode (beta), stability and speed improvements, Mac fixes.",
-  "released_at": "2026-09-13T07:04:11.380243+00:00",
-  "_sig": "47d8b6bb348525eec032d9d8d9b940abb64043e267b7c88fcd93043aa3999f2c"
+  "release_notes": "New: Audio source, stability, speed, UI improvements, and downloads finished sound effect.",
+  "released_at": "2026-10-14T08:26:40.001173+00:00",
+  "_sig": "381d40fdd679cf52f6ca1b11259e1bf1644b3ee04e09f47de152eb87286bad3d"
 }
