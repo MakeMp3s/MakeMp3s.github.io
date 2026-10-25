@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H11K90Y0CD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H11K90Y0CD');
+    </script>
+
     <title>Make MP3s - Convert Music Playlists to MP3s</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -98,20 +108,35 @@
         .hamburger {
             display: none;
             flex-direction: column;
+            justify-content: center;
             cursor: pointer;
-            gap: 4px;
+            gap: 5px;
+            /* it is a <button> now: strip the default button look */
+            background: none;
+            border: none;
+            padding: 8px;
+            margin: 0 -8px 0 1.1rem;   /* 8px padding = bigger tap area, negative margin keeps the bars aligned to the edge */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .hamburger span {
-            width: 25px;
-            height: 3px;
+            display: block;
+            width: 22px;
+            height: 2px;
+            border-radius: 2px;
             background-color: #b0b0b0;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, opacity 0.2s ease, background-color 0.3s ease;
         }
 
         .hamburger:hover span {
             background-color: #ffffff;
         }
+
+        /* Open state: three bars turn into an X (bar centres are 7px apart: 2px bar + 5px gap) */
+        .hamburger.open span { background-color: #ffffff; }
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
         /* Hero Section */
         .hero {
@@ -164,6 +189,94 @@
             background-color: #c8c8c8;
             transform: translateY(-2px);
             box-shadow: none;
+        }
+
+        .smartscreen-tip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.12);
+            color: #b0b0b0;
+            font-size: 0.7rem;
+            font-style: italic;
+            font-family: Georgia, serif;
+            cursor: pointer;
+            position: relative;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        .smartscreen-tip:hover,
+        .smartscreen-tip:focus {
+            background-color: rgba(255,255,255,0.22);
+            color: #ffffff;
+            opacity: 0.92;
+        }
+
+        .smartscreen-tip .tip-bubble {
+            display: none;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 230px;
+            background-color: #2a2a2a;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 0.65rem 0.8rem;
+            font-size: 0.78rem;
+            font-style: normal;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            color: #c8c8c8;
+            line-height: 1.45;
+            text-align: left;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            z-index: 50;
+        }
+
+        .smartscreen-tip:hover .tip-bubble,
+        .smartscreen-tip:focus .tip-bubble {
+            display: block;
+        }
+
+        .dl-with-tip {
+            display: inline-flex;
+            align-items: center;
+            position: relative;
+            margin-right: 1.3rem;
+        }
+
+        .dl-with-tip .smartscreen-tip {
+            position: absolute;
+            left: 100%;
+            margin-left: 0.5rem;
+        }
+
+        .mobile-dl-note {
+            color: #b0b0b0;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.35s ease;
+            width: 100%;
+            text-align: center;
+            line-height: 1.5;
+        }
+
+        .mobile-dl-subnote {
+            color: #909090;
+            font-size: 0.75rem;
+        }
+
+        .mobile-dl-note.visible {
+            opacity: 1;
+            max-height: 3.2rem;
         }
 
         .button-group {
@@ -423,37 +536,79 @@
             nav {
                 padding: 1rem;
                 position: relative;
+                justify-content: flex-start;
+            }
+
+            /* Row on phones: logo | (space) | account, Instagram, YouTube | menu button */
+            .nav-icons {
+                gap: 1rem;
+                margin-left: auto;
             }
 
             .hamburger {
-                position: absolute;
-                left: 70px;
                 display: flex;
             }
 
-            .hamburger span {
-                background-color: #b0b0b0;
-            }
-
+            /* Menu panel: always rendered so it can animate. Hidden = transparent, slightly
+               raised, not clickable. Frosted glass: 75% dark + blur of the photo behind. */
             .nav-links {
-                display: none;
+                display: flex;
                 position: absolute;
-                top: 60px;
+                top: 100%;
                 left: 0;
                 right: 0;
-                background-color: #1a1a1a;
                 flex-direction: column;
-                padding: 1rem;
-                gap: 0.5rem;
+                gap: 0;
+                padding: 0.4rem 1.25rem 1rem;
+                background-color: rgba(26, 26, 26, 0.75);
+                -webkit-backdrop-filter: blur(14px);
+                backdrop-filter: blur(14px);
                 z-index: 1000;
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transform: translateY(-12px);
+                transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
             }
 
             .nav-links.active {
-                display: flex;
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+                transform: translateY(0);
+                transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s;
             }
 
-            .nav-icons {
-                gap: 1rem;
+            /* Items slide in one after another (fast stagger); on close they leave together */
+            .nav-links li {
+                opacity: 0;
+                transform: translateY(-8px);
+                transition: opacity 0.2s ease, transform 0.2s ease;
+            }
+
+            .nav-links.active li {
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
+
+            .nav-links.active li:nth-child(1) { transition-delay: 0.05s; }
+            .nav-links.active li:nth-child(2) { transition-delay: 0.10s; }
+            .nav-links.active li:nth-child(3) { transition-delay: 0.15s; }
+            .nav-links.active li:nth-child(4) { transition-delay: 0.20s; }
+
+            .nav-links a {
+                display: block;
+                padding: 0.8rem 0;
+                font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+                font-size: 1.3rem;
+                font-weight: bold;
+                color: #ececec;
+                text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .nav-links, .nav-links li, .hamburger span { transition: none !important; }
             }
 
             .hero h1 {
@@ -491,6 +646,18 @@
             .footer-bottom {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .dl-with-tip {
+                width: 100%;
+                justify-content: center;
+                margin-right: 0;
             }
         }
 			/* Dropdown Styles */
@@ -805,9 +972,26 @@
 
 			.modal-forgot:hover { color: #b0b0b0; }
 
+        #bg-load-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #1a1a1a;
+            z-index: -1;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+
+        #bg-load-overlay.hidden {
+            opacity: 0;
+        }
+
         @media (max-width: 768px) {
             body {
                 background-image: none;
+                background-attachment: scroll;
             }
             body::before {
                 content: '';
@@ -815,29 +999,27 @@
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: 100%;
+                height: 100dvh;
+                height: calc(var(--vh, 1vh) * 100);
                 background-image: url('images/boombox.jpg');
                 background-size: cover;
                 background-position: center;
                 z-index: -1;
+                transition: height 0.3s ease;
             }
         }
     </style>
 </head>
 <body>
+    <div id="bg-load-overlay"></div>
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
-        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="downloads.html">Downloads</a></li>
-            <li><a href="donate.html">Donate</a></li>
-            <li><a href="https://makemp3s.github.io/feedback.html">Feedback & Contact</a></li>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/donate">Donate</a></li>
+            <li><a href="/feedback">Feedback & Contact</a></li>
         </ul>
         <div class="nav-icons">
 			<div class="account-container" style="position: relative; display: inline-block;">
@@ -850,6 +1032,11 @@
             <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
 
     <!-- Hero Section -->
@@ -857,7 +1044,7 @@
     <section class="hero">
         <h1>A Better Way to Convert Music Playlists to MP3s</h1>
         <p>Designed for artists, music collectors, and DJs who need clean, consistent MP3s.</p>
-        <a href="downloads.html" class="btn">Download Make MP3s Free Edition</a>
+        <span id="hero-dl-btn"></span>
     </section>
 
     <!-- What is Make MP3s Section -->
@@ -884,7 +1071,7 @@
             <h3>Free Edition Beta</h3>
             <p>Convert your favorite songs or entire playlists into your very own MP3 files. Works with a wide range of supported sources. Try free with 100 downloads in your first 24 hours, then 10 per day after that. Unlock unlimited and more with Premium.</p>
             <div class="button-group">
-                <a href="downloads.html" class="btn">Download</a>
+                <span id="feature-dl-btn"></span>
                 <a href="/learn-more" class="btn btn-secondary">Learn More</a>
             </div>
         </div>
@@ -946,7 +1133,7 @@
 		</div>
 	</div>
 
-    <p style="text-align:center; color:#808080; font-size:0.78rem; padding: 0.75rem 3rem 0;">Make MP3s is intended for use with content you own or have the right to download.</p>
+    <p style="text-align:center; color:#808080; font-size:0.78rem; padding: 0.75rem 3rem 0;">Make MP3s is intended for use with content you own or have the right to download. We don't host, store, or distribute any audio files.</p>
 
     <!-- Footer -->
     <footer>
@@ -997,24 +1184,10 @@
     // 1. Handle Google Login
     window.handleGoogleLogin = async () => {
         try {
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            
-            // Check if user exists in Firestore, if not create them
-            const userRef = doc(db, "users", user.uid);
-            const userSnap = await getDoc(userRef);
-
-            if (!userSnap.exists()) {
-                await setDoc(userRef, {
-                    email: user.email,
-                    subscription: "free", // Default to free
-                    createdAt: new Date()
-                });
-            }
-            
+            await signInWithPopup(auth, provider);
             window.closeAuthModal();
         } catch (error) {
-            console.error("Login Failed:", error);
+            console.error("Google login error:", error);
             alert("Login failed. Please try again.");
         }
     };
@@ -1060,9 +1233,27 @@
 			}
 			
 			// Normal web login (no callback)
-			const userRef = doc(db, "users", user.email);
-			const userSnap = await getDoc(userRef);
-			const userData = userSnap.exists() ? userSnap.data() : { subscription: 'free' };
+			// Ensure Firestore profile exists, keyed by uid
+			const userRef = doc(db, "users", user.uid);
+			let userData = { subscription: 'free' };
+			try {
+				const userSnap = await getDoc(userRef);
+				if (userSnap.exists()) {
+					userData = userSnap.data();
+				} else {
+					// First time this user has logged in — create their profile
+					const newProfile = {
+						email: user.email,
+						subscription: "free",
+						createdAt: new Date()
+					};
+					await setDoc(userRef, newProfile);
+					userData = newProfile;
+				}
+			} catch (err) {
+				console.error("Firestore profile error:", err);
+				// Non-fatal: fall back to free tier display
+			}
 			const subscription = userData.subscription || 'free';
 			const subscriptionType = userData.subscriptionType || null;
 
@@ -1086,7 +1277,7 @@
 					</div>
 				</div>
 				<div style="padding: 0.4rem 0.5rem 0.5rem;">
-					<a href="account-settings.html" class="dropdown-btn dropdown-btn-gold">
+					<a href="/account-settings" class="dropdown-btn dropdown-btn-gold">
 						<i class="fas fa-user-cog"></i> Account Settings
 					</a>
 					<button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
@@ -1240,16 +1431,6 @@
             let result;
             if (isSignUpMode) {
                 result = await createUserWithEmailAndPassword(auth, email, password);
-                // Create Firestore record for new user
-                const userRef = doc(db, "users", result.user.email);
-                const userSnap = await getDoc(userRef);
-                if (!userSnap.exists()) {
-                    await setDoc(userRef, {
-                        email: result.user.email,
-                        subscription: "free",
-                        createdAt: new Date()
-                    });
-                }
             } else {
                 result = await signInWithEmailAndPassword(auth, email, password);
             }
@@ -1282,6 +1463,89 @@
         }
     };
 
+    // ── OS Detection & Smart Download ────────────────────────────────────────
+    const WIN_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe';
+    const MAC_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Mac-Installer.dmg';
+
+    function getOS() {
+        const ua = navigator.userAgent;
+        const platform = navigator.platform || '';
+        if (/android/i.test(ua) || /iphone|ipad|ipod/i.test(ua)) return 'mobile';
+        if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
+        if (/mac/i.test(platform) || /macintosh/i.test(ua)) return 'mac';
+        if (/linux/i.test(platform)) return 'linux';
+        return 'unknown';
+    }
+
+    function smartDownloadButton(classes) {
+        const os = getOS();
+        const isDesktop = os === 'windows' || os === 'mac';
+        const el = document.createElement(isDesktop ? 'a' : 'span');
+        el.className = classes;
+        if (os === 'windows') {
+            el.href = WIN_URL;
+            el.setAttribute('download', '');
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        } else if (os === 'mac') {
+            el.href = MAC_URL;
+            el.setAttribute('download', '');
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        } else if (os === 'mobile') {
+            el.style.cursor = 'pointer';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+            el.addEventListener('click', function() {
+                const wrapper = el.parentElement;
+                const msg = wrapper.nextElementSibling;
+                if (msg && msg.classList.contains('mobile-dl-note')) {
+                    msg.classList.add('visible');
+                    clearTimeout(msg._fadeTimer);
+                    msg._fadeTimer = setTimeout(() => msg.classList.remove('visible'), 5500);
+                }
+            });
+        } else if (os === 'linux') {
+            el.style.cursor = 'default';
+            el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
+        } else {
+            el.href = '/downloads';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        }
+        return el;
+    }
+
+    function buildDownloadGroup(btnId, classes) {
+        const placeholder = document.getElementById(btnId);
+        if (!placeholder) return;
+        const os = getOS();
+        const wrapper = document.createElement('span');
+        wrapper.className = 'dl-with-tip';
+
+        const btn = smartDownloadButton(classes);
+        wrapper.appendChild(btn);
+
+        // Tooltip only on desktop (windows/mac), hidden on mobile/linux/unknown
+        if (os === 'windows' || os === 'mac') {
+            const tip = document.createElement('span');
+            tip.className = 'smartscreen-tip';
+            tip.tabIndex = 0;
+            tip.innerHTML = 'i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span>';
+            wrapper.appendChild(tip);
+        }
+
+        placeholder.replaceWith(wrapper);
+
+        // Mobile-only fade note, appended after the wrapper
+        if (os === 'mobile') {
+            const note = document.createElement('div');
+            note.className = 'mobile-dl-note';
+            note.innerHTML = 'Available on Mac and Windows<br><span class="mobile-dl-subnote">Go to makemp3s.com on your computer</span>';
+            wrapper.insertAdjacentElement('afterend', note);
+        }
+    }
+
+    // Render smart download buttons
+    buildDownloadGroup('hero-dl-btn', 'btn');
+    buildDownloadGroup('feature-dl-btn', 'btn');
+
     // Close dropdowns if clicking outside
     window.onclick = function(event) {
         if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
@@ -1293,5 +1557,87 @@
     }
 </script>
 	
+    <script>
+        // Mobile menu: open/close, X animation, and the small extras
+        // (tap outside / tap a link / press Escape closes it; leaving phone width resets it).
+        (function() {
+            const btn = document.getElementById('hamburger');
+            const menu = document.getElementById('nav-links');
+            if (!btn || !menu) return;
+
+            function setOpen(open) {
+                menu.classList.toggle('active', open);
+                btn.classList.toggle('open', open);
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+            }
+
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                setOpen(!menu.classList.contains('active'));
+            });
+            menu.addEventListener('click', function(e) {
+                if (e.target.closest('a')) setOpen(false);
+            });
+            document.addEventListener('click', function(e) {
+                if (!menu.classList.contains('active')) return;
+                if (e.target.closest('#nav-links') || e.target.closest('#hamburger')) return;
+                setOpen(false);
+            });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') setOpen(false);
+            });
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) setOpen(false);
+            });
+        })();
+    </script>
+
+    <script>
+        // Fix mobile background scaling glitch (Instagram in-app browser, etc.)
+        function setViewportHeight() {
+            const vh = (window.visualViewport ? window.visualViewport.height : window.innerHeight) * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        setViewportHeight();
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', setViewportHeight);
+        } else {
+            window.addEventListener('resize', setViewportHeight);
+        }
+    </script>
+
+    <script>
+        // Always fade the background in. The dark cover (#bg-load-overlay) sits behind all
+        // text and buttons (z-index -1) and only hides the background image. It lifts once the
+        // image is loaded AND decoded, so a cached image fades in right away and a slow one
+        // fades in whenever it arrives. A safety timer lifts the cover if the image never loads.
+        (function() {
+            const overlay = document.getElementById('bg-load-overlay');
+            if (!overlay) return;
+
+            let revealed = false;
+            function revealPage() {
+                if (revealed) return;
+                revealed = true;
+                // Two frames so the browser has painted the image under the cover first,
+                // otherwise a cached image can skip the transition.
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    overlay.classList.add('hidden');
+                    setTimeout(() => overlay.remove(), 700);
+                }));
+            }
+
+            const img = new Image();
+            img.onload = function() {
+                if (img.decode) { img.decode().then(revealPage, revealPage); }
+                else { revealPage(); }
+            };
+            img.onerror = revealPage;
+            img.src = 'images/boombox.jpg';
+
+            setTimeout(revealPage, 3000);   // safety: never leave the page covered
+        })();
+    </script>
+    <noscript><style>#bg-load-overlay { display: none; }</style></noscript>
 </body>
 </html>
