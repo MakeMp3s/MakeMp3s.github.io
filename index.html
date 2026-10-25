@@ -923,7 +923,7 @@
             height: 100%;
             background-color: #1a1a1a;
             z-index: -1;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.6s ease;
             pointer-events: none;
         }
 
@@ -1515,28 +1515,37 @@
     </script>
 
     <script>
-        // Fade out the load overlay once the background image is ready.
-        // Skips the fade entirely if it's already been shown this session.
+        // Always fade the background in. The dark cover (#bg-load-overlay) sits behind all
+        // text and buttons (z-index -1) and only hides the background image. It lifts once the
+        // image is loaded AND decoded, so a cached image fades in right away and a slow one
+        // fades in whenever it arrives. A safety timer lifts the cover if the image never loads.
         (function() {
             const overlay = document.getElementById('bg-load-overlay');
             if (!overlay) return;
 
-            if (localStorage.getItem('bgLoaded') === '1') {
-                overlay.remove();
-                return;
+            let revealed = false;
+            function revealPage() {
+                if (revealed) return;
+                revealed = true;
+                // Two frames so the browser has painted the image under the cover first,
+                // otherwise a cached image can skip the transition.
+                requestAnimationFrame(() => requestAnimationFrame(() => {
+                    overlay.classList.add('hidden');
+                    setTimeout(() => overlay.remove(), 700);
+                }));
             }
 
             const img = new Image();
-            img.onload = revealPage;
+            img.onload = function() {
+                if (img.decode) { img.decode().then(revealPage, revealPage); }
+                else { revealPage(); }
+            };
             img.onerror = revealPage;
             img.src = 'images/boombox.jpg';
 
-            function revealPage() {
-                overlay.classList.add('hidden');
-                localStorage.setItem('bgLoaded', '1');
-                setTimeout(() => overlay.remove(), 450);
-            }
+            setTimeout(revealPage, 3000);   // safety: never leave the page covered
         })();
     </script>
+    <noscript><style>#bg-load-overlay { display: none; }</style></noscript>
 </body>
 </html>
