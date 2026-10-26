@@ -539,7 +539,7 @@
                 justify-content: flex-start;
             }
 
-            /* Row on phones: logo | (space) | account, Instagram, YouTube | menu button */
+            /* Row on phones: logo | menu button | (space) | account, Instagram, YouTube */
             .nav-icons {
                 gap: 1rem;
                 margin-left: auto;
@@ -547,6 +547,7 @@
 
             .hamburger {
                 display: flex;
+                margin: 0 0 0 6px;   /* sits right beside the logo (8px padding + 6px = about 14px gap, as before) */
             }
 
             /* Menu panel: always rendered so it can animate. Hidden = transparent, slightly
@@ -1015,6 +1016,11 @@
     <!-- Navigation -->
     <nav>
         <img src="images/logo.png" alt="Logo" class="logo">
+        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
         <ul class="nav-links" id="nav-links">
             <li><a href="/">Home</a></li>
             <li><a href="/downloads">Downloads</a></li>
@@ -1032,11 +1038,6 @@
             <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
             <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
         </div>
-        <button class="hamburger" id="hamburger" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
     </nav>
 
     <!-- Hero Section -->
