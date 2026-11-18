@@ -228,9 +228,17 @@
             display: block;
         }
 
+        /* Reserve the download button's height (0.75rem x2 padding + 1.6 line-height)
+           so the layout doesn't jump when the button is built by script. */
+        #hero-dl-btn,
+        #feature-dl-btn,
         .dl-with-tip {
             display: inline-flex;
             align-items: center;
+            min-height: 3.1rem;
+        }
+
+        .dl-with-tip {
             position: relative;
             margin-right: 1.3rem;
         }
@@ -1021,6 +1029,93 @@
     </section>
     </div>
 
+    <!-- Smart download buttons: classic (non-module) script so it runs immediately,
+         without waiting for the Firebase imports to download. -->
+    <script>
+    // ── OS Detection & Smart Download ────────────────────────────────────────
+    const WIN_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe';
+    const MAC_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Mac-Installer.dmg';
+
+    function getOS() {
+        const ua = navigator.userAgent;
+        const platform = navigator.platform || '';
+        if (/android/i.test(ua) || /iphone|ipad|ipod/i.test(ua)) return 'mobile';
+        if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
+        if (/mac/i.test(platform) || /macintosh/i.test(ua)) return 'mac';
+        if (/linux/i.test(platform)) return 'linux';
+        return 'unknown';
+    }
+
+    function smartDownloadButton(classes) {
+        const os = getOS();
+        const isDesktop = os === 'windows' || os === 'mac';
+        const el = document.createElement(isDesktop ? 'a' : 'span');
+        el.className = classes;
+        if (os === 'windows') {
+            el.href = WIN_URL;
+            el.setAttribute('download', '');
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        } else if (os === 'mac') {
+            el.href = MAC_URL;
+            el.setAttribute('download', '');
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        } else if (os === 'mobile') {
+            el.style.cursor = 'pointer';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+            el.addEventListener('click', function() {
+                const wrapper = el.parentElement;
+                const msg = wrapper.nextElementSibling;
+                if (msg && msg.classList.contains('mobile-dl-note')) {
+                    msg.classList.add('visible');
+                    clearTimeout(msg._fadeTimer);
+                    msg._fadeTimer = setTimeout(() => msg.classList.remove('visible'), 5500);
+                }
+            });
+        } else if (os === 'linux') {
+            el.style.cursor = 'default';
+            el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
+        } else {
+            el.href = '/downloads';
+            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
+        }
+        return el;
+    }
+
+    function buildDownloadGroup(btnId, classes) {
+        const placeholder = document.getElementById(btnId);
+        if (!placeholder) return;
+        const os = getOS();
+        const wrapper = document.createElement('span');
+        wrapper.className = 'dl-with-tip';
+
+        const btn = smartDownloadButton(classes);
+        wrapper.appendChild(btn);
+
+        // Tooltip only on desktop (windows/mac), hidden on mobile/linux/unknown
+        if (os === 'windows' || os === 'mac') {
+            const tip = document.createElement('span');
+            tip.className = 'smartscreen-tip';
+            tip.tabIndex = 0;
+            tip.innerHTML = 'i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span>';
+            wrapper.appendChild(tip);
+        }
+
+        placeholder.replaceWith(wrapper);
+
+        // Mobile-only fade note, appended after the wrapper
+        if (os === 'mobile') {
+            const note = document.createElement('div');
+            note.className = 'mobile-dl-note';
+            note.innerHTML = 'Available on Mac and Windows<br><span class="mobile-dl-subnote">Go to makemp3s.com on your computer</span>';
+            wrapper.insertAdjacentElement('afterend', note);
+        }
+    }
+
+    // Render smart download buttons
+    buildDownloadGroup('hero-dl-btn', 'btn');
+    buildDownloadGroup('feature-dl-btn', 'btn');
+    </script>
+
     <!-- Premium Section -->
     <section class="premium-section">
         <a href="/premium" class="premium-animation">
@@ -1405,89 +1500,6 @@
             errorEl.textContent = friendlyError(error.code);
         }
     };
-
-    // ── OS Detection & Smart Download ────────────────────────────────────────
-    const WIN_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe';
-    const MAC_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Mac-Installer.dmg';
-
-    function getOS() {
-        const ua = navigator.userAgent;
-        const platform = navigator.platform || '';
-        if (/android/i.test(ua) || /iphone|ipad|ipod/i.test(ua)) return 'mobile';
-        if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
-        if (/mac/i.test(platform) || /macintosh/i.test(ua)) return 'mac';
-        if (/linux/i.test(platform)) return 'linux';
-        return 'unknown';
-    }
-
-    function smartDownloadButton(classes) {
-        const os = getOS();
-        const isDesktop = os === 'windows' || os === 'mac';
-        const el = document.createElement(isDesktop ? 'a' : 'span');
-        el.className = classes;
-        if (os === 'windows') {
-            el.href = WIN_URL;
-            el.setAttribute('download', '');
-            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
-        } else if (os === 'mac') {
-            el.href = MAC_URL;
-            el.setAttribute('download', '');
-            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
-        } else if (os === 'mobile') {
-            el.style.cursor = 'pointer';
-            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
-            el.addEventListener('click', function() {
-                const wrapper = el.parentElement;
-                const msg = wrapper.nextElementSibling;
-                if (msg && msg.classList.contains('mobile-dl-note')) {
-                    msg.classList.add('visible');
-                    clearTimeout(msg._fadeTimer);
-                    msg._fadeTimer = setTimeout(() => msg.classList.remove('visible'), 5500);
-                }
-            });
-        } else if (os === 'linux') {
-            el.style.cursor = 'default';
-            el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon';
-        } else {
-            el.href = '/downloads';
-            el.innerHTML = '<i class="fas fa-download"></i> Download Make MP3s';
-        }
-        return el;
-    }
-
-    function buildDownloadGroup(btnId, classes) {
-        const placeholder = document.getElementById(btnId);
-        if (!placeholder) return;
-        const os = getOS();
-        const wrapper = document.createElement('span');
-        wrapper.className = 'dl-with-tip';
-
-        const btn = smartDownloadButton(classes);
-        wrapper.appendChild(btn);
-
-        // Tooltip only on desktop (windows/mac), hidden on mobile/linux/unknown
-        if (os === 'windows' || os === 'mac') {
-            const tip = document.createElement('span');
-            tip.className = 'smartscreen-tip';
-            tip.tabIndex = 0;
-            tip.innerHTML = 'i<span class="tip-bubble">Windows might show a SmartScreen warning since Make MP3s is a new app. Click "More info" then "Run anyway" to continue.</span>';
-            wrapper.appendChild(tip);
-        }
-
-        placeholder.replaceWith(wrapper);
-
-        // Mobile-only fade note, appended after the wrapper
-        if (os === 'mobile') {
-            const note = document.createElement('div');
-            note.className = 'mobile-dl-note';
-            note.innerHTML = 'Available on Mac and Windows<br><span class="mobile-dl-subnote">Go to makemp3s.com on your computer</span>';
-            wrapper.insertAdjacentElement('afterend', note);
-        }
-    }
-
-    // Render smart download buttons
-    buildDownloadGroup('hero-dl-btn', 'btn');
-    buildDownloadGroup('feature-dl-btn', 'btn');
 
     // Close dropdowns if clicking outside
     window.onclick = function(event) {
