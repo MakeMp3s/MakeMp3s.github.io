@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H11K90Y0CD"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-H11K90Y0CD');
+    </script>
+
+    <!-- Click tracking for Google Analytics: download_click and premium_click.
+         Reads data-loc on a button (or the nearest element id) to say which button was clicked. -->
+    <script>
+    (function () {
+      function where(a) {
+        var d = a.closest('[data-loc]'); if (d) return d.getAttribute('data-loc');
+        var i = a.closest('[id]'); return i ? i.id : 'page';
+      }
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest ? e.target.closest('a[href]') : null;
+        if (!a || typeof gtag !== 'function') return;
+        var href = a.getAttribute('href') || '';
+        if (/\.(exe|dmg)(\?|$)/i.test(href)) {
+          var tag = href.match(/\/download\/([^\/]+)\//);
+          gtag('event', 'download_click', {
+            platform: /\.exe/i.test(href) ? 'windows' : 'mac',
+            button_location: where(a),
+            release: /\/releases\/latest\//.test(href) ? 'latest' : (tag ? tag[1] : 'unknown'),
+            transport_type: 'beacon'
+          });
+        } else if (/^(https:\/\/makemp3s\.com)?\/premium\/?([?#]|$)/.test(href)) {
+          gtag('event', 'premium_click', { button_location: where(a), transport_type: 'beacon' });
+        }
+      });
+    })();
+    </script>
+
+    <title>Playlist to MP3 Converter - Spotify, Apple Music | Make MP3s</title>
+    <meta name="description" content="Convert Spotify, Apple Music and YouTube playlists to MP3 files with a desktop app for Windows and Mac. Download a whole playlist at once. Try Make MP3s free.">
+    <link rel="canonical" href="https://makemp3s.com/playlist-to-mp3">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Make MP3s">
+    <meta property="og:title" content="Playlist to MP3 Converter - Spotify, Apple Music | Make MP3s">
+    <meta property="og:description" content="Convert Spotify, Apple Music and YouTube playlists to MP3 files with a desktop app for Windows and Mac. Download a whole playlist at once. Try Make MP3s free.">
+    <meta property="og:url" content="https://makemp3s.com/playlist-to-mp3">
+    <meta property="og:image" content="https://makemp3s.com/images/app-screenshot.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Playlist to MP3 Converter - Spotify, Apple Music | Make MP3s">
+    <meta name="twitter:description" content="Convert Spotify, Apple Music and YouTube playlists to MP3 files with a desktop app for Windows and Mac. Download a whole playlist at once. Try Make MP3s free.">
+    <meta name="twitter:image" content="https://makemp3s.com/images/app-screenshot.png">
+
+    <!-- Structured data -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Make MP3s",
+  "alternateName": [
+    "MakeMP3s",
+    "MakeMP3",
+    "Make MP3"
+  ],
+  "applicationCategory": "MultimediaApplication",
+  "operatingSystem": "Windows 10+, macOS (Apple Silicon)",
+  "description": "Desktop app that turns Spotify, Apple Music, YouTube and YouTube Music playlists into MP3 files with album art, tags and metadata. Currently in Beta.",
+  "url": "https://makemp3s.com/playlist-to-mp3",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Prodwest",
+    "url": "https://makemp3s.com"
+  }
+}
+    </script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Make MP3s?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A desktop app that turns your playlists into MP3 files you can keep."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which services does it work with?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Spotify, Apple Music, YouTube and YouTube Music playlists."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert a Spotify playlist to MP3?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Copy the playlist link in Spotify, paste it into Make MP3s, choose a folder and an export setting, and start the download. The whole playlist is converted to MP3 files."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does my playlist need to be public?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Set the playlist to public before you copy its link (recommended), so Make MP3s can read it. On YouTube, unlisted playlists work too."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What quality are the files?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "MP3 files, with export settings of 128, 192, 256 or 320 kbps."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work on my phone or MP3 player?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The app runs on a computer. Your music files then transfer to Android, iPhone and MP3 players. See the device guide in the FAQ."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is there a free version?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. A free trial of every feature (24 hours or 100 songs, whichever comes first), then a free tier with 10 downloads a day."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do I need to run it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Windows 10 or newer, or a Mac with Apple Silicon (M1 or newer). Intel Macs and Linux aren't supported yet."
+      }
+    }
+  ]
+}
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+
+        /* ============================================================
+           STYLE REFERENCE — Make MP3s Design System
+           ============================================================
+
+           FONTS
+           ─────
+           Body font:     Helvetica, 'Segoe UI', Arial, sans-serif
+           Bold/headings: 'Helvetica Neue Bold' (loaded via @font-face below)
+           Applied to:    h1–h6, strong, b, and all .btn elements explicitly
+
+           FONT SIZES
+           ──────────
+           Page title:        1.6rem  (font-weight: 400)
+           Section heading:   1.15–1.4rem
+           Body/paragraph:    0.95–1rem, color #b0b0b0, line-height 1.8
+           Small/label:       0.75–0.85rem, uppercase, letter-spacing 0.1em
+           Nav links:         1rem, color #b0b0b0
+           Footer:            0.9rem, color #808080
+
+           COLORS
+           ──────
+           Background dark:   #1a1a1a
+           Card background:   rgba(42, 42, 42, 0.6)
+           Card border:       #444 or rgba(255,255,255,0.08)
+           Gold (premium):    #D4AF37  →  hover: #F4D03F
+           Blue (primary):    #007AFF  →  hover: #0051D5 or #0066dd
+           Grey (secondary):  #b0b0b0  →  hover: #c8c8c8
+           Red (cancel):      #ff4444  →  hover: #ff6666
+           White text:        #ffffff
+           Muted text:        #b0b0b0
+           Subtle text:       #808080
+           Very subtle:       #606060
+
+           BUTTONS  (class combos to use)
+           ────────────────────────────────
+           Gold solid:        class="btn btn-gold"       → bg #D4AF37, text #1a1a1a
+           Blue solid:        class="btn btn-blue"       → bg #007AFF, text #ffffff
+           Grey solid:        class="btn btn-grey"       → bg #b0b0b0, text #1a1a1a
+           White solid:       class="btn btn-white"      → bg #ffffff, text #1a1a1a
+           Red solid:         class="btn btn-red"        → bg #ff4444, text #1a1a1a
+           Grey outline:      class="btn btn-outline"    → transparent, border #555, text #b0b0b0
+
+           Button sizing (action area):
+             width: 100%, max-width: 320px, margin: auto, min-height: 48px
+           Button sizing (inline/hero):
+             display: inline-block, padding: 0.75rem 2rem
+
+           CARDS
+           ─────
+           Standard card:     background rgba(42,42,42,0.6), border 1px solid #444, border-radius 14px, padding 1.75rem
+           Upgrade card:      gradient from rgba(212,175,55,0.08) to rgba(42,42,42,0.4), border rgba(212,175,55,0.2)
+           Info callout:      background rgba(0,122,255,0.08), border rgba(0,122,255,0.2), border-radius 10px
+           Warning callout:   background rgba(212,175,55,0.08), border rgba(212,175,55,0.2), border-radius 10px
+
+           BORDERS & RADIUS
+           ─────────────────
+           Cards:             border-radius: 14px
+           Buttons:           border-radius: 25px
+           Dropdown:          border-radius: 14px
+           Modal:             border-radius: 15px
+           Inputs:            border-radius: 8px
+
+           SPACING
+           ───────
+           Section gap:       margin-bottom: 1rem (between cards)
+           Content padding:   padding: 2rem 3rem 6rem
+           Nav padding:       padding: 1rem 3rem
+
+           ICONS (Font Awesome 6)
+           ──────────────────────
+           Profile:           fas fa-user
+           Crown:             fas fa-crown
+           Settings:          fas fa-user-cog
+           Download:          fas fa-download
+           Sign out:          fas fa-sign-out-alt
+           Cancel:            fas fa-times-circle
+           Gold star:         fas fa-star
+           Infinity:          fas fa-infinity
+           Instagram:         fab fa-instagram
+           YouTube:           fab fa-youtube
+           Google:            fab fa-google
+
+           BACKGROUNDS
+           ────────────
+           Index page:        images/paper-bg.jpg  (on body only, fixed)
+           Other pages:       images/boombox.jpg   (on body only, fixed)
+           Premium section:   images/prem-bg.png   (via ::before at 0.75 opacity)
+           Mobile fix:        body::before with position:fixed (iOS Safari workaround)
+
+           DROPDOWN STATES
+           ───────────────
+           Logged out:        Click profile → opens auth modal (Google + email/password)
+           Logged in:         Click profile → shows email, plan, Account Settings (gold), Sign Out (grey)
+           Plan labels:       'Free' (#ffffff), 'Monthly' (#D4AF37), 'Lifetime' (#D4AF37)
+
+        ============================================================ */
+
+        @font-face {
+            font-family: 'Helvetica Neue Bold';
+            src: url('fonts/HelveticaNeue Bold.ttf') format('truetype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            background-color: #1a1a1a;
+            background-image: url('images/paper-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+        }
+
+        strong, b {
+            font-family: 'Helvetica Neue Bold', Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* ── Navigation ─────────────────────────────────────────── */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 3rem;
+        }
+
+        .logo { width: 40px; height: 40px; }
+        .logo-link { display: flex; align-items: center; }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+
+        .nav-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover { color: #ffffff; transform: translateY(-1px); }
+
+        .nav-icons { display: flex; gap: 1.5rem; align-items: center; }
+
+        .nav-icons a {
+            color: #b0b0b0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-icons a:hover { color: #ffffff; transform: translateY(-2px); }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: #b0b0b0;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger:hover span { background-color: #ffffff; }
+
+        /* ── Dropdown ───────────────────────────────────────────── */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 42px;
+            background-color: #222222;
+            width: 280px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.6);
+            border-radius: 14px;
+            z-index: 1000;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem;
+        }
+
+        .dropdown-menu.show { display: block; }
+
+        .dropdown-header {
+            padding: 0.85rem 1rem;
+            margin-bottom: 0.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .dropdown-plan {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #606060;
+            margin-bottom: 0.25rem;
+        }
+
+        .dropdown-email {
+            font-size: 0.9rem;
+            color: #ffffff;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .dropdown-sub { font-size: 0.78rem; margin-top: 0.2rem; }
+
+        .dropdown-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            height: 44px;
+            border-radius: 25px;
+            font-size: 0.88rem !important;
+            font-weight: bold;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif !important;
+            cursor: pointer;
+            border: none;
+            transition: all 0.25s ease;
+            text-decoration: none;
+            margin-bottom: 0.4rem;
+            text-align: center;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            appearance: none;
+            line-height: 1;
+        }
+
+        .dropdown-btn:last-child { margin-bottom: 0; }
+
+        .dropdown-btn-gold { background-color: #D4AF37; color: #1a1a1a !important; }
+        .dropdown-btn-gold:hover { background-color: #F4D03F; transform: translateY(-1px); box-shadow: 0 4px 10px rgba(212,175,55,0.35); }
+
+        .dropdown-btn-grey { background-color: #b0b0b0; color: #1a1a1a !important; }
+        .dropdown-btn-grey:hover { background-color: #c8c8c8; transform: translateY(-1px); }
+
+        .dropdown-item {
+            display: block;
+            padding: 12px 15px;
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: background 0.2s;
+            border-bottom: 1px solid #3a3a3a;
+        }
+
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background-color: #3a3a3a; color: #fff; }
+
+        /* ── Buttons ────────────────────────────────────────────── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            padding: 0.75rem 2rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        /* Action area buttons (full-width, centered) */
+        .btn-action {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 0.65rem;
+            min-height: 48px;
+        }
+
+        .btn-gold { background-color: #D4AF37; color: #1a1a1a; }
+        .btn-gold:hover { background-color: #F4D03F; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(212,175,55,0.4); }
+
+        .btn-blue { background-color: #007AFF; color: #ffffff; }
+        .btn-blue:hover { background-color: #0051D5; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,122,255,0.3); }
+
+        .btn-grey { background-color: #b0b0b0; color: #1a1a1a; }
+        .btn-grey:hover { background-color: #c8c8c8; transform: translateY(-2px); }
+
+        .btn-white { background-color: #ffffff; color: #1a1a1a; }
+        .btn-white:hover { background-color: #e0e0e0; transform: translateY(-2px); }
+
+        .btn-red { background-color: #ff4444; color: #1a1a1a; }
+        .btn-red:hover { background-color: #ff6666; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255,68,68,0.4); }
+
+        .btn-outline { background-color: transparent; color: #b0b0b0; border: 1.5px solid #555; }
+        .btn-outline:hover { border-color: #ffffff; color: #ffffff; transform: translateY(-2px); }
+
+        /* ── Cards ──────────────────────────────────────────────── */
+        .card {
+            background-color: rgba(42, 42, 42, 0.6);
+            border: 1px solid #444;
+            border-radius: 14px;
+            padding: 1.75rem;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Auth Modal ─────────────────────────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-box {
+            background-color: #1a1a1a;
+            padding: 2.5rem;
+            border-radius: 15px;
+            border: 1px solid #444;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: #b0b0b0;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        .google-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .google-btn:hover { transform: translateY(-2px); background-color: #f0f0f0; }
+
+        .modal-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 1rem 0;
+            color: #555;
+            font-size: 0.8rem;
+        }
+
+        .modal-divider::before, .modal-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #3a3a3a;
+        }
+
+        .modal-toggle {
+            background: none;
+            border: none;
+            color: #808080;
+            font-size: 0.82rem;
+            cursor: pointer;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            transition: color 0.2s;
+            padding: 0;
+            width: 100%;
+        }
+
+        .modal-toggle:hover { color: #cccccc; }
+
+        .modal-email-form { display: none; margin-top: 0.75rem; text-align: left; }
+        .modal-email-form.visible { display: block; }
+
+        .modal-form-group { margin-bottom: 0.75rem; }
+
+        .modal-form-group label {
+            display: block;
+            font-size: 0.78rem;
+            color: #a0a0a0;
+            margin-bottom: 0.3rem;
+        }
+
+        .modal-form-group input {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #ffffff;
+            font-size: 0.93rem;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+        }
+
+        .modal-form-group input:focus { border-color: #007AFF; }
+        .modal-form-group input::placeholder { color: #555; }
+
+        .modal-email-btn {
+            background-color: #007AFF;
+            color: #ffffff;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 25px;
+            font-size: 0.93rem;
+            cursor: pointer;
+            width: 100%;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 0.25rem;
+        }
+
+        .modal-email-btn:hover { background-color: #0066dd; transform: translateY(-2px); }
+        .modal-email-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        .modal-error {
+            font-size: 0.8rem;
+            color: #ff6666;
+            margin-top: 0.5rem;
+            text-align: left;
+            min-height: 1rem;
+        }
+
+        .modal-switch-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.75rem;
+            font-size: 0.78rem;
+            color: #606060;
+        }
+
+        .modal-switch-row button {
+            background: none;
+            border: none;
+            color: #808080;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+        }
+
+        .modal-switch-row button:hover { color: #cccccc; }
+
+        .modal-forgot {
+            background: none;
+            border: none;
+            color: #606060;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: Helvetica, 'Segoe UI', Arial, sans-serif;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            padding: 0;
+            display: block;
+            text-align: right;
+            margin-top: -0.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-forgot:hover { color: #b0b0b0; }
+
+        /* ── Footer ─────────────────────────────────────────────── */
+        footer { background-color: transparent; padding: 1rem 3rem; }
+
+        .footer-bottom {
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #808080;
+            font-size: 0.9rem;
+        }
+
+        /* ── Page content area ──────────────────────────────────── */
+        .content-wrapper {
+            flex: 1;
+            padding: 3rem 3rem 6rem;
+            max-width: 860px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* ── Responsive ─────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            nav { padding: 1rem; position: relative; }
+            .hamburger { position: absolute; left: 70px; display: flex; }
+            .hamburger span { background-color: #b0b0b0; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px; left: 0; right: 0;
+                background-color: #1a1a1a;
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                z-index: 1000;
+            }
+            .nav-links.active { display: flex; }
+            .nav-icons { gap: 1rem; }
+            .content-wrapper { padding: 2rem 1.25rem 5rem; }
+        }
+
+        /* iOS Safari fixed background fix */
+        @media (max-width: 768px) {
+            body { background-image: none; }
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0; left: 0;
+                width: 100%; height: 100%;
+                background-image: url('images/paper-bg.jpg');
+                background-size: cover;
+                background-position: center;
+                z-index: -1;
+            }
+        }
+
+
+        /* ── SEO page layout (matches Learn More) ───────────────── */
+        .content-wrapper {
+            flex: 1;
+            max-width: 860px;
+            margin: 1.5rem auto;
+            padding: 3rem 4rem 4rem;
+            width: 100%;
+            background-color: rgba(35, 35, 35, 0.45);
+            border: 1px solid #333;
+            border-radius: 16px;
+        }
+
+        .page-header {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .page-header h1 { text-align: center; font-size: 2.1rem; font-weight: 400; line-height: 1.25; margin-bottom: 0.75rem; }
+        .page-header p { color: #b0b0b0; font-size: 1.05rem; line-height: 1.8; }
+
+        .cta-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 0.9rem; margin-top: 1.5rem; }
+        .page-header > p { text-align: center; }
+        .page-header p.microcopy { font-size: 0.85rem; color: #909090; margin-top: 0.75rem; }
+
+        .dl-slot { display: inline-flex; align-items: center; min-height: 3.1rem; }
+
+        .mobile-dl-note {
+            color: #b0b0b0; font-size: 0.82rem; margin-top: 0.4rem; opacity: 0; max-height: 0;
+            overflow: hidden; transition: opacity 0.35s ease; line-height: 1.5;
+        }
+        .mobile-dl-note.visible { opacity: 1; max-height: 3.4rem; }
+
+        .compat-box {
+            margin-top: 1.5rem;
+            background-color: rgba(0,122,255,0.07);
+            border: 1px solid rgba(0,122,255,0.2);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            font-size: 0.92rem;
+            color: #b0b0b0;
+            line-height: 1.75;
+        }
+        .compat-box strong { color: #ffffff; }
+        .compat-box ul { list-style: none; margin-top: 0.4rem; }
+        .compat-box li { margin-bottom: 0.2rem; }
+
+        .section {
+            margin-bottom: 2.5rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+        .section h2 { font-size: 1.3rem; font-weight: 400; margin-bottom: 1rem; scroll-margin-top: 1.5rem; }
+        .section h3 { font-size: 1.02rem; font-weight: 400; margin-bottom: 0.4rem; color: #ffffff; }
+
+        .section p, .section li { color: #b0b0b0; font-size: 0.97rem; line-height: 1.85; }
+        .section p { margin-bottom: 0.85rem; }
+        .section p:last-child { margin-bottom: 0; }
+
+        .content-wrapper p a:not(.btn), .content-wrapper li a:not(.btn) {
+            color: #6db3ff; text-decoration: none; text-underline-offset: 3px;
+        }
+        .content-wrapper p a:not(.btn):hover, .content-wrapper li a:not(.btn):hover { color: #ffffff; text-decoration: underline; }
+
+        .feature-logo-row { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+        .feature-logo { height: 2.8rem; width: auto; margin-left: -0.4rem; }
+
+        .steps { list-style: none; margin: 0.75rem 0; counter-reset: step-counter; }
+        .steps li { counter-increment: step-counter; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 0.6rem; }
+        .steps li::before {
+            content: counter(step-counter);
+            background-color: rgba(255,255,255,0.08); color: #ffffff; font-weight: bold; font-size: 0.78rem;
+            min-width: 24px; height: 24px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin-top: 4px; flex-shrink: 0;
+        }
+        .steps li strong { color: #ffffff; }
+
+        .bullet-list { list-style: none; margin: 0.75rem 0; }
+        .bullet-list li { display: flex; align-items: flex-start; gap: 0.75rem; margin-bottom: 0.5rem; }
+        .bullet-list li::before {
+            content: ''; width: 5px; height: 5px; background-color: #D4AF37;
+            border-radius: 50%; margin-top: 11px; flex-shrink: 0;
+        }
+        .bullet-list li strong { color: #ffffff; }
+
+        .note { color: #808080 !important; font-size: 0.88rem !important; }
+
+        .premium-badge {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            background-color: rgba(212,175,55,0.12); border: 1px solid rgba(212,175,55,0.3);
+            color: #D4AF37; font-size: 0.72rem; font-weight: bold; letter-spacing: 0.06em;
+            text-transform: uppercase; padding: 0.2rem 0.65rem; border-radius: 20px; vertical-align: middle;
+        }
+
+        .shot { width: 100%; max-width: 330px; height: auto; border-radius: 8px; margin: 0.75rem 0; display: block; }
+
+        .toc { list-style: none; margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .toc a {
+            display: inline-block; padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem;
+            border: 1px solid #555; color: #b0b0b0; text-decoration: none; transition: all 0.25s ease;
+        }
+        .toc a:hover { border-color: #ffffff; color: #ffffff; }
+
+        .faq-item { margin-bottom: 1.5rem; }
+        .faq-item:last-child { margin-bottom: 0; }
+        .faq-item ul { list-style: none; margin: 0.4rem 0 0; }
+        .faq-item ul li { display: flex; gap: 0.75rem; margin-bottom: 0.3rem; }
+        .faq-item ul li::before {
+            content: ''; width: 5px; height: 5px; background-color: #D4AF37;
+            border-radius: 50%; margin-top: 11px; flex-shrink: 0;
+        }
+
+        .legal-note { color: #707070 !important; font-size: 0.82rem !important; line-height: 1.7 !important; }
+
+        .cta-box {
+            text-align: center; margin-top: 2rem; padding: 2rem;
+            background: linear-gradient(135deg, rgba(212,175,55,0.08), rgba(42,42,42,0.4));
+            border: 1px solid rgba(212,175,55,0.2); border-radius: 14px;
+        }
+        .cta-box p { color: #b0b0b0; margin-bottom: 1rem; }
+
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: center; }
+        .footer-links a { color: #808080; text-decoration: none; }
+        .footer-links a:hover { color: #ffffff; }
+
+
+        /* ── New sections ───────────────────────────────────────── */
+        .app-shot {
+            display: block; width: 100%; max-width: 360px; height: auto;
+            aspect-ratio: 1 / 1; object-fit: contain; margin: 1.75rem auto 0;
+        }
+
+        .phone-note {
+            display: none; margin-top: 1.25rem; padding: 1rem 1.25rem;
+            background-color: rgba(212,175,55,0.07); border: 1px solid rgba(212,175,55,0.22);
+            border-radius: 10px; color: #b0b0b0; font-size: 0.92rem; line-height: 1.7;
+        }
+        .phone-note strong { color: #ffffff; }
+        .page-header .phone-note p { font-size: 0.92rem; margin: 0.3rem 0 0.9rem; }
+        @media (max-width: 768px) { .phone-note { display: block; } }
+
+        .quality-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin: 0.75rem 0 1rem; }
+        .quality-item {
+            background-color: rgba(42,42,42,0.6); border: 1px solid #3a3a3a; border-radius: 8px;
+            padding: 0.7rem 1rem; font-size: 0.9rem; color: #b0b0b0; line-height: 1.5;
+        }
+        .quality-item strong { color: #ffffff; display: block; margin-bottom: 0.1rem; }
+
+        .video-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; }
+        .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+        @media (max-width: 768px) {
+            .content-wrapper { padding: 2rem 1.25rem 3rem; margin: 1rem 0.75rem; width: auto; }
+            .page-header h1 { font-size: 1.65rem; }
+            .footer-links { gap: 0.75rem 1rem; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="/" class="logo-link" aria-label="Make MP3s home"><img src="images/logo.png" alt="Make MP3s home" class="logo" width="40" height="40"></a>
+        <div class="hamburger" onclick="this.nextElementSibling.classList.toggle('active')">
+            <span></span><span></span><span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/downloads">Downloads</a></li>
+            <li><a href="/donate">Donate</a></li>
+            <li><a href="/feedback">Feedback & Contact</a></li>
+        </ul>
+        <div class="nav-icons">
+            <div class="account-container" style="position: relative; display: inline-block;">
+                <a href="javascript:void(0)" onclick="toggleDropdown()">
+                    <i class="fas fa-user"></i>
+                </a>
+                <div id="user-dropdown" class="dropdown-menu"></div>
+            </div>
+            <a href="https://www.instagram.com/makemp3s/" aria-label="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@MakeMP3s" aria-label="YouTube" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </nav>
+
+    <div class="content-wrapper">
+
+        <!-- Header -->
+        <div class="page-header">
+            <h1>Playlist to MP3 <br>Turn your playlists into files you keep</h1>
+            <p>Make MP3s is a desktop app for Windows and Mac that works as a playlist converter and downloader. It turns your Spotify, Apple Music, YouTube and YouTube Music playlists into MP3 files, a whole playlist at once, ready for your computer, phone, USB drive, iPod or MP3 player.</p>
+            <div class="cta-row">
+                <span class="dl-slot" id="hero-dl-btn"></span>
+                <a href="#how-it-works" class="btn btn-outline">See how it works</a>
+            </div>
+            <p class="microcopy">No card or email needed. Windows 10+ and Mac (Apple Silicon). Currently in Beta.</p>
+
+            <!-- Shown on phones only (see CSS). Lets mobile visitors send the page to their computer. -->
+            <div class="phone-note">
+                <strong>Reading this on your phone?</strong>
+                <p>Make MP3s runs on Windows and Mac, so you'll need a computer to install it. Send yourself the link and open it there.</p>
+                <a href="mailto:?subject=Make%20MP3s%20for%20my%20computer&amp;body=Open%20this%20on%20your%20computer%20to%20download%20Make%20MP3s.%20https%3A%2F%2Fmakemp3s.com%2Fplaylist-to-mp3" class="btn btn-outline" id="send-link-btn"><i class="fas fa-paper-plane"></i> Send myself the link</a>
+            </div>
+
+            <div class="compat-box">
+                <strong>Compatibility</strong>
+                <ul>
+                    <li>Works on Windows 10 or newer, and on Macs with Apple Silicon (M1 or newer).</li>
+                    <li>Intel Macs and Linux aren't supported yet. We're working on wider support.</li>
+                </ul>
+            </div>
+
+            <img class="app-shot" src="images/app-screenshot.png" alt="Make MP3s desktop app converting a playlist to MP3 files" width="360" height="360">
+        </div>
+
+        <!-- Why files -->
+        <div class="section">
+            <h2>Why keep your music as files?</h2>
+            <p>Streaming is great for finding music, but your playlists live inside someone else's app. Songs get pulled, catalogs change and prices go up. Files stay on your drive until you delete them, and they play offline on whatever player you own.</p>
+        </div>
+
+        <!-- How it works -->
+        <div class="section" id="how-it-works-wrap">
+            <h2 id="how-it-works">How it works</h2>
+            <ol class="steps">
+                <li><div>Open your playlist on Spotify, Apple Music, YouTube or YouTube Music and copy its link.</div></li>
+                <li><div>Paste the link into Make MP3s, choose a folder, and pick an export setting up to 320 kbps.</div></li>
+                <li><div>Make MP3s reads your playlist, finds matching audio online and converts each song to an MP3 file with album art, tags and metadata.</div></li>
+            </ol>
+        </div>
+
+        <!-- ============================================================
+             WORKS WITH (platform blocks)
+             No links yet. Each block will link to its own page later:
+             Spotify -> /spotify-playlist-to-mp3
+             Apple Music -> /apple-music-playlist-to-mp3
+             YouTube Music -> /youtube-music-playlist-to-mp3
+             YouTube -> /youtube-playlist-to-mp3 (decision pending)
+             See FUTURE LINK MAP in template.html.
+             Copy-link steps and the public-playlist rule were confirmed
+             by the site owner (Nov 2026).
+             ============================================================ -->
+        <div class="section" id="works-with">
+            <h2>Convert playlists from Spotify, Apple Music and YouTube</h2>
+            <p>Make MP3s works as a Spotify to MP3 converter, and the same goes for Apple Music, YouTube and YouTube Music. Whichever service you use, the steps are the same. Copy the playlist link, paste it into the app and pick a folder.</p>
+
+            <div class="faq-item" id="spotify">
+                <h3>Spotify playlist to MP3</h3>
+                <p>Open the playlist in Spotify, click the three dots, choose Share, then Copy link to playlist. Make sure the playlist is set to public so Make MP3s can read it. Paste the link into Make MP3s and download the whole Spotify playlist as MP3 files in one go.</p>
+            </div>
+            <div class="faq-item" id="apple-music">
+                <h3>Apple Music playlist to MP3</h3>
+                <p>Open the playlist in Apple Music, click the three dots, choose Share, then Copy Link. Make sure the playlist is shared publicly so the link works. Paste it into Make MP3s to convert the playlist to MP3 files.</p>
+            </div>
+            <div class="faq-item" id="youtube-music">
+                <h3>YouTube Music playlist to MP3</h3>
+                <p>Open the playlist in YouTube Music, choose Share, then Copy link. Check that the playlist's privacy is set to public or unlisted so the link opens for anyone. Paste it into Make MP3s and pick your export setting.</p>
+            </div>
+            <div class="faq-item" id="youtube">
+                <h3>YouTube playlist to MP3</h3>
+                <p>Open the playlist on YouTube, choose Share, then Copy. Set the playlist to public or unlisted first, since private playlists can't be opened from a link. Paste the link into Make MP3s to turn the videos into MP3 files.</p>
+                <div class="cta-row" style="justify-content:flex-start;">
+                <span class="dl-slot" id="works-dl-btn"></span>
+            </div>
+        </div>
+        </div>
+
+        <!-- ============================================================
+             DEMO VIDEO PLACEHOLDER
+             When the video is ready, replace this comment with the block below
+             (put it right after the How it works steps), then add VideoObject
+             structured data and use the keyword in the YouTube title.
+
+             <div class="section">
+                 <h2>Watch it work</h2>
+                 <div class="video-wrap">
+                     <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+                             title="Make MP3s demo - playlist to MP3"
+                             loading="lazy" allowfullscreen
+                             allow="accelerometer; encrypted-media; picture-in-picture"></iframe>
+                 </div>
+             </div>
+             ============================================================ -->
+
+        <!-- What's in each file -->
+        <div class="section">
+            <h2>What you get in each file</h2>
+            <p>Every song is saved as an MP3 with its album art, tags and metadata, so it shows up properly in your music app or on your player.</p>
+            <ul class="bullet-list">
+                <li><div>Cover art can be turned on or off in Settings.</div></li>
+                <li><div>If a playlist includes music videos, Make MP3s can look for audio-only versions, so skits and intros don't interrupt your listening.</div></li>
+                <li><div>When a track has both versions, you can choose whether to prefer the explicit or the clean one.</div></li>
+                <li><div>You pick the folder, and you get a summary after each batch with success rates and any errors.</div></li>
+            </ul>
+        </div>
+
+        <!-- Quality -->
+        <div class="section">
+            <h2 id="quality">Which quality setting should you pick?</h2>
+            <p>Make MP3s can export at 128, 192, 256 or 320 kbps. Here's roughly what a 4-minute song weighs at each setting.</p>
+            <div class="quality-grid">
+                <div class="quality-item"><strong>128 kbps</strong>Quick. About 3.8 MB.</div>
+                <div class="quality-item"><strong>192 kbps</strong>Standard. About 5.8 MB.</div>
+                <div class="quality-item"><strong>256 kbps</strong>HQ. About 7.7 MB.</div>
+                <div class="quality-item"><strong>320 kbps</strong>HQ Max. About 9.6 MB, the highest setting MP3 offers.</div>
+            </div>
+            <p>A higher setting can't make a lower-quality source sound better, so the original audio still sets the ceiling. If you're not sure, 256 or 320 is a safe choice for most listening. Pick 128 or 192 when space on a small player matters more. You can change it any time, and every option is included in the free tier. You can see <a href="/learn-more">every audio setting explained</a> on our Learn More page.</p>
+        </div>
+
+        <!-- Sync Library (most space) -->
+        <div class="section">
+            <div class="feature-logo-row">
+                <img class="feature-logo" src="images/sync_library.png" alt="Sync Library in Make MP3s, which keeps a playlist folder up to date" height="45">
+                <span class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
+            </div>
+            <h2>Keep your music up to date with one click</h2>
+            <p>Playlists keep growing, and the folder on your computer usually doesn't. With Sync Library, you add a playlist once, pick a folder, and click Sync whenever the playlist has new songs. Make MP3s only downloads what you don't already have.</p>
+            <ol class="steps">
+                <li><div>Open Sync Library in Make MP3s and click <strong>Add</strong>.</div></li>
+                <li><div>Paste your playlist link and choose a folder. It can be on your computer, or on a plugged-in device like an SSD, phone or MP3 player.</div></li>
+                <li><div>Click <strong>Sync</strong> to download the songs. Whenever the playlist grows, click <strong>Sync</strong> again to pick up the new ones.</div></li>
+            </ol>
+            <img class="shot" src="images/paste-folder-but.png" alt="Adding a playlist to Sync Library in Make MP3s by pasting its link and choosing a folder" loading="lazy" width="310">
+            <p>Syncing to an iPhone, iPad or iPod? Point Sync Library at a folder on your computer, then add that folder to iTunes or Apple Music. You'll find the <a href="/learn-more">full Sync Library and iPhone walkthrough</a> on our Learn More page.</p>
+            <div class="cta-row" style="justify-content:flex-start;">
+                <span class="dl-slot" id="sync-dl-btn"></span>
+            </div>
+        </div>
+
+        <!-- Edit in batches -->
+        <div class="section">
+            <h2>Edit your music in batches</h2>
+            <p><span class="premium-badge"><i class="fas fa-crown"></i> Premium</span></p>
+            <p>Edit Music works on songs you've already downloaded. Pick a folder or a few files, and it can even out the volume and trim dead air from the start and end of tracks across the whole batch. We explain <a href="/learn-more">how Edit Music works</a> in more detail on our Learn More page.</p>
+        </div>
+
+        <!-- Devices -->
+        <div class="section">
+            <h2>Getting your music onto your phone or MP3 player</h2>
+            <ul class="bullet-list">
+                <li><div>On Android, drag and drop the files.</div></li>
+                <li><div>On iPhone, transfer them with iTunes, or with the Music app on a Mac.</div></li>
+                <li><div>For MP3 players and USB drives, sync straight to a folder on the device.</div></li>
+            </ul>
+            <p>There's more detail in our <a href="/faq#devices">device guide</a>.</p>
+        </div>
+
+        <!-- Ways to use your MP3s -->
+        <div class="section" id="ways-to-use">
+            <h2>Ways people use their MP3 files</h2>
+            <p>Once a playlist is saved as MP3 files, it's yours to use anywhere.</p>
+            <ul class="bullet-list">
+                <li><div>Listen offline on a flight, a hike or anywhere with a weak signal.</div></li>
+                <li><div>Copy a playlist to a USB drive and play it in the car.</div></li>
+                <li><div>Load tracks into DJ software or a video editor.</div></li>
+                <li><div>Fill a small MP3 player for the gym or a run, without your phone.</div></li>
+                <li><div>Keep a backup of playlists you've spent years building.</div></li>
+                <li><div>Bring an old iPod or MP3 player back to life.</div></li>
+            </ul>
+        </div>
+
+        <!-- What to expect -->
+        <div class="section">
+            <h2>What to expect</h2>
+            <p>Make MP3s is in Beta, so you may run into rough edges. Matching isn't perfect either. We search for audio that matches each track in your playlist, and now and then a song comes out wrong or can't be found. If that happens, tell us which song and which playlist and we'll look into it. We're working on improving matching.</p>
+            <ul class="bullet-list">
+                <li><div>It runs on Windows 10 or newer and on Macs with Apple Silicon (M1 or newer). Intel Macs and Linux aren't supported yet.</div></li>
+                <li><div>After your trial, the free tier allows 10 downloads a day, and the count resets at 12 am.</div></li>
+                <li><div>The free trial is once per device.</div></li>
+            </ul>
+        </div>
+
+        <!-- Safe to install -->
+        <div class="section">
+            <h2>Is Make MP3s safe to install?</h2>
+            <p>The Windows installer is code-signed with a certificate from Certum, and the Mac version is signed using Apple's developer tools. Because Make MP3s is a newer app, Windows may still show a SmartScreen warning the first time you run it. If it does, click More info, then Run anyway.</p>
+            <p>We don't track what you download or sell your data. The details are in our <a href="https://makemp3s.com/legal">Privacy Policy</a>.</p>
+        </div>
+
+        <!-- Free / Premium -->
+        <div class="section">
+            <h2>What's free and what's Premium</h2>
+            <ul class="bullet-list">
+                <li><div>Try every feature free for your first 24 hours or 100 songs, whichever comes first. No card or email needed.</div></li>
+                <li><div>After the trial, the free tier gives you 10 downloads a day, along with audio quality options, cover art, silence trimming, download stats and the explicit-content option.</div></li>
+                <li><div>Premium unlocks unlimited downloads, Sync Library, Edit Music, Auto Volume and Square Crop Cover Art. <a href="https://makemp3s.com/premium">See pricing</a>.</div></li>
+            </ul>
+            <p>Refunds are covered in our <a href="https://makemp3s.com/refund-policy">refund policy</a>.</p>
+            <div class="cta-row" style="justify-content:flex-start;">
+                <a href="/premium" class="btn btn-gold" data-loc="premium-section"><i class="fas fa-crown"></i> Get Premium Edition</a>
+            </div>
+            <p class="legal-note" style="margin-top:0.9rem;">Use Make MP3s only with music you own or have the right to download. See our <a href="https://makemp3s.com/legal">Terms</a>.</p>
+        </div>
+
+        <!-- Who makes it -->
+        <div class="section">
+            <h2>Who makes Make MP3s</h2>
+            <p>Make MP3s is made by Prodwest in Ontario, Canada. You can read more on our <a href="/ourstory">Our Story page</a>, or send us feedback any time on the <a href="/feedback">Feedback page</a>.</p>
+        </div>
+
+        <!-- Artists -->
+        <div class="section">
+            <h2>Support the artists you love</h2>
+            <!-- TODO: link to a "Support artists" page when it exists. -->
+            <p>If an artist's music means something to you, buy an album or some merch and catch a show when you can.</p>
+        </div>
+
+        <!-- Quick answers -->
+        <div class="section">
+            <h2>Quick answers</h2>
+            <div class="faq-item">
+                <h3>What is Make MP3s?</h3>
+                <p>A desktop app that turns your playlists into MP3 files you can keep.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Which services does it work with?</h3>
+                <p>Spotify, Apple Music, YouTube and YouTube Music playlists.</p>
+            </div>
+            <div class="faq-item">
+                <h3>How do I convert a Spotify playlist to MP3?</h3>
+                <p>Copy the playlist link in Spotify, paste it into Make MP3s, choose a folder and an export setting, and start the download. The whole playlist is converted to MP3 files.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Does my playlist need to be public?</h3>
+                <p>Yes. Set the playlist to public before you copy its link (recommended), so Make MP3s can read it. On YouTube, unlisted playlists work too.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What quality are the files?</h3>
+                <p>MP3 files, with export settings of 128, 192, 256 or 320 kbps. <a href="#quality">See which setting to pick</a>.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Does it work on my phone or MP3 player?</h3>
+                <p>The app runs on a computer. Your music files then transfer to Android, iPhone and MP3 players. See the <a href="/faq#devices">device guide in the FAQ</a>.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Is there a free version?</h3>
+                <p>Yes. A free trial of every feature (24 hours or 100 songs, whichever comes first), then a free tier with 10 downloads a day.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What do I need to run it?</h3>
+                <p>Windows 10 or newer, or a Mac with Apple Silicon (M1 or newer). Intel Macs and Linux aren't supported yet.</p>
+            </div>
+            <p style="margin-top:1.25rem;">More questions? <a href="/faq">See the full FAQ</a>.</p>
+            <div class="cta-row" style="justify-content:flex-start;">
+                <span class="dl-slot" id="bottom-dl-btn"></span>
+            </div>
+        </div>
+
+        <!-- Footer block of the page -->
+        <div class="section">
+            <p class="legal-note">Make MP3s is not affiliated with, endorsed by or sponsored by Spotify, Apple Music, YouTube or YouTube Music. Use Make MP3s only with music you own or have the right to download. Read our <a href="https://makemp3s.com/legal">Terms and Privacy Policy</a>.</p>
+            <!-- CONFIRM: Terms and Privacy URLs (currently both point to the /legal page). -->
+            <p class="legal-note">Questions? Email <a href="mailto:makemp3smusic@gmail.com">makemp3smusic@gmail.com</a> or ask on the <a href="/feedback">Feedback page</a>.</p>
+        </div>
+
+    </div>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-box">
+            <span class="close-btn" onclick="closeAuthModal()">&times;</span>
+            <h2 style="color:#fff; margin-bottom:0.4rem;" id="modal-title">Welcome Back</h2>
+            <p style="color:#b0b0b0; margin-bottom:1.5rem; font-size:0.9rem;" id="modal-subtitle">Sign in to access your Make MP3s account.</p>
+
+            <button onclick="handleGoogleLogin()" class="google-btn" id="modal-google-btn">
+                <i class="fab fa-google"></i> Continue with Google
+            </button>
+
+            <div class="modal-divider" id="modal-divider">or</div>
+
+            <button class="modal-toggle" id="modal-toggle" onclick="toggleEmailForm()">
+                Sign in with email & password
+            </button>
+
+            <div class="modal-email-form" id="modal-email-form">
+                <div class="modal-form-group">
+                    <label for="modal-email">Email</label>
+                    <input type="email" id="modal-email" placeholder="your@email.com" autocomplete="email">
+                </div>
+                <div class="modal-form-group">
+                    <label for="modal-password">Password</label>
+                    <input type="password" id="modal-password" placeholder="Password" autocomplete="current-password">
+                </div>
+                <button class="modal-forgot" id="modal-forgot" onclick="handleModalForgotPassword()">Forgot password?</button>
+                <div class="modal-form-group" id="modal-confirm-group" style="display:none;">
+                    <label for="modal-confirm">Confirm Password</label>
+                    <input type="password" id="modal-confirm" placeholder="Confirm password" autocomplete="new-password">
+                </div>
+                <div class="modal-error" id="modal-error"></div>
+                <button class="modal-email-btn" id="modal-email-btn" onclick="handleEmailAuth()">Sign In</button>
+                <div class="modal-switch-row">
+                    <span id="modal-switch-text">Don't have an account?</span>
+                    <button onclick="toggleAuthMode()">Create one</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-bottom">
+            <p>© <span id="footer-year">2026</span> Make MP3s | <a href="https://makemp3s.com/legal" style="color:#808080; text-decoration:none;">Terms and Policies</a></p>
+            <div class="footer-links">
+                <a href="/playlist-to-mp3">Playlist to MP3</a>
+                <a href="/faq">FAQ</a>
+                <a href="https://makemp3s.com/ourstory" style="font-weight:bold;">Our Story</a>
+            </div>
+        </div>
+    </footer>
+    <script>document.getElementById('footer-year').textContent = new Date().getFullYear();</script>
+
+    <!-- Phone visitors can send the page to their computer (share sheet, or email as a fallback). -->
+    <script>
+    (function() {
+        var btn = document.getElementById('send-link-btn');
+        if (!btn) return;
+        btn.addEventListener('click', function(e) {
+            if (navigator.share) {
+                e.preventDefault();
+                navigator.share({
+                    title: 'Make MP3s',
+                    text: 'Open this on your computer to download Make MP3s.',
+                    url: 'https://makemp3s.com/playlist-to-mp3'
+                }).catch(function() {});
+            }
+        });
+    })();
+    </script>
+
+    <!-- Smart download buttons: classic script so it runs immediately, without waiting for Firebase. -->
+    <script>
+    (function() {
+        const WIN_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Win-Installer.exe';
+        const MAC_URL = 'https://github.com/MakeMp3s/MakeMp3s.github.io/releases/latest/download/MakeMP3s-Mac-Installer.dmg';
+        const LABEL = '<i class="fas fa-download"></i> Try Make MP3s free';
+
+        function getOS() {
+            const ua = navigator.userAgent, platform = navigator.platform || '';
+            if (/android/i.test(ua) || /iphone|ipad|ipod/i.test(ua)) return 'mobile';
+            if (/win/i.test(platform) || /windows/i.test(ua)) return 'windows';
+            if (/mac/i.test(platform) || /macintosh/i.test(ua)) return 'mac';
+            if (/linux/i.test(platform)) return 'linux';
+            return 'unknown';
+        }
+
+        function build(id) {
+            const slot = document.getElementById(id);
+            if (!slot) return;
+            const os = getOS();
+            const isDesktop = os === 'windows' || os === 'mac';
+            const wrap = document.createElement('span');
+            wrap.className = 'dl-slot';
+            wrap.setAttribute('data-loc', id);
+            const el = document.createElement(isDesktop ? 'a' : 'span');
+            el.className = 'btn btn-blue';
+            if (os === 'windows') { el.href = WIN_URL; el.setAttribute('download', ''); el.innerHTML = LABEL; }
+            else if (os === 'mac') { el.href = MAC_URL; el.setAttribute('download', ''); el.innerHTML = LABEL; }
+            else if (os === 'mobile') {
+                el.style.cursor = 'pointer';
+                el.innerHTML = LABEL;
+                el.addEventListener('click', function() {
+                    const msg = wrap.parentElement.querySelector('.mobile-dl-note');
+                    if (msg) {
+                        msg.classList.add('visible');
+                        clearTimeout(msg._t);
+                        msg._t = setTimeout(() => msg.classList.remove('visible'), 5500);
+                    }
+                });
+            }
+            else if (os === 'linux') { el.style.cursor = 'default'; el.innerHTML = '<i class="fab fa-linux"></i> Linux version coming soon'; }
+            else { el.href = '/downloads'; el.innerHTML = LABEL; }
+            wrap.appendChild(el);
+            slot.replaceWith(wrap);
+            if (os === 'mobile') {
+                const note = document.createElement('div');
+                note.className = 'mobile-dl-note';
+                note.innerHTML = 'Available on Mac and Windows. Go to makemp3s.com on your computer.';
+                wrap.insertAdjacentElement('afterend', note);
+            }
+        }
+
+        build('hero-dl-btn');
+        build('sync-dl-btn');
+        build('works-dl-btn');
+        build('bottom-dl-btn');
+    })();
+    </script>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged,
+        signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAi9fITJ_WhYup1P7CBG_HTxG2BMwJxX8U",
+        authDomain: "make-mp3s.firebaseapp.com",
+        projectId: "make-mp3s",
+        storageBucket: "make-mp3s.firebasestorage.app",
+        messagingSenderId: "530983812032",
+        appId: "1:530983812032:web:1d059a67673771929b2625",
+        measurementId: "G-H11K90Y0CD"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+
+    const dropdown = document.getElementById("user-dropdown");
+    const authModal = document.getElementById("auth-modal");
+
+    // ── Auth state ────────────────────────────────────────────────────────────
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            // Profile is keyed by uid. Create it on first login.
+            const userRef = doc(db, "users", user.uid);
+            let userData = { subscription: 'free' };
+            try {
+                const userSnap = await getDoc(userRef);
+                if (userSnap.exists()) {
+                    userData = userSnap.data();
+                } else {
+                    const newProfile = {
+                        email: user.email,
+                        subscription: "free",
+                        createdAt: new Date()
+                    };
+                    await setDoc(userRef, newProfile);
+                    userData = newProfile;
+                }
+            } catch (err) {
+                console.error("Firestore profile error:", err);
+                // Non-fatal: fall back to free tier display
+            }
+            const subscription = userData.subscription || 'free';
+            const subscriptionType = userData.subscriptionType || null;
+
+            let planLabel = 'Free';
+            let planColor = '#ffffff';
+            if (subscription === 'premium' && subscriptionType === 'lifetime') {
+                planLabel = 'Lifetime';
+                planColor = '#D4AF37';
+            } else if (subscription === 'premium' && subscriptionType === 'monthly') {
+                planLabel = 'Monthly';
+                planColor = '#D4AF37';
+            }
+
+            dropdown.innerHTML = `
+                <div class="dropdown-header">
+                    <div class="dropdown-plan">Account</div>
+                    <div class="dropdown-email">${user.email}</div>
+                    <div class="dropdown-sub">
+                        Plan: <span style="color:${planColor}; font-weight:bold;">${planLabel}</span>
+                    </div>
+                </div>
+                <div style="padding: 0.4rem 0.5rem 0.5rem;">
+                    <a href="/account-settings" class="dropdown-btn dropdown-btn-gold">
+                        <i class="fas fa-user-cog"></i> Account Settings
+                    </a>
+                    <button onclick="handleLogout()" class="dropdown-btn dropdown-btn-grey">
+                        <i class="fas fa-sign-out-alt"></i> Sign Out
+                    </button>
+                </div>
+            `;
+        } else {
+            dropdown.innerHTML = "";
+            dropdown.classList.remove("show");
+        }
+    });
+
+    // ── Auth actions ──────────────────────────────────────────────────────────
+    window.handleGoogleLogin = async () => {
+        try {
+            await signInWithPopup(auth, provider);
+            window.closeAuthModal();
+        } catch (error) {
+            console.error("Google login error:", error);
+            alert("Login failed. Please try again.");
+        }
+    };
+
+    window.handleLogout = async () => {
+        await signOut(auth);
+        window.location.reload();
+    };
+
+    window.toggleDropdown = () => {
+        if (auth.currentUser || dropdown.innerHTML.trim() !== "") {
+            dropdown.classList.toggle("show");
+        } else {
+            dropdown.classList.remove("show");
+            window.openAuthModal();
+        }
+    };
+
+    window.openAuthModal = () => {
+        authModal.style.display = "flex";
+        dropdown.classList.remove("show");
+        resetEmailForm();
+    };
+
+    window.closeAuthModal = () => { authModal.style.display = "none"; };
+
+    window.onclick = (event) => {
+        if (!event.target.closest('.account-container') && !event.target.closest('#auth-modal')) {
+            dropdown.classList.remove('show');
+        }
+        if (event.target === authModal) window.closeAuthModal();
+    };
+
+    // ── Email/password auth ───────────────────────────────────────────────────
+    let emailFormVisible = false;
+    let isSignUpMode = false;
+
+    window.toggleEmailForm = () => {
+        emailFormVisible = !emailFormVisible;
+        const form      = document.getElementById('modal-email-form');
+        const toggle    = document.getElementById('modal-toggle');
+        const googleBtn = document.getElementById('modal-google-btn');
+        const divider   = document.getElementById('modal-divider');
+        form.classList.toggle('visible', emailFormVisible);
+        toggle.textContent = emailFormVisible ? '← Back to Google sign in' : 'Sign in with email & password';
+        googleBtn.style.display = emailFormVisible ? 'none' : 'flex';
+        divider.style.display   = emailFormVisible ? 'none' : 'flex';
+        if (emailFormVisible) document.getElementById('modal-email').focus();
+    };
+
+    window.toggleAuthMode = () => {
+        isSignUpMode = !isSignUpMode;
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-confirm').value = '';
+        const confirmGroup = document.getElementById('modal-confirm-group');
+        const forgot       = document.getElementById('modal-forgot');
+        const btn          = document.getElementById('modal-email-btn');
+        const switchText   = document.getElementById('modal-switch-text');
+        const switchBtn    = document.querySelector('.modal-switch-row button');
+        const title        = document.getElementById('modal-title');
+        const subtitle     = document.getElementById('modal-subtitle');
+        if (isSignUpMode) {
+            confirmGroup.style.display = 'block';
+            forgot.style.display = 'none';
+            btn.textContent = 'Create Account';
+            switchText.textContent = 'Already have an account?';
+            switchBtn.textContent = 'Sign in';
+            title.textContent = 'Create Account';
+            subtitle.textContent = 'Join Make MP3s today.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'new-password');
+        } else {
+            confirmGroup.style.display = 'none';
+            forgot.style.display = 'block';
+            btn.textContent = 'Sign In';
+            switchText.textContent = "Don't have an account?";
+            switchBtn.textContent = 'Create one';
+            title.textContent = 'Welcome Back';
+            subtitle.textContent = 'Sign in to access your Make MP3s account.';
+            document.getElementById('modal-password').setAttribute('autocomplete', 'current-password');
+        }
+    };
+
+    function resetEmailForm() {
+        emailFormVisible = false;
+        isSignUpMode = false;
+        document.getElementById('modal-email-form').classList.remove('visible');
+        document.getElementById('modal-toggle').textContent = 'Sign in with email & password';
+        document.getElementById('modal-google-btn').style.display = 'flex';
+        document.getElementById('modal-divider').style.display = 'flex';
+        document.getElementById('modal-error').textContent = '';
+        document.getElementById('modal-email').value = '';
+        document.getElementById('modal-password').value = '';
+        document.getElementById('modal-confirm').value = '';
+        document.getElementById('modal-confirm-group').style.display = 'none';
+        document.getElementById('modal-forgot').style.display = 'block';
+        document.getElementById('modal-email-btn').textContent = 'Sign In';
+        document.getElementById('modal-switch-text').textContent = "Don't have an account?";
+        document.querySelector('.modal-switch-row button').textContent = 'Create one';
+        document.getElementById('modal-title').textContent = 'Welcome Back';
+        document.getElementById('modal-subtitle').textContent = 'Sign in to access your Make MP3s account.';
+    }
+
+    function friendlyError(code) {
+        return ({
+            'auth/user-not-found'       : 'No account found with that email.',
+            'auth/wrong-password'       : 'Incorrect password. Please try again.',
+            'auth/invalid-credential'   : 'Incorrect email or password.',
+            'auth/invalid-email'        : 'Please enter a valid email address.',
+            'auth/too-many-requests'    : 'Too many attempts. Please wait and try again.',
+            'auth/email-already-in-use' : 'An account with this email already exists.',
+            'auth/weak-password'        : 'Password must be at least 6 characters.',
+        })[code] || 'Something went wrong. Please try again.';
+    }
+
+    window.handleEmailAuth = async () => {
+        const email    = document.getElementById('modal-email').value.trim();
+        const password = document.getElementById('modal-password').value;
+        const confirm  = document.getElementById('modal-confirm').value;
+        const errorEl  = document.getElementById('modal-error');
+        const btn      = document.getElementById('modal-email-btn');
+        errorEl.textContent = '';
+        if (!email || !password) { errorEl.textContent = 'Please enter your email and password.'; return; }
+        if (isSignUpMode) {
+            if (!confirm) { errorEl.textContent = 'Please confirm your password.'; return; }
+            if (password !== confirm) { errorEl.textContent = 'Passwords do not match.'; return; }
+            if (password.length < 6) { errorEl.textContent = 'Password must be at least 6 characters.'; return; }
+        }
+        btn.disabled = true;
+        btn.textContent = isSignUpMode ? 'Creating account...' : 'Signing in...';
+        try {
+            if (isSignUpMode) {
+                await createUserWithEmailAndPassword(auth, email, password);
+            } else {
+                await signInWithEmailAndPassword(auth, email, password);
+            }
+            window.closeAuthModal();
+        } catch (error) {
+            errorEl.textContent = friendlyError(error.code);
+        } finally {
+            btn.disabled = false;
+            btn.textContent = isSignUpMode ? 'Create Account' : 'Sign In';
+        }
+    };
+
+    window.handleModalForgotPassword = async () => {
+        const email   = document.getElementById('modal-email').value.trim();
+        const errorEl = document.getElementById('modal-error');
+        if (!email) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = 'Enter your email above first, then click Forgot password.';
+            document.getElementById('modal-email').focus();
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            errorEl.style.color = '#4CAF50';
+            errorEl.textContent = `Reset email sent to ${email}. Check your inbox.`;
+        } catch (error) {
+            errorEl.style.color = '#ff6666';
+            errorEl.textContent = friendlyError(error.code);
+        }
+    };
+
+</script>
+
+</body>
+</html>
